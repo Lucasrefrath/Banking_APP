@@ -19,6 +19,8 @@ import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.session.HttpSessionEventPublisher;
 import org.springframework.session.data.redis.config.annotation.web.http.EnableRedisHttpSession;
+import org.springframework.session.web.http.CookieSerializer;
+import org.springframework.session.web.http.DefaultCookieSerializer;
 
 @Configuration
 @EnableWebSecurity
@@ -63,10 +65,12 @@ public class SecurityConfig {
     return http
             .csrf(AbstractHttpConfigurer::disable)
             .authorizeHttpRequests(auth -> {
-              auth.requestMatchers("/api/v1/open", "/api/v1/login", "/logout").permitAll();
+              auth.requestMatchers("/auth/v1/login").permitAll();
+              auth.requestMatchers("/api/v1/open").permitAll();
+
               auth.requestMatchers("/api/v1/user").hasAnyRole("USER", "ADMIN");
               auth.requestMatchers("/api/v1/admin").hasRole("ADMIN");
-              auth.requestMatchers("/api/v1/check").authenticated();
+
               auth.anyRequest().authenticated();
             })
             .sessionManagement(session -> session
@@ -79,7 +83,14 @@ public class SecurityConfig {
                     .deleteCookies("SESSION")
                     .invalidateHttpSession(true)
             )
-            .formLogin(Customizer.withDefaults())
+            .httpBasic(Customizer.withDefaults())
             .build();
+  }
+
+  @Bean
+  public CookieSerializer cookieSerializer() {
+    DefaultCookieSerializer cookieSerializer = new DefaultCookieSerializer();
+    cookieSerializer.setSameSite(null);
+    return cookieSerializer;
   }
 }
