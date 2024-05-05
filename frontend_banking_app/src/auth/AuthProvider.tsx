@@ -1,15 +1,16 @@
 import React, {useEffect, useState} from "react";
-import HomePage from "../Components/HomePage";
 import {AuthContext} from "./AuthContext";
-import {API_URLS} from "../global-const/GlobalConst";
-import {UserDetails} from "../types/Types";
+import {API_URLS} from "../types-const/GlobalConst";
+import {UserDetails} from "../types-const/Types";
+import AuthRoutingManager from "./AuthRoutingManager";
 
 const AuthProvider = () => {
-    const [isAuthenticated, setIsAuthenticated] = useState(false)
-    const [userDetails, setUserDetails] = useState<UserDetails | undefined>(undefined)
+    const [isAuthenticated, setIsAuthenticated] = useState(false);
+    const [userDetails, setUserDetails] = useState<UserDetails | undefined>(undefined);
+    const [isChecking, setIsChecking] = useState(true);
 
     useEffect(() => {
-        checkAuthentication()
+        checkAuthentication();
     }, []);
 
     const checkAuthentication = async (): Promise<void> => {
@@ -31,6 +32,7 @@ const AuthProvider = () => {
         } catch (error) {
             console.log(error)
         }
+        setIsChecking(false);
     }
 
     const handleLogIn = async (): Promise<void> => {
@@ -72,6 +74,10 @@ const AuthProvider = () => {
         }
     }
 
+    if(isChecking) {
+        return <></>
+    }
+
     return (
         <AuthContext.Provider value={{
             isAuthenticated: isAuthenticated,
@@ -79,7 +85,7 @@ const AuthProvider = () => {
             login: handleLogIn,
             logout: handleLogOut
         }}>
-            <HomePage />
+            <AuthRoutingManager />
         </AuthContext.Provider>
     );
 };

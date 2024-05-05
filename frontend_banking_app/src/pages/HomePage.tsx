@@ -1,8 +1,10 @@
-import React, {useContext} from 'react';
-import {AuthContext} from "../auth/AuthContext";
+import React from 'react';
+import useAuth from "../hooks/useAuth";
+import {useNavigate} from "react-router-dom";
 
 const HomePage = () => {
-    const AuthData = useContext(AuthContext)
+    const AuthData = useAuth();
+    const navigate = useNavigate();
     return (
         <div>
             {AuthData?.isAuthenticated ? (
@@ -14,7 +16,7 @@ const HomePage = () => {
             ) : (
                 <>
                     <div>Bitte Anmelden</div>
-                    <button onClick={AuthData?.login}>LogIn</button>
+                    <button onClick={() => navigate("/login")}>LogIn</button>
                 </>
 
             )}
