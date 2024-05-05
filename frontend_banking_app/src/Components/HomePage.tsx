@@ -9,6 +9,7 @@ const HomePage = () => {
                 <>
                     <div>Hello Home ({AuthData?.userDetails?.username})</div>
                     <button onClick={AuthData.logout}>LogOut</button>
+                    <p>{JSON.stringify(AuthData?.userDetails)}</p>
                 </>
             ) : (
                 <>

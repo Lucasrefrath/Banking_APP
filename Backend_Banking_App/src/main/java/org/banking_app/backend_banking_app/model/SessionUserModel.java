@@ -1,4 +1,4 @@
-package org.banking_app.backend_banking_app.model.requestModel;
+package org.banking_app.backend_banking_app.model;
 
 import lombok.Data;
 import org.springframework.security.core.context.SecurityContextHolder;

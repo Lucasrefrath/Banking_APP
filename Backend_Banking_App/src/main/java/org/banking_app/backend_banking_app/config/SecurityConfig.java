@@ -1,23 +1,17 @@
-package org.banking_app.backend_banking_app.security;
+package org.banking_app.backend_banking_app.config;
 
+import org.banking_app.backend_banking_app.service.JpaUserDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.Customizer;
-import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
-import org.springframework.security.core.userdetails.User;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
-import org.springframework.security.web.session.HttpSessionEventPublisher;
 import org.springframework.session.data.redis.config.annotation.web.http.EnableRedisHttpSession;
 import org.springframework.session.web.http.CookieSerializer;
 import org.springframework.session.web.http.DefaultCookieSerializer;
@@ -27,37 +21,12 @@ import org.springframework.session.web.http.DefaultCookieSerializer;
 @EnableRedisHttpSession
 public class SecurityConfig {
 
+  @Autowired
+  JpaUserDetailsService jpaUserDetailsService;
+
   @Bean
   public static PasswordEncoder passwordEncoder() {
     return new BCryptPasswordEncoder();
-  }
-
-  @Bean
-  public HttpSessionEventPublisher httpSessionEventPublisher() {
-    return new HttpSessionEventPublisher();
-  }
-
-  @Bean
-  public AuthenticationManager authenticationManager(
-          AuthenticationConfiguration configuration) throws Exception {
-    return configuration.getAuthenticationManager();
-  }
-
-  @Bean
-  public InMemoryUserDetailsManager userDetailsManager() {
-    UserDetails admin = User.builder()
-            .username("admin")
-            .password(passwordEncoder().encode("admin"))
-            .roles("ADMIN")
-            .build();
-
-    UserDetails user = User.builder()
-            .username("user")
-            .password(passwordEncoder().encode("user"))
-            .roles("USER")
-            .build();
-
-    return new InMemoryUserDetailsManager(user, admin);
   }
 
   @Bean
@@ -65,11 +34,12 @@ public class SecurityConfig {
     return http
             .csrf(AbstractHttpConfigurer::disable)
             .authorizeHttpRequests(auth -> {
-              auth.requestMatchers("/auth/v1/login").permitAll();
+              auth.requestMatchers("/auth/v1/login", "/auth/v1/checkAuth").permitAll();
               auth.requestMatchers("/api/v1/open").permitAll();
+              auth.requestMatchers("/api/v1/test").permitAll();
 
-              auth.requestMatchers("/api/v1/user").hasAnyRole("USER", "ADMIN");
-              auth.requestMatchers("/api/v1/admin").hasRole("ADMIN");
+              auth.requestMatchers("/api/v1/user").hasAnyAuthority("ROLE_USER", "ROLE_ADMIN");
+              auth.requestMatchers("/api/v1/admin").hasAuthority("ROLE_ADMIN");
 
               auth.anyRequest().authenticated();
             })
@@ -83,6 +53,7 @@ public class SecurityConfig {
                     .deleteCookies("SESSION")
                     .invalidateHttpSession(true)
             )
+            .userDetailsService(jpaUserDetailsService)
             .httpBasic(Customizer.withDefaults())
             .build();
   }
