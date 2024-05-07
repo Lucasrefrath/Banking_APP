@@ -23,10 +23,9 @@ public class AccountService {
     return accountRepository.save(entity);
   }
 
-  public AccountEntity createAccount(AccountEntity entity, String ownerName) throws IdNotNullException, NoSuchUserFoundException {
-    if(entity.getId() != null) throw new IdNotNullException(entity.getId());
+  public AccountEntity createAccount(AccountEntity entity, String ownerName) throws NoSuchUserFoundException, IdNotNullException {
     entity.setOwner(userService.getUserByUsername(ownerName));
-    return accountRepository.save(entity);
+    return createAccount(entity);
   }
 
 }
