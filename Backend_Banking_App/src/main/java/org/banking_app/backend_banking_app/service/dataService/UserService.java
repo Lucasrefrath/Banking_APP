@@ -1,4 +1,4 @@
-package org.banking_app.backend_banking_app.service;
+package org.banking_app.backend_banking_app.service.dataService;
 
 
 import lombok.Data;

@@ -36,7 +36,7 @@ public class SecurityConfig {
             .authorizeHttpRequests(auth -> {
               auth.requestMatchers("/auth/v1/login", "/auth/v1/checkAuth").permitAll();
               auth.requestMatchers("/api/v1/open").permitAll();
-              auth.requestMatchers("/api/v1/test").permitAll();
+              auth.requestMatchers("/api/v1/test", "/api/v1/accounts").permitAll();
 
               auth.requestMatchers("/api/v1/user").hasAnyAuthority("ROLE_USER", "ROLE_ADMIN");
               auth.requestMatchers("/api/v1/admin").hasAuthority("ROLE_ADMIN");
