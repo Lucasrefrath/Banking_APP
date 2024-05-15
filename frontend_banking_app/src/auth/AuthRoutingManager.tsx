@@ -5,6 +5,7 @@ import RequiresAuthRoute from "./RequiresAuthRoute";
 import LogInPage from "../pages/LogInPage";
 import DashBoardPage from "../pages/DashBoardPage";
 import AdminPage from "../pages/AdminPage";
+import ViewAccountPage from "../pages/ViewAccountPage";
 
 const AuthRoutingManager = () => {
     return (
@@ -23,6 +24,9 @@ const AuthRoutingManager = () => {
                 }/>
                 <Route path={"/admin"} element={
                     <RequiresAuthRoute renderElement={<AdminPage />} allowedRoles={["ROLE_ADMIN"]}/>
+                }/>
+                <Route path={"/account/:accountId"} element={
+                    <RequiresAuthRoute renderElement={<ViewAccountPage />} />
                 }/>
             </Routes>
         </BrowserRouter>

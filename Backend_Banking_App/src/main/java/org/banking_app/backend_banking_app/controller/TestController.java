@@ -14,7 +14,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/api/v1")
+@RequestMapping("/api-test/v1")
 @CrossOrigin("http://localhost:3000/")
 public class TestController {
 

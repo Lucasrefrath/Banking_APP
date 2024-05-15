@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from "react";
 import {AuthContext} from "./AuthContext";
-import {API_URLS} from "../types-const/GlobalConst";
+import {API_URLS_V1} from "../types-const/GlobalConst";
 import {UserDetails} from "../types-const/Types";
 import AuthRoutingManager from "./AuthRoutingManager";
 
@@ -15,7 +15,7 @@ const AuthProvider = () => {
 
     const checkAuthentication = async (): Promise<void> => {
         try {
-            const response = await fetch(API_URLS.authV1 + "/checkAuth", {
+            const response = await fetch(API_URLS_V1.auth + "/checkAuth", {
                 method: 'GET',
                 credentials: "include",
             });
@@ -41,7 +41,7 @@ const AuthProvider = () => {
         console.log(auth)
 
         try {
-            const response = await fetch(API_URLS.authV1 + '/login', {
+            const response = await fetch(API_URLS_V1.auth + '/login', {
                 method: 'POST',
                 headers: {
                     "Authorization": `Basic ${auth}`,
@@ -61,7 +61,7 @@ const AuthProvider = () => {
         if(!isAuthenticated) return
 
         try {
-            const response = await fetch(API_URLS.authV1 + '/logout', {
+            const response = await fetch(API_URLS_V1.auth + '/logout', {
                 method: 'POST',
                 credentials: "include",
             });

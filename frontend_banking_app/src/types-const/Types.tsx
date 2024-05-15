@@ -5,9 +5,10 @@ export interface AuthData {
     logout: () => void
 }
 
-export interface ApiPath {
-    testV1: string,
-    authV1: string
+export interface ApiVersion {
+    test: string,
+    auth: string,
+    accounts: string
 }
 
 export interface FallbackPath {
@@ -21,3 +22,12 @@ export interface UserDetails {
 }
 
 export type Role = "ROLE_USER" | "ROLE_ADMIN"
+
+export type AccountDetails = {
+    id: number,
+    balance: number
+}
+
+export type AccountHistory = {
+
+}
