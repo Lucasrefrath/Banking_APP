@@ -10,11 +10,26 @@ const AccountPreview = ({account}: AccountPreviewProps) => {
   const navigate = useNavigate();
 
   return (
-    <div>
-      <h4>ID: {account.id}</h4>
-      <p>Balance: {account.balance}</p>
-      <button onClick={() => navigate("/account/" + account.id)}>view</button>
-    </div>
+      <li key={account.id} className="flex justify-between gap-x-6 py-5">
+        <div className="flex min-w-0 gap-x-4">
+          <div className="min-w-0 flex-auto">
+            <p className="text-sm font-semibold leading-6 text-gray-900">Account {account.id}</p>
+            <p className="mt-1 truncate text-xs leading-5 text-gray-500">{account.balance.toLocaleString("de", {
+              minimumFractionDigits: 2,
+              maximumFractionDigits: 2
+            })} €</p>
+          </div>
+        </div>
+        <div className="hidden shrink-0 sm:flex sm:flex-col sm:items-end">
+            <a
+              href={""}
+              onClick={() => navigate("/account/" + account.id)}
+              className="rounded-md bg-indigo-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+            >
+              view Account
+            </a>
+        </div>
+      </li>
   );
 };
 

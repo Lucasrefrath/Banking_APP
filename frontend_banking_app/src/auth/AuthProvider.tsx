@@ -3,6 +3,7 @@ import {AuthContext} from "./AuthContext";
 import {API_URLS_V1} from "../types-const/GlobalConst";
 import {UserDetails} from "../types-const/Types";
 import AuthRoutingManager from "./AuthRoutingManager";
+import Header from "../components/Header";
 
 const AuthProvider = () => {
     const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -79,15 +80,15 @@ const AuthProvider = () => {
     }
 
     return (
-        <AuthContext.Provider value={{
-            isAuthenticated: isAuthenticated,
-            userDetails: userDetails,
-            login: handleLogIn,
-            logout: handleLogOut
-        }}>
-            <AuthRoutingManager />
-        </AuthContext.Provider>
-    );
+      <AuthContext.Provider value={{
+          isAuthenticated: isAuthenticated,
+          userDetails: userDetails,
+          login: handleLogIn,
+          logout: handleLogOut
+      }}>
+          <AuthRoutingManager/>
+      </AuthContext.Provider>
+);
 };
 
 export default AuthProvider;

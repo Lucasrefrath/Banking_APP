@@ -31,3 +31,8 @@ export type AccountDetails = {
 export type AccountHistory = {
 
 }
+
+export interface Navigation {
+    name: string,
+    to: string,
+}

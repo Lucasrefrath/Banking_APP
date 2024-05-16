@@ -2,22 +2,22 @@ import React from 'react';
 import useAuth from "../hooks/useAuth";
 import AccountPreview from "../components/AccountPreview";
 import useFetchUsersAccounts from "../hooks/useFetchUsersAccounts";
-import {AccountDetails, UserDetails} from "../types-const/Types";
+import {AccountDetails} from "../types-const/Types";
 
 const DashBoardPage = () => {
     const AuthData = useAuth();
     const { userAccounts, isPending} = useFetchUsersAccounts();
     return (
-        <>
-          <h1>Hello, {AuthData?.userDetails?.username}</h1>
-          {isPending ? (
-            <p>Loading...</p>
-          ) : (
-            userAccounts?.map((account: AccountDetails) => {
-              return <AccountPreview account={account}/>
-            })
-          )}
-        </>
+      <>
+        <h1 className={"text-5xl pb-5"}>Welcome back, {AuthData?.userDetails?.username}</h1>
+        {isPending ? (
+          <p>Loading...</p>
+        ) : (
+          <ul role="list" className="divide-y divide-gray-100">
+            {userAccounts?.map((account: AccountDetails) => <AccountPreview account={account}/>)}
+          </ul>
+        )}
+      </>
     );
 };
 
