@@ -1,6 +1,7 @@
 package org.banking_app.backend_banking_app.controller;
 
 import jakarta.servlet.http.HttpSession;
+import org.banking_app.backend_banking_app.model.SecurityUserDetails;
 import org.banking_app.backend_banking_app.model.SessionUserModel;
 import org.banking_app.backend_banking_app.service.JpaUserDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,9 +26,9 @@ public class AuthController {
   }
 
   @PostMapping("/logout")
-  public ResponseEntity<String> logout(HttpSession session, Principal principal) {
+  public ResponseEntity<String> logout(HttpSession session, @AuthenticationPrincipal SecurityUserDetails userDetails) {
     session.invalidate();
-    return ResponseEntity.ok("User: " + principal.getName() + " was logged out successfully.");
+    return ResponseEntity.ok("User: " + userDetails.getUsername() + " was logged out successfully.");
   }
 
   @GetMapping("/checkAuth")

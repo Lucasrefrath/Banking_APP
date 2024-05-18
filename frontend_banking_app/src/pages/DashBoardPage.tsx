@@ -9,7 +9,7 @@ const DashBoardPage = () => {
     const { userAccounts, isPending} = useFetchUsersAccounts();
     return (
       <>
-        <h1 className={"text-5xl pb-5"}>Welcome back, {AuthData?.userDetails?.username}</h1>
+        <h1 className={"text-5xl pb-5 font-bold"}>Welcome back, {AuthData?.userDetails?.username}</h1>
         {isPending ? (
           <p>Loading...</p>
         ) : (

@@ -1,41 +1,16 @@
 import { Fragment } from 'react'
 import { Disclosure, Menu, Transition } from '@headlessui/react'
-import { Bars3Icon, BellIcon, XMarkIcon } from '@heroicons/react/24/outline'
-import {useLocation, useNavigate} from "react-router-dom";
-import {Navigation} from "../types-const/Types";
-
-const user = {
-  name: 'Tom Cook',
-  email: 'tom@example.com',
-  imageUrl:
-      "https://st3.depositphotos.com/9998432/13335/v/450/depositphotos_133351928-stock-illustration-default-placeholder-man-and-woman.jpg"
-}
-
-const navigation: Navigation[] = [
-  { name: 'Home', to: '/'},
-  { name: 'Dashboard', to: '/dashboard'},
-  { name: 'Projects', to: '/projects'},
-  { name: 'Calendar', to: '/calendar'},
-  { name: 'Reports', to: '/reports'},
-]
-const userNavigation: Navigation[] = [
-  { name: 'Your Profile', to: '/' },
-  { name: 'Settings', to: '/' },
-  { name: 'Sign out', to: '/' },
-]
-
-function classNames(...classes: string[]) {
-  return classes.filter(Boolean).join(' ')
-}
-
+import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline'
+import {useNavigate} from "react-router-dom";
+import {navigation, user, userNavigation} from "../types-const/GlobalConst";
+import useUtils, {classNames} from "../types-const/Utils";
+import useAuth from "../hooks/useAuth";
 
 const Header = () => {
   const navigate = useNavigate();
-  const location = useLocation();
+  const { checkRouteActive } = useUtils();
+  const AuthData = useAuth();
 
-  const checkActive = (item: Navigation): boolean => {
-    return item.to === location.pathname;
-  }
   return (
     <>
       <div className="min-h-full">
@@ -60,12 +35,12 @@ const Header = () => {
                             href=""
                             onClick={() => navigate(item.to)}
                             className={classNames(
-                              checkActive(item)
+                              checkRouteActive(item.to)
                                 ? 'bg-gray-900 text-white'
                                 : 'text-gray-300 hover:bg-gray-700 hover:text-white',
                               'rounded-md px-3 py-2 text-sm font-medium'
                             )}
-                            aria-current={checkActive(item) ? 'page' : undefined}
+                            aria-current={checkRouteActive(item.to) ? 'page' : undefined}
                           >
                             {item.name}
                           </a>
@@ -139,10 +114,10 @@ const Header = () => {
                       href=""
                       onClick={() => navigate(item.to)}
                       className={classNames(
-                        checkActive(item) ? 'bg-gray-900 text-white' : 'text-gray-300 hover:bg-gray-700 hover:text-white',
+                        checkRouteActive(item.to) ? 'bg-gray-900 text-white' : 'text-gray-300 hover:bg-gray-700 hover:text-white',
                         'block rounded-md px-3 py-2 text-base font-medium'
                       )}
-                      aria-current={checkActive(item) ? 'page' : undefined}
+                      aria-current={checkRouteActive(item.to) ? 'page' : undefined}
                     >
                       {item.name}
                     </Disclosure.Button>

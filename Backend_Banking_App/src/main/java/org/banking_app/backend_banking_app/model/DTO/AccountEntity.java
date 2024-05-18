@@ -26,4 +26,8 @@ public class AccountEntity {
     this.balance = balance;
     this.owner = owner;
   }
+
+  public void deposit(Double amount) {
+    balance += amount;
+  }
 }

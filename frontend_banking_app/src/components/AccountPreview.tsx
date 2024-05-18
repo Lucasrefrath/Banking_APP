@@ -1,6 +1,7 @@
 import React from 'react';
 import {AccountDetails} from "../types-const/Types";
 import {useNavigate} from "react-router-dom";
+import {formatBalance} from "../types-const/Utils";
 
 interface AccountPreviewProps {
   account: AccountDetails
@@ -14,10 +15,7 @@ const AccountPreview = ({account}: AccountPreviewProps) => {
         <div className="flex min-w-0 gap-x-4">
           <div className="min-w-0 flex-auto">
             <p className="text-sm font-semibold leading-6 text-gray-900">Account {account.id}</p>
-            <p className="mt-1 truncate text-xs leading-5 text-gray-500">{account.balance.toLocaleString("de", {
-              minimumFractionDigits: 2,
-              maximumFractionDigits: 2
-            })} €</p>
+            <p className="mt-1 truncate text-xs leading-5 text-gray-500">{formatBalance(account.balance)} €</p>
           </div>
         </div>
         <div className="hidden shrink-0 sm:flex sm:flex-col sm:items-end">
@@ -26,7 +24,7 @@ const AccountPreview = ({account}: AccountPreviewProps) => {
               onClick={() => navigate("/account/" + account.id)}
               className="rounded-md bg-indigo-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
             >
-              view Account
+              view Details
             </a>
         </div>
       </li>

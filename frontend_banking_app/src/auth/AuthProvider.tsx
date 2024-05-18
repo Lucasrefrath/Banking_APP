@@ -1,9 +1,8 @@
 import React, {useEffect, useState} from "react";
-import {AuthContext} from "./AuthContext";
+import {AuthContext} from "../types-const/Context";
 import {API_URLS_V1} from "../types-const/GlobalConst";
-import {UserDetails} from "../types-const/Types";
+import {LogInData, UserDetails} from "../types-const/Types";
 import AuthRoutingManager from "./AuthRoutingManager";
-import Header from "../components/Header";
 
 const AuthProvider = () => {
     const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -36,9 +35,9 @@ const AuthProvider = () => {
         setIsChecking(false);
     }
 
-    const handleLogIn = async (): Promise<void> => {
+    const handleLogIn = async ({username = "admin", password = "admin"}: LogInData): Promise<void> => {
         if(isAuthenticated) return
-        const auth: string = btoa("admin:admin");
+        const auth: string = btoa(`${username}:${password}`);
         console.log(auth)
 
         try {

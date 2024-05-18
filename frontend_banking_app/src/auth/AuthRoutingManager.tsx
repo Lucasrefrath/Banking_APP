@@ -8,6 +8,7 @@ import AdminPage from "../pages/AdminPage";
 import ViewAccountPage from "../pages/ViewAccountPage";
 import NotFoundPage from "../pages/NotFoundPage";
 import Header from "../components/Header";
+import LogOutPage from "../pages/LogOutPage";
 
 const AuthRoutingManager = () => {
     return (
@@ -31,6 +32,9 @@ const AuthRoutingManager = () => {
                   }/>
                   <Route path={"/account/:accountId"} element={
                       <RequiresAuthRoute renderElement={<ViewAccountPage/>}/>
+                  }/>
+                  <Route path={"/logout"} element={
+                      <RequiresAuthRoute renderElement={<LogOutPage />}/>
                   }/>
 
                   <Route path={"/*"} element={<NotFoundPage/>}/>

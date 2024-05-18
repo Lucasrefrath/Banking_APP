@@ -52,4 +52,10 @@ public class AccountService {
     return entity;
   }
 
+  public AccountEntity deposit(Long accountId, Double amount) throws IllegalIdentifierException, UserAccessNotAllowedException {
+    AccountEntity account = getAccountById(accountId);
+    account.deposit(amount);
+    accountRepository.save(account);
+    return account;
+  }
 }

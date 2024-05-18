@@ -46,7 +46,7 @@ const UseFetchUsersAccounts = (accountId: string) => {
     setIsPending(false);
   }
 
-  return {userAccount, accountHistory, isPending, error}
+  return {userAccount, setUserAccount,accountHistory, isPending, error}
 };
 
 export default UseFetchUsersAccounts;
