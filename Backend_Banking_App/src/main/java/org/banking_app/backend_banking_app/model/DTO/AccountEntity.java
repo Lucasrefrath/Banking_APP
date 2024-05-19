@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.banking_app.backend_banking_app.exceptions.NotEnoughBalanceException;
 
 @Data
 @NoArgsConstructor
@@ -29,5 +30,12 @@ public class AccountEntity {
 
   public void deposit(Double amount) {
     balance += amount;
+  }
+
+  public void withdraw(Double amount) throws NotEnoughBalanceException {
+    if(amount > balance) {
+      throw new NotEnoughBalanceException(amount, balance);
+    }
+    balance -= amount;
   }
 }

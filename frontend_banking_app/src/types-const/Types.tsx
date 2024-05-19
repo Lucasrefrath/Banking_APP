@@ -7,10 +7,10 @@ export interface AuthData {
 
 export interface ProfileData {
     userAccount: AccountDetails | undefined
-    isDepositOpen: boolean,
     updateAccountDetails: (details: AccountDetails) => void,
-    openDeposit: () => void,
-    closeDeposit: () => void
+    openPopUp: (actionType: AccountAction) => void,
+    closePopUp: (actionType: AccountAction) => void,
+    isPopUpOpen: (actionType: AccountAction) => boolean
 }
 
 export interface ApiVersion {
@@ -53,5 +53,27 @@ export type LogInData = {
 
 export type DepositRequst = {
     accountId: number,
-    amount: number
+    amount: number,
+    recipientId?: number,
+    message?: string
+}
+
+export enum AccountAction {
+    DEPOSIT = "/deposit",
+    WITHDRAW = "/withdraw",
+    TRANSFER = "/transfer"
+}
+
+export type AccountActionConfig = {
+    action: string,
+    heading: string,
+    description: string,
+    selectRecipient: boolean,
+    writeMessage: boolean,
+    testBalance: boolean
+}
+
+export enum MessageLevel {
+    NOTICE,
+    ERROR
 }

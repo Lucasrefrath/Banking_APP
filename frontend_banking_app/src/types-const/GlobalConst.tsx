@@ -1,4 +1,5 @@
-import {ApiVersion, FallbackPath, Navigation} from "./Types";
+import {AccountAction, AccountActionConfig, ApiVersion, FallbackPath, Navigation} from "./Types";
+import * as trace_events from "node:trace_events";
 
 export const API_URLS_V1: ApiVersion = {
     test: 'http://localhost:8080/api-test/v1',
@@ -30,3 +31,32 @@ export const userNavigation: Navigation[] = [
     { name: 'Settings', to: '/' },
     { name: 'Sign out', to: '/logout' },
 ]
+
+export const getAccountActionConfig = (actionType: AccountAction): AccountActionConfig => {
+    switch (actionType) {
+        case AccountAction.DEPOSIT: return {
+            action: "deposit",
+            heading: "Deposit to Account",
+            description: "simulates deposit from ATM or PayPal",
+            selectRecipient: false,
+            writeMessage: false,
+            testBalance: false
+        }
+        case AccountAction.WITHDRAW: return {
+            action: "withdraw",
+            heading: "Withdraw from Account",
+            description: "simulates withdraw to ATM or PayPal",
+            selectRecipient: false,
+            writeMessage: false,
+            testBalance: true
+        }
+        case AccountAction.TRANSFER: return {
+            action: "transfer",
+            heading: "Transfer to Account",
+            description: "transfer money to other accounts",
+            selectRecipient: true,
+            writeMessage: true,
+            testBalance: true
+        }
+    }
+}

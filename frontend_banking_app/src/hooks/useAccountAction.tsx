@@ -1,19 +1,16 @@
 import {useContext, useState} from 'react';
 import {API_URLS_V1} from "../types-const/GlobalConst";
-import DepositPopUp from "../components/DepositPopUp";
-import {AccountDetails, DepositRequst} from "../types-const/Types";
+import {AccountAction, AccountDetails, DepositRequst} from "../types-const/Types";
 import {ProfileContext} from "../types-const/Context";
 
-const useDeposit = () => {
-  const [isPending, setIsPending] = useState<boolean>(false);
+const useAccountAction = (actionType: AccountAction) => {
   const [error, setError] = useState<any>(undefined);
   const ProfileData = useContext(ProfileContext);
 
   const handleRequest = async ( payLoad: DepositRequst): Promise<void> => {
-    setIsPending(true);
 
     try {
-      const response = await fetch(API_URLS_V1.accountActions + "/deposit", {
+      const response = await fetch(API_URLS_V1.accountActions + actionType, {
         method: 'POST',
         credentials: "include",
         headers: {
@@ -28,21 +25,19 @@ const useDeposit = () => {
       }
 
       if(response.status !== 200) {
-        throw new Error("Ein unerwarteter Fehler ist aufgetreten...");
+        throw new Error("An unexpectet error accured");
       }
 
       const data: AccountDetails = await response.json();
       ProfileData?.updateAccountDetails(data);
-      ProfileData?.closeDeposit()
-      setIsPending(false);
+      ProfileData?.closePopUp(actionType)
     } catch (error) {
       setError(error)
       console.log(error);
     }
-    setIsPending(false);
   }
 
-  return { handleRequest }
+  return { handleRequest, error, setError }
 };
 
-export default useDeposit;
+export default useAccountAction;
