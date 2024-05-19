@@ -1,4 +1,12 @@
-import {AccountAction, AccountActionConfig, ApiVersion, FallbackPath, Navigation} from "./Types";
+import {
+    AccountAction,
+    AccountActionConfig,
+    ApiVersion,
+    FallbackPath,
+    LogInData,
+    Navigation,
+    UserDetails
+} from "./Types";
 import {Cog6ToothIcon, LockClosedIcon, UserCircleIcon} from "@heroicons/react/24/outline";
 
 export const API_URLS_V1: ApiVersion = {
@@ -10,6 +18,11 @@ export const API_URLS_V1: ApiVersion = {
 
 export const FALLBACK_URLS: FallbackPath = {
     unauthorised: "/login"
+}
+
+export const DEFAULT_USER: LogInData = {
+    username: "admin",
+    password: "admin"
 }
 
 export const user = {
