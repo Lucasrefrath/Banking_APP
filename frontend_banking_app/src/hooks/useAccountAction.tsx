@@ -1,6 +1,12 @@
 import {useContext, useState} from 'react';
 import {API_URLS_V1} from "../types-const/GlobalConst";
-import {AccountAction, AccountDetails, DepositRequst} from "../types-const/Types";
+import {
+  AccountAction,
+  AccountActionResponse,
+  AccountDetails,
+  DepositRequst,
+  SimpleAccountDetails
+} from "../types-const/Types";
 import {ProfileContext} from "../types-const/Context";
 
 const useAccountAction = (actionType: AccountAction) => {
@@ -28,8 +34,9 @@ const useAccountAction = (actionType: AccountAction) => {
         throw new Error("An unexpectet error accured");
       }
 
-      const data: AccountDetails = await response.json();
-      ProfileData?.updateAccountDetails(data);
+      const data: AccountActionResponse = await response.json();
+      ProfileData?.updateAccountDetails(data.updatedAccountData);
+      ProfileData?.userAccountHistory?.unshift(data.newHistoryData);
       ProfileData?.closePopUp(actionType)
     } catch (error) {
       setError(error)

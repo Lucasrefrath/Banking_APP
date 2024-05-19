@@ -3,15 +3,16 @@ import {useParams} from "react-router-dom";
 import useFetchAccount from "../hooks/useFetchAccount";
 import {ProfileContext} from '../types-const/Context';
 import AccountInfo from "../components/AccountInfo";
-import {AccountAction, AccountDetails} from "../types-const/Types";
+import {AccountAction, SimpleAccountDetails} from "../types-const/Types";
 import AccountActionPopUp from "../components/pop-ups/AccountActionPopUp";
+import AccountHistoryList from "../components/AccountHistoryList";
 
 const ViewAccountPage = () => {
   const { accountId} = useParams<string>();
-  const {userAccount, isPending, setUserAccount} = useFetchAccount(accountId || "");
-  const [activePopUp, setActivePopUp] = useState<AccountAction | undefined>(undefined)
+  const {userAccount, accountHistory, setUserAccount} = useFetchAccount(accountId || "");
+  const [activePopUp, setActivePopUp] = useState<AccountAction | undefined>(undefined);
 
-  const updateAccountDetails = (details: AccountDetails) => {
+  const updateAccountDetails = (details: SimpleAccountDetails) => {
     setUserAccount(details)
   }
 
@@ -31,13 +32,17 @@ const ViewAccountPage = () => {
 
   return (
     <ProfileContext.Provider value={{
-      userAccount,
+      userAccount: userAccount,
+      userAccountHistory: accountHistory || undefined,
       updateAccountDetails,
       openPopUp,
       closePopUp,
       isPopUpOpen
     }}>
       <AccountInfo />
+
+      <AccountHistoryList />
+
       <AccountActionPopUp actionType={AccountAction.DEPOSIT}/>
       <AccountActionPopUp actionType={AccountAction.WITHDRAW}/>
       <AccountActionPopUp actionType={AccountAction.TRANSFER}/>

@@ -69,23 +69,29 @@ const Header = () => {
                           leaveTo="transform opacity-0 scale-95"
                         >
                           <Menu.Items className="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
-                            {AuthData?.isAuthenticated && <p className={"font-extralight text-sm mb-1 mt-2 mx-4"}>logged in as {AuthData.userDetails?.username}</p>}
+                            {AuthData?.isAuthenticated && <p className={"font-extralight text-sm mb-1 mt-2 mx-4"}>{AuthData.userDetails?.username}</p>}
 
                             {userNavigation.map((item) => (
                               <Menu.Item key={item.name}>
-                                {({ active }) => (
-                                  <a
+                                {({active}) => (
+                                  <div>
+                                    {item.divider && <div className="my-1 mx-2 h-px bg-black/5"/>}
+                                    <a
                                     href=""
                                     onClick={() => navigate(item.to)}
-                                    className={classNames(
-                                      active ? 'bg-gray-100' : '',
-                                      'block px-4 py-2 text-sm text-gray-700'
-                                    )}
-                                  >
-                                    {item.name}
-                                  </a>
-                                )}
-                              </Menu.Item>
+                                           className={classNames(
+                                             active ? 'bg-gray-100' : '',
+                                             'block px-4 py-2 text-sm text-gray-700'
+                                           )}
+                                    >
+                                      <div className={"flex"}>
+                                        <div className={"me-1.5"}>{item.icon}</div>
+                                        <p className={item.addOnStyles}>{item.name}</p>
+                                      </div>
+                                    </a>
+                                  </div>
+                            )}
+                          </Menu.Item>
                             ))}
                           </Menu.Items>
                         </Transition>

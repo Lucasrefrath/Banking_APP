@@ -7,6 +7,7 @@ import org.banking_app.backend_banking_app.model.DTO.AccountEntity;
 import org.banking_app.backend_banking_app.model.SecurityUserDetails;
 import org.banking_app.backend_banking_app.model.responseModel.AccountResponse;
 import org.banking_app.backend_banking_app.service.dataService.AccountService;
+import org.banking_app.backend_banking_app.service.dataService.HistoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,7 +22,10 @@ import java.util.List;
 public class AccountsController {
 
   @Autowired
-  AccountService accountService;
+  private AccountService accountService;
+
+  @Autowired
+  private HistoryService historyService;
 
   @GetMapping
   public ResponseEntity<List<AccountEntity>> getUserAccounts() {
@@ -35,6 +39,7 @@ public class AccountsController {
     try {
       AccountResponse account = new AccountResponse();
       account.setAccountDetails((accountService.getAccountById(accountId)));
+      account.setAccountHistory(historyService.getHistoryForAccount(accountId));
       return ResponseEntity.ok(account);
     } catch (UserAccessNotAllowedException e) {
       return ResponseEntity.status(HttpStatus.FORBIDDEN).body(e.getMessage());

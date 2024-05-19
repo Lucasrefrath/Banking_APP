@@ -1,8 +1,9 @@
 import React, {useContext} from 'react';
-import {ArrowDownRightIcon, ArrowUpLeftIcon, CreditCardIcon, CurrencyDollarIcon} from "@heroicons/react/24/solid";
+import {CreditCardIcon, CurrencyDollarIcon, CurrencyEuroIcon} from "@heroicons/react/24/solid";
 import {formatBalance} from "../types-const/Utils";
 import {ProfileContext} from "../types-const/Context";
 import {AccountAction} from "../types-const/Types";
+import {MinusIcon, PlusIcon} from "@heroicons/react/24/outline";
 
 const AccountInfo = () => {
   const ProfileData = useContext(ProfileContext);
@@ -15,7 +16,7 @@ const AccountInfo = () => {
         </h2>
         <div className="mt-1 flex flex-col sm:mt-0 sm:flex-row sm:flex-wrap sm:space-x-6">
           <div className="mt-2 flex items-center text-sm text-gray-500">
-            <CurrencyDollarIcon className="mr-1.5 h-5 w-5 flex-shrink-0 text-gray-400" aria-hidden="true"/>
+            <CurrencyEuroIcon className="mr-1.5 h-5 w-5 flex-shrink-0 text-gray-400" aria-hidden="true"/>
             {formatBalance(ProfileData?.userAccount?.balance)} €
           </div>
         </div>
@@ -27,7 +28,7 @@ const AccountInfo = () => {
             onClick={() => ProfileData?.openPopUp(AccountAction.WITHDRAW)}
             className="inline-flex items-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
           >
-            <ArrowDownRightIcon className="-ml-0.5 mr-1.5 h-5 w-5" aria-hidden="true"/>
+            <MinusIcon className="-ml-0.5 mr-1.5 h-5 w-5" aria-hidden="true"/>
             withdraw
           </button>
         </span>
@@ -38,7 +39,7 @@ const AccountInfo = () => {
               onClick={() => ProfileData?.openPopUp(AccountAction.DEPOSIT)}
               className="inline-flex items-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
             >
-              <ArrowUpLeftIcon className="-ml-0.5 mr-1.5 h-5 w-5" aria-hidden="true"/>
+              <PlusIcon className="-ml-0.5 mr-1.5 h-5 w-5" aria-hidden="true"/>
               deposit
             </button>
           </span>

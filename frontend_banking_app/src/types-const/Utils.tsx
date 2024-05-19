@@ -9,6 +9,37 @@ export const formatBalance = (raw: number | undefined): string => {
   });
 }
 
+export const formatDate = (date: Date): string => {
+  return new Date(date).toLocaleDateString("de");
+}
+
+export const formatTime = (date: Date): string => {
+  return new Date(date).toLocaleTimeString("de");
+}
+
+export const getTimeSince = (date: Date): string => {
+  const seconds: number = (Date.now() - new Date(date).getTime()) / 1000;
+  if(seconds < 20) return 'few seconds ago'
+  if(seconds < 60) return `${seconds.toFixed(0)} seconds ago`
+
+  const minutes: number = seconds / 60;
+  if(minutes < 60) return `${minutes.toFixed(0)} minutes ago`
+
+  const hours: number = minutes / 60;
+  if(hours < 24) return `${hours.toFixed(0)} hours ago`
+
+  const days: number = hours /24;
+  if(days < 7) return `${days.toFixed(0)} days ago`
+
+  const weeks: number = days / 7;
+  if(weeks < 52) return `${weeks.toFixed(0)} weeks ago`
+
+  const years: number = weeks / 52;
+  if(years < 5) return `${years.toFixed(0)} years ago`
+
+  return "long ago"
+}
+
 export const classNames = (...classes: string[]) => {
   return classes.filter(Boolean).join(' ')
 }

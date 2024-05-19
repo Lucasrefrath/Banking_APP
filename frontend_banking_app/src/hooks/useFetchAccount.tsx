@@ -1,15 +1,15 @@
 import {API_URLS_V1} from "../types-const/GlobalConst";
-import {AccountDetails, AccountHistory} from "../types-const/Types";
+import {AccountDetails, AccountHistory, SimpleAccountDetails} from "../types-const/Types";
 import {useEffect, useState} from "react";
 
 interface FetchAccountReturn {
-  accountDetails: AccountDetails,
-  //history: AccountHistory[]
+  accountDetails: SimpleAccountDetails,
+  accountHistory: AccountHistory[]
 }
 
 const UseFetchUsersAccounts = (accountId: string) => {
-  const [userAccount, setUserAccount] = useState<AccountDetails | undefined>(undefined);
-  const [accountHistory, setAccountHistory] = useState<AccountHistory | undefined>(undefined);
+  const [userAccount, setUserAccount] = useState<SimpleAccountDetails | undefined>(undefined);
+  const [accountHistory, setAccountHistory] = useState<AccountHistory[] | undefined>(undefined);
   const [isPending, setIsPending] = useState<boolean>(true);
   const [error, setError] = useState<any>(undefined);
 
@@ -38,7 +38,7 @@ const UseFetchUsersAccounts = (accountId: string) => {
       const data: FetchAccountReturn = await response.json();
       setIsPending(false);
       setUserAccount(data.accountDetails);
-      //setAccountHistory(data.history)
+      setAccountHistory(data.accountHistory)
     } catch (error) {
       setError(error)
       console.log(error);

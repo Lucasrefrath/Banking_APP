@@ -1,5 +1,5 @@
 import {AccountAction, AccountActionConfig, ApiVersion, FallbackPath, Navigation} from "./Types";
-import * as trace_events from "node:trace_events";
+import {Cog6ToothIcon, LockClosedIcon, UserCircleIcon} from "@heroicons/react/24/outline";
 
 export const API_URLS_V1: ApiVersion = {
     test: 'http://localhost:8080/api-test/v1',
@@ -27,9 +27,9 @@ export const navigation: Navigation[] = [
     { name: 'Reports', to: '/reports'},
 ]
 export const userNavigation: Navigation[] = [
-    { name: 'Your Profile', to: '/' },
-    { name: 'Settings', to: '/' },
-    { name: 'Sign out', to: '/logout' },
+    { name: 'Your Profile', to: '/', icon: <UserCircleIcon className="mr-1.5 h-5 w-5 flex-shrink-0 text-gray-400" aria-hidden="true"/> },
+    { name: 'Settings', to: '/', icon: <Cog6ToothIcon className="mr-1.5 h-5 w-5 flex-shrink-0 text-gray-400" aria-hidden="true" />},
+    { name: 'Sign out', to: '/logout', icon: <LockClosedIcon className="mr-1.5 h-5 w-5 flex-shrink-0 text-red-500" aria-hidden="true" />, addOnStyles: "text-red-500", divider: true},
 ]
 
 export const getAccountActionConfig = (actionType: AccountAction): AccountActionConfig => {

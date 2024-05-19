@@ -75,7 +75,7 @@ const AccountActionPopUp = ({actionType}: {actionType: AccountAction}) => {
         [prop]: value
       })
   }
-  
+
   return (
     <Transition appear show={ProfileData?.isPopUpOpen(actionType)}>
       <Dialog as="div" className="relative z-10 focus:outline-none" onClose={() => ProfileData?.closePopUp(actionType)}>
@@ -155,7 +155,7 @@ const AccountActionPopUp = ({actionType}: {actionType: AccountAction}) => {
                   <button
                     type="button"
                     onClick={() => ProfileData?.closePopUp(actionType)}
-                    className="inline-flex items-center rounded-md bg-gray-400 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-gray-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                    className="inline-flex items-center rounded-md bg-gray-400 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-gray-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
                   >
                     cancel
                   </button>

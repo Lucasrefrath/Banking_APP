@@ -1,3 +1,5 @@
+import {ReactElement} from "react";
+
 export interface AuthData {
     isAuthenticated: boolean,
     userDetails: UserDetails | undefined,
@@ -6,8 +8,9 @@ export interface AuthData {
 }
 
 export interface ProfileData {
-    userAccount: AccountDetails | undefined
-    updateAccountDetails: (details: AccountDetails) => void,
+    userAccount: SimpleAccountDetails | undefined
+    userAccountHistory: AccountHistory[] | undefined
+    updateAccountDetails: (details: SimpleAccountDetails) => void,
     openPopUp: (actionType: AccountAction) => void,
     closePopUp: (actionType: AccountAction) => void,
     isPopUpOpen: (actionType: AccountAction) => boolean
@@ -33,17 +36,35 @@ export interface UserDetails {
 export type Role = "ROLE_USER" | "ROLE_ADMIN"
 
 export type AccountDetails = {
-    id: number,
-    balance: number
+    accountDetails: SimpleAccountDetails
+    accountHistory: AccountHistory[] | null
 }
 
 export type AccountHistory = {
+    id: number,
+    originAccount: SimpleAccountDetails | null,
+    originBalanceBefore: number | null,
+    originBalanceAfter: number | null,
+    destinationAccount: SimpleAccountDetails | null
+    destinationBalanceBefore: number | null,
+    destinationBalanceAfter: number | null,
+    transactionType: string,
+    amount: number,
+    message: string | null,
+    timeStamp: Date
+}
 
+export type SimpleAccountDetails = {
+    id: number,
+    balance: number
 }
 
 export interface Navigation {
     name: string,
     to: string,
+    icon?: ReactElement,
+    addOnStyles?: string,
+    divider?: boolean
 }
 
 export type LogInData = {
@@ -76,4 +97,9 @@ export type AccountActionConfig = {
 export enum MessageLevel {
     NOTICE,
     ERROR
+}
+
+export type AccountActionResponse = {
+    updatedAccountData: SimpleAccountDetails,
+    newHistoryData: AccountHistory
 }

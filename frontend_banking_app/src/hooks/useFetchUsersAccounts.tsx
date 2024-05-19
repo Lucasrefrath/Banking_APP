@@ -1,9 +1,9 @@
 import {API_URLS_V1} from "../types-const/GlobalConst";
-import {AccountDetails, UserDetails} from "../types-const/Types";
+import {AccountDetails, SimpleAccountDetails, UserDetails} from "../types-const/Types";
 import {useEffect, useState} from "react";
 
 const UseFetchUsersAccounts = () => {
-  const [userAccounts, setUserAccounts] = useState<AccountDetails[] | undefined>(undefined);
+  const [userAccounts, setUserAccounts] = useState<SimpleAccountDetails[] | undefined>(undefined);
   const [isPending, setIsPending] = useState<boolean>(true);
   const [error, setError] = useState<any>(undefined);
 
@@ -24,7 +24,7 @@ const UseFetchUsersAccounts = () => {
         throw new Error("Ein unerwarteter Fehler ist aufgetreten...");
       }
 
-      const data: AccountDetails[] = await response.json();
+      const data: SimpleAccountDetails[] = await response.json();
       setIsPending(false);
       setUserAccounts(data);
 

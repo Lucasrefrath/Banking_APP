@@ -3,12 +3,12 @@ package org.banking_app.backend_banking_app.service.dataService;
 import lombok.Data;
 import org.banking_app.backend_banking_app.exceptions.*;
 import org.banking_app.backend_banking_app.model.DTO.AccountEntity;
+import org.banking_app.backend_banking_app.model.DTO.AccountHistoryEntity;
 import org.banking_app.backend_banking_app.model.SecurityUserDetails;
+import org.banking_app.backend_banking_app.model.responseModel.AccountActionResponse;
 import org.banking_app.backend_banking_app.repository.AccountRepository;
 import org.banking_app.backend_banking_app.service.JpaUserDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -22,6 +22,9 @@ public class AccountService {
 
   @Autowired
   private UserService userService;
+
+  @Autowired
+  HistoryService historyService;
 
   public AccountEntity createAccount(AccountEntity entity) throws IdNotNullException {
     if(entity.getId() != null) throw new IdNotNullException(entity.getId());
@@ -53,25 +56,50 @@ public class AccountService {
     return accountRepository.findById(accountId).orElseThrow(() -> new IllegalIdentifierException(accountId));
   }
 
-  public AccountEntity deposit(Long accountId, Double amount) throws IllegalIdentifierException, UserAccessNotAllowedException {
-    AccountEntity account = getAccountById(accountId);
-    account.deposit(amount);
-    accountRepository.save(account);
-    return account;
+  public AccountActionResponse deposit(Long accountId, Double amount) throws IllegalIdentifierException, UserAccessNotAllowedException {
+    AccountEntity destinationAccount = getAccountById(accountId);
+    Double balanceBefore = destinationAccount.getBalance();
+
+    destinationAccount.deposit(amount);
+    accountRepository.save(destinationAccount);
+
+    AccountHistoryEntity history = historyService.logDepositAction(
+            destinationAccount,
+            amount,
+            balanceBefore
+    );
+
+    return new AccountActionResponse(
+            destinationAccount,
+            history
+    );
   }
 
-  public AccountEntity withdraw(Long accountId, Double amount) throws IllegalIdentifierException, UserAccessNotAllowedException, NotEnoughBalanceException {
-    AccountEntity account = getAccountById(accountId);
+  public AccountActionResponse withdraw(Long accountId, Double amount) throws IllegalIdentifierException, UserAccessNotAllowedException, NotEnoughBalanceException {
+    AccountEntity originAccount = getAccountById(accountId);
+    Double originBalanceBefore = originAccount.getBalance();
 
-    account.withdraw(amount);
+    originAccount.withdraw(amount);
+    accountRepository.save(originAccount);
 
-    accountRepository.save(account);
-    return account;
+    AccountHistoryEntity history = historyService.logWithdrawAction(
+            originAccount,
+            amount,
+            originBalanceBefore
+    );
+
+    return new AccountActionResponse(
+            originAccount,
+            history
+    );
   }
 
-  public AccountEntity transfer(Long accountId, Double amount, Long recipientId) throws IllegalIdentifierException, UserAccessNotAllowedException, NotEnoughBalanceException {
+  public AccountActionResponse transfer(Long accountId, Double amount, Long recipientId, String message) throws IllegalIdentifierException, UserAccessNotAllowedException, NotEnoughBalanceException {
     AccountEntity fromAccount = getAccountById(accountId);
     AccountEntity toAccount = getAccountByIdUnsecured(recipientId);
+
+    Double originBalanceBefore = fromAccount.getBalance();
+    Double destinationBalanceBefore = toAccount.getBalance();
 
     fromAccount.withdraw(amount);
     toAccount.deposit(amount);
@@ -79,6 +107,18 @@ public class AccountService {
     accountRepository.save(fromAccount);
     accountRepository.save(toAccount);
 
-    return fromAccount;
+    AccountHistoryEntity history = historyService.logTransferAction(
+            fromAccount,
+            toAccount,
+            amount,
+            message,
+            originBalanceBefore,
+            destinationBalanceBefore
+    );
+
+    return new AccountActionResponse(
+            fromAccount,
+            history
+    );
   }
 }

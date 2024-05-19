@@ -1,17 +1,16 @@
 package org.banking_app.backend_banking_app.model.responseModel;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import org.banking_app.backend_banking_app.model.DTO.AccountEntity;
 import org.banking_app.backend_banking_app.model.DTO.AccountHistoryEntity;
 
-import java.util.ArrayList;
-import java.util.List;
-
 @Data
-public class AccountResponse {
+@AllArgsConstructor
+public class AccountActionResponse {
 
-  private AccountEntity accountDetails;
+  private AccountEntity updatedAccountData;
 
-  private List<AccountHistoryEntity> accountHistory;
+  private AccountHistoryEntity newHistoryData;
 
 }
