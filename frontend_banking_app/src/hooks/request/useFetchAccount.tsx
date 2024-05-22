@@ -1,5 +1,5 @@
-import {API_URLS_V1} from "../types-const/GlobalConst";
-import {AccountDetails, AccountHistory, SimpleAccountDetails} from "../types-const/Types";
+import {API_URLS_V1} from "../../const/GlobalConst";
+import {AccountDetails, AccountHistory, SimpleAccountDetails} from "../../types/Types";
 import {useEffect, useState} from "react";
 
 interface FetchAccountReturn {

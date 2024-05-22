@@ -1,15 +1,16 @@
 import React, { Fragment } from 'react'
 import { Disclosure, Menu, Transition } from '@headlessui/react'
-import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline'
+import {Bars3Icon, FingerPrintIcon, XMarkIcon} from '@heroicons/react/24/outline'
 import {useNavigate} from "react-router-dom";
-import {navigation, user, userNavigation} from "../types-const/GlobalConst";
-import useUtils, {classNames} from "../types-const/Utils";
-import useAuth from "../hooks/useAuth";
+import {navigation, user, userNavigation} from "../const/GlobalConst";
+import useUtils, {classNames} from "../utils/Utils";
+import useAuthContext from "../hooks/useAuthContext";
+import PrimaryButton from "./customUI/CustomButtons/PrimaryButton";
 
 const Header = () => {
   const navigate = useNavigate();
   const { checkRouteActive } = useUtils();
-  const AuthData = useAuth();
+  const AuthData = useAuthContext();
 
   return (
     <>
@@ -101,12 +102,12 @@ const Header = () => {
                         </Transition>
                       </Menu>
                       ) : (
-                        <button
-                          onClick={() => navigate("/login")}
-                          className="rounded-md bg-indigo-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-                        >
-                          LogIn
-                        </button>
+                        <PrimaryButton onClick={() => navigate("/login")}>
+                          <div className={"flex gap-1 justify-between items-center"}>
+                            <FingerPrintIcon className={"w-5 h-5"} />
+                            LogIn
+                          </div>
+                        </PrimaryButton>
                       )}
                     </div>
                   </div>

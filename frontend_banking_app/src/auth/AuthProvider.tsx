@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from "react";
-import {AuthContext} from "../types-const/Context";
-import {API_URLS_V1} from "../types-const/GlobalConst";
-import {LogInData, UserDetails} from "../types-const/Types";
+import {AuthContext} from "../const/Context";
+import {API_URLS_V1} from "../const/GlobalConst";
+import {LogInData, UserDetails} from "../types/Types";
 import AuthRoutingManager from "./AuthRoutingManager";
 
 const AuthProvider = () => {

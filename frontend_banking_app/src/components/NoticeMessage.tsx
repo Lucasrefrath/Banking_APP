@@ -1,10 +1,10 @@
 import React from 'react';
-import {MessageLevel} from "../types-const/Types";
 import {ExclamationTriangleIcon, InformationCircleIcon, XMarkIcon} from "@heroicons/react/24/outline";
+import {MessageLevel} from "../types/Enums";
 
 interface NoticeMessageProps {
   message: string,
-  onClick: () => any,
+  onClick?: () => any,
   level: MessageLevel
 }
 
@@ -18,7 +18,7 @@ const NoticeMessage = ({level, message, onClick}: NoticeMessageProps) => {
             <ExclamationTriangleIcon className="-ml-0.5 mr-1.5 h-5 w-5 text-red-500"/>
             <p className={"text-red-500 font-bold"}>ERROR</p>
           </div>
-          <XMarkIcon className="-ml-0.5 mr-1.5 h-5 w-5 text-red-500" onClick={() => onClick()}/>
+          <XMarkIcon className="-ml-0.5 mr-1.5 h-5 w-5 text-red-500" onClick={onClick}/>
         </div>
         <p className={"text-red-500 font-light"}>{message}</p>
       </div>

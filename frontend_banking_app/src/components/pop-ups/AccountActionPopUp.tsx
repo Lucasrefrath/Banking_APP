@@ -1,10 +1,14 @@
 import React, {useContext, useEffect, useState} from 'react';
-import {Dialog, DialogPanel, DialogTitle, Transition, TransitionChild} from "@headlessui/react";
-import {ProfileContext} from "../../types-const/Context";
-import useAccountAction from "../../hooks/useAccountAction";
-import {AccountAction, MessageLevel} from "../../types-const/Types";
-import {getAccountActionConfig} from "../../types-const/GlobalConst";
+import {Checkbox, Dialog, DialogPanel, DialogTitle, Switch, Transition, TransitionChild} from "@headlessui/react";
+import {ProfileContext} from "../../const/Context";
+import useAccountAction from "../../hooks/request/useAccountAction";
+import {getAccountActionConfig} from "../../const/GlobalConst";
 import NoticeMessage from "../NoticeMessage";
+import PrimaryButton from "../customUI/CustomButtons/PrimaryButton";
+import SecondaryButton from "../customUI/CustomButtons/SecondaryButton";
+import {AccountAction, MessageLevel, PopUpType} from "../../types/Enums";
+import InputField from "../customUI/InputField";
+import {CheckIcon} from "@heroicons/react/24/outline";
 
 interface DataProps {
   recipient: number | undefined,
@@ -18,9 +22,9 @@ const standard: DataProps = {
   description: ""
 }
 
-const AccountActionPopUp = ({actionType}: {actionType: AccountAction}) => {
+const AccountActionPopUp = ({actionType, popUpType}: {actionType: AccountAction, popUpType: PopUpType}) => {
   const ProfileData = useContext(ProfileContext);
-  const { handleRequest, error, setError } = useAccountAction(actionType);
+  const { handleRequest, error, setError } = useAccountAction({actionType, popUpType});
   const config = getAccountActionConfig(actionType);
 
   const [data, setData] = useState<DataProps>(standard)
@@ -77,8 +81,8 @@ const AccountActionPopUp = ({actionType}: {actionType: AccountAction}) => {
   }
 
   return (
-    <Transition appear show={ProfileData?.isPopUpOpen(actionType)}>
-      <Dialog as="div" className="relative z-10 focus:outline-none" onClose={() => ProfileData?.closePopUp(actionType)}>
+    <Transition appear show={ProfileData?.isPopUpOpen(popUpType)}>
+      <Dialog as="div" className="relative z-10 focus:outline-none" onClose={() => ProfileData?.closePopUp(popUpType)}>
         <div className="fixed inset-0 z-10 w-screen overflow-y-auto">
           <div className="flex min-h-full items-center justify-center p-4">
             <TransitionChild
@@ -89,7 +93,7 @@ const AccountActionPopUp = ({actionType}: {actionType: AccountAction}) => {
               leaveFrom="opacity-100 transform-[scale(100%)]"
               leaveTo="opacity-0 transform-[scale(95%)]"
             >
-              <DialogPanel className="w-full max-w-md rounded-xl bg-black/5 p-6 backdrop-blur-2xl">
+              <DialogPanel className="w-full max-w-lg rounded-xl bg-black/5 p-6 backdrop-blur-2xl">
                 <DialogTitle as="h3" className="text-xl font-medium text-black">
                   {config.heading}
                 </DialogTitle>
@@ -152,22 +156,12 @@ const AccountActionPopUp = ({actionType}: {actionType: AccountAction}) => {
                 )}
 
                 <div className="flex mt-5 gap-2">
-                  <button
-                    type="button"
-                    onClick={() => ProfileData?.closePopUp(actionType)}
-                    className="inline-flex items-center rounded-md bg-gray-400 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-gray-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-                  >
+                  <SecondaryButton onClick={() => ProfileData?.closePopUp(popUpType)}>
                     cancel
-                  </button>
-
-                  <button
-                    type="button"
-                    onClick={handleSubmit}
-                    disabled={!buttonActive}
-                    className="inline-flex items-center rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-                  >
+                  </SecondaryButton>
+                  <PrimaryButton onClick={handleSubmit} disabled={!buttonActive}>
                     {config.action}
-                  </button>
+                  </PrimaryButton>
                 </div>
               </DialogPanel>
             </TransitionChild>

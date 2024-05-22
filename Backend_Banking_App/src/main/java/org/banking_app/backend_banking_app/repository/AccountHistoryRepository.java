@@ -13,4 +13,5 @@ public interface AccountHistoryRepository extends JpaRepository<AccountHistoryEn
   List<AccountHistoryEntity> findAllByOriginAccountId(Long originAccountId);
 
   List<AccountHistoryEntity> findAllByDestinationAccountId(Long destinationAccountId);
+
 }

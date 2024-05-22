@@ -1,9 +1,14 @@
-import {useContext} from 'react';
-import {AuthContext} from "../types-const/Context";
-import {AuthData} from "../types-const/Types";
+import useAuthContext from "./useAuthContext";
+import {Roles} from "../types/Enums";
 
-const useAuth = (): AuthData | undefined => {
-    return useContext(AuthContext)
+const useAuth = () => {
+  const AuthData = useAuthContext()
+
+  const userHasRole = (role: Roles) => {
+    return AuthData?.userDetails?.roles.includes(role);
+  }
+
+  return { userHasRole };
 };
 
 export default useAuth;

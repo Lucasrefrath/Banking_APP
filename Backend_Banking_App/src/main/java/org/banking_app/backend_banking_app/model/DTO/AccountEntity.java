@@ -15,6 +15,8 @@ public class AccountEntity {
   @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
 
+  private String name;
+
   @Column(nullable = false)
   private Double balance = 0.0;
 
@@ -22,6 +24,10 @@ public class AccountEntity {
   @ManyToOne
   @JoinColumn(name = "owner_id", nullable = false)
   private UserEntity owner;
+
+  private Boolean active = true;
+
+  private String iban;
 
   public AccountEntity(Double balance, UserEntity owner) {
     this.balance = balance;
@@ -37,5 +43,15 @@ public class AccountEntity {
       throw new NotEnoughBalanceException(amount, balance);
     }
     balance -= amount;
+  }
+
+  public AccountEntity(UserEntity owner, String name, String iban) {
+    this.owner = owner;
+    this.name = name;
+    this.iban = iban;
+  }
+
+  public void deactivate() {
+    this.active = false;
   }
 }

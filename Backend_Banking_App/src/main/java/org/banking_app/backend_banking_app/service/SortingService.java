@@ -1,6 +1,7 @@
 package org.banking_app.backend_banking_app.service;
 
 import lombok.NoArgsConstructor;
+import org.banking_app.backend_banking_app.model.DTO.AccountEntity;
 import org.banking_app.backend_banking_app.model.DTO.AccountHistoryEntity;
 import org.springframework.stereotype.Service;
 
@@ -16,6 +17,12 @@ public class SortingService {
   public List<AccountHistoryEntity> sortByTimeStamp(List<AccountHistoryEntity> entities) {
     return entities.stream()
             .sorted(Comparator.comparing(AccountHistoryEntity::getTimeStamp).thenComparing((x) -> x.getTimeStamp().getNano()).reversed())
+            .toList();
+  }
+
+  public List<AccountEntity> sortById(List<AccountEntity> accounts) {
+    return accounts.stream()
+            .sorted(Comparator.comparing(AccountEntity::getId))
             .toList();
   }
 }

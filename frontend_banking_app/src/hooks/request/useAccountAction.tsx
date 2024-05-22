@@ -1,15 +1,12 @@
 import {useContext, useState} from 'react';
-import {API_URLS_V1} from "../types-const/GlobalConst";
+import {API_URLS_V1} from "../../const/GlobalConst";
 import {
-  AccountAction,
-  AccountActionResponse,
-  AccountDetails,
-  DepositRequst,
-  SimpleAccountDetails
-} from "../types-const/Types";
-import {ProfileContext} from "../types-const/Context";
+} from "../../types/Types";
+import {ProfileContext} from "../../const/Context";
+import {AccountAction, PopUpType} from "../../types/Enums";
+import {AccountActionResponse, DepositRequst} from "../../types/Request-Response";
 
-const useAccountAction = (actionType: AccountAction) => {
+const useAccountAction = ({actionType, popUpType}: {actionType: AccountAction, popUpType: PopUpType}) => {
   const [error, setError] = useState<any>(undefined);
   const ProfileData = useContext(ProfileContext);
 
@@ -37,7 +34,7 @@ const useAccountAction = (actionType: AccountAction) => {
       const data: AccountActionResponse = await response.json();
       ProfileData?.updateAccountDetails(data.updatedAccountData);
       ProfileData?.userAccountHistory?.unshift(data.newHistoryData);
-      ProfileData?.closePopUp(actionType)
+      ProfileData?.closePopUp(popUpType)
     } catch (error) {
       setError(error)
       console.log(error);

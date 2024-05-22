@@ -9,6 +9,7 @@ import ViewAccountPage from "../pages/ViewAccountPage";
 import NotFoundPage from "../pages/NotFoundPage";
 import Header from "../components/Header";
 import LogOutPage from "../pages/LogOutPage";
+import {Roles} from "../types/Enums";
 
 const AuthRoutingManager = () => {
     return (
@@ -18,17 +19,17 @@ const AuthRoutingManager = () => {
               <Routes>
                   <Route path={"/"} element={<HomePage/>}/>
                   <Route path={"/login"} element={<LogInPage/>}/>
-                  <Route path={"/open"} element={<TestPage/>}/>
+                  <Route path={"/test"} element={<TestPage />}/>
 
-                  // Private Routes
+                  (// Private Routes)
                   <Route path={"/user"} element={
-                      <RequiresAuthRoute renderElement={<TestPage/>} allowedRoles={["ROLE_USER"]}/>}
+                      <RequiresAuthRoute renderElement={<TestPage/>} allowedRoles={[Roles.USER]}/>}
                   />
                   <Route path={"/dashBoard"} element={
                       <RequiresAuthRoute renderElement={<DashBoardPage/>}/>
                   }/>
                   <Route path={"/admin"} element={
-                      <RequiresAuthRoute renderElement={<AdminPage/>} allowedRoles={["ROLE_ADMIN"]}/>
+                      <RequiresAuthRoute renderElement={<AdminPage/>} allowedRoles={[Roles.ADMIN]}/>
                   }/>
                   <Route path={"/account/:accountId"} element={
                       <RequiresAuthRoute renderElement={<ViewAccountPage/>}/>

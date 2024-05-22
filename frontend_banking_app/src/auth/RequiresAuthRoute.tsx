@@ -1,17 +1,17 @@
 import React, {ReactElement} from 'react';
 import {Navigate} from "react-router-dom";
-import {Role} from "../types-const/Types";
-import useAuth from "../hooks/useAuth";
-import {FALLBACK_URLS} from "../types-const/GlobalConst";
+import useAuthContext from "../hooks/useAuthContext";
+import {FALLBACK_URLS} from "../const/GlobalConst";
+import {Roles} from "../types/Enums";
 
 interface RequiresAuthRouteParam {
     fallbackRoute?: string,
     renderElement: ReactElement,
-    allowedRoles?: Role[] | []
+    allowedRoles?: Roles[] | []
 }
 
 const RequiresAuthRoute = ({fallbackRoute = FALLBACK_URLS.unauthorised, renderElement, allowedRoles = []}: RequiresAuthRouteParam): ReactElement => {
-    const AuthData = useAuth();
+    const AuthData = useAuthContext();
     const userRoles = AuthData?.userDetails?.roles;
 
     if(AuthData?.isAuthenticated) {

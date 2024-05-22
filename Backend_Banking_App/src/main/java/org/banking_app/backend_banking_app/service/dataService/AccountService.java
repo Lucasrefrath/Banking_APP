@@ -7,7 +7,11 @@ import org.banking_app.backend_banking_app.model.DTO.AccountHistoryEntity;
 import org.banking_app.backend_banking_app.model.SecurityUserDetails;
 import org.banking_app.backend_banking_app.model.responseModel.AccountActionResponse;
 import org.banking_app.backend_banking_app.repository.AccountRepository;
+import org.banking_app.backend_banking_app.service.AccountLimitationService;
+import org.banking_app.backend_banking_app.service.AuthorisationService;
 import org.banking_app.backend_banking_app.service.JpaUserDetailsService;
+import org.banking_app.backend_banking_app.service.SortingService;
+import org.banking_app.backend_banking_app.service.factory.AccountFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -26,28 +30,45 @@ public class AccountService {
   @Autowired
   HistoryService historyService;
 
-  public AccountEntity createAccount(AccountEntity entity) throws IdNotNullException {
-    if(entity.getId() != null) throw new IdNotNullException(entity.getId());
-    return accountRepository.save(entity);
+  @Autowired
+  SortingService sortingService;
+
+  @Autowired
+  AccountLimitationService accountLimitationService;
+
+  @Autowired
+  AuthorisationService authorisationService;
+
+  @Autowired
+  AccountFactory accountFactory;
+
+  public AccountEntity createAccount(String name) throws IdNotNullException, NoSuchUserFoundException, NumberOfAccountsLimitedException {
+    AccountEntity account = accountFactory.createNewAccountEntity(name);
+    return createAccount(account);
   }
 
-  public AccountEntity createAccount(AccountEntity entity, String ownerName) throws NoSuchUserFoundException, IdNotNullException {
-    entity.setOwner(userService.getUserByUsername(ownerName));
-    return createAccount(entity);
+  public void deactivateAccount(Long accountId) throws IllegalIdentifierException, UserAccessNotAllowedException {
+    AccountEntity account = getAccountById(accountId);
+    account.deactivate();
+    accountRepository.save(account);
+  }
+
+
+  public AccountEntity createAccount(AccountEntity entity) throws IdNotNullException, NumberOfAccountsLimitedException {
+    if(entity.getId() != null) throw new IdNotNullException(entity.getId());
+    accountLimitationService.checkCreateAccount();
+    return accountRepository.save(entity);
   }
 
   public List<AccountEntity> getCurrentAuthenticatedUsersAccounts() {
     SecurityUserDetails userDetails = JpaUserDetailsService.getAuthenticatedUserDetails();
-    return accountRepository.findAllByOwner_Id(userDetails.getUserId());
+    List<AccountEntity> allByOwnerId = accountRepository.findAllByOwner_IdAndActive(userDetails.getUserId(), true);
+    return sortingService.sortById(allByOwnerId);
   }
 
   public AccountEntity getAccountById(Long accountId) throws IllegalIdentifierException, UserAccessNotAllowedException {
     AccountEntity entity = getAccountByIdUnsecured(accountId);
-    SecurityUserDetails userDetails = JpaUserDetailsService.getAuthenticatedUserDetails();
-
-    if(!(entity.getOwner().getId()).equals(userDetails.getUserId())) {
-      throw new UserAccessNotAllowedException();
-    }
+    authorisationService.checkAccountOwnership(accountId);
 
     return entity;
   }

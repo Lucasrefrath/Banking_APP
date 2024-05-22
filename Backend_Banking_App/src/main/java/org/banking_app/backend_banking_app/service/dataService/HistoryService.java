@@ -1,18 +1,15 @@
 package org.banking_app.backend_banking_app.service.dataService;
 
-import lombok.Data;
-import org.banking_app.backend_banking_app.enums.AccountActionType;
 import org.banking_app.backend_banking_app.exceptions.IllegalIdentifierException;
 import org.banking_app.backend_banking_app.exceptions.UserAccessNotAllowedException;
 import org.banking_app.backend_banking_app.model.DTO.AccountEntity;
 import org.banking_app.backend_banking_app.model.DTO.AccountHistoryEntity;
 import org.banking_app.backend_banking_app.repository.AccountHistoryRepository;
-import org.banking_app.backend_banking_app.service.AccountHistoryFactory;
+import org.banking_app.backend_banking_app.service.factory.AccountHistoryFactory;
 import org.banking_app.backend_banking_app.service.SortingService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Service

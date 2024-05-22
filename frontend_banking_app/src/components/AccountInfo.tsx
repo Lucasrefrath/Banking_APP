@@ -1,19 +1,30 @@
 import React, {useContext} from 'react';
-import {CreditCardIcon, CurrencyDollarIcon, CurrencyEuroIcon} from "@heroicons/react/24/solid";
-import {formatBalance} from "../types-const/Utils";
-import {ProfileContext} from "../types-const/Context";
-import {AccountAction} from "../types-const/Types";
+import {CreditCardIcon, CurrencyEuroIcon} from "@heroicons/react/24/solid";
+import {formatBalance} from "../utils/Utils";
+import {ProfileContext} from "../const/Context";
 import {MinusIcon, PlusIcon} from "@heroicons/react/24/outline";
+import PrimaryButton from "./customUI/CustomButtons/PrimaryButton";
+import OutlineSecondaryButton from "./customUI/CustomButtons/OutlineSecondaryButton";
+import {PopUpType} from "../types/Enums";
 
 const AccountInfo = () => {
   const ProfileData = useContext(ProfileContext);
 
+  if(!ProfileData) return <p>Loading...</p>
+
   return (
     <div className="lg:flex lg:items-center lg:justify-between">
       <div className="min-w-0 flex-1">
-        <h2 className="text-2xl font-bold leading-7 text-gray-900 sm:truncate sm:text-3xl sm:tracking-tight">
-          Account {ProfileData?.userAccount?.id}
-        </h2>
+        <div>
+          <h2 className="text-2xl font-bold leading-7 text-gray-900 sm:truncate sm:text-3xl sm:tracking-tight">
+            {ProfileData?.userAccount?.name ? (
+              ProfileData?.userAccount?.name
+            ) : (
+              `Account ${ProfileData?.userAccount?.id}`
+            )}
+          </h2>
+          <p className={"text-sm font-light text-gray-700"}>{ProfileData.userAccount?.iban}</p>
+        </div>
         <div className="mt-1 flex flex-col sm:mt-0 sm:flex-row sm:flex-wrap sm:space-x-6">
           <div className="mt-2 flex items-center text-sm text-gray-500">
             <CurrencyEuroIcon className="mr-1.5 h-5 w-5 flex-shrink-0 text-gray-400" aria-hidden="true"/>
@@ -23,37 +34,23 @@ const AccountInfo = () => {
       </div>
       <div className="mt-5 flex lg:ml-4 lg:mt-0">
         <span className="ml-3 hidden sm:block">
-          <button
-            type="button"
-            onClick={() => ProfileData?.openPopUp(AccountAction.WITHDRAW)}
-            className="inline-flex items-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
-          >
-            <MinusIcon className="-ml-0.5 mr-1.5 h-5 w-5" aria-hidden="true"/>
+          <OutlineSecondaryButton onClick={() => ProfileData?.openPopUp(PopUpType.ACCOUNT_ACTION_WITHDRAW)}>
+            <MinusIcon className="h-5 w-5" aria-hidden="true"/>
             withdraw
-          </button>
+          </OutlineSecondaryButton>
         </span>
-
         <span className="sm:ml-3">
-            <button
-              type="button"
-              onClick={() => ProfileData?.openPopUp(AccountAction.DEPOSIT)}
-              className="inline-flex items-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
-            >
-              <PlusIcon className="-ml-0.5 mr-1.5 h-5 w-5" aria-hidden="true"/>
-              deposit
-            </button>
-          </span>
-
-          <span className="sm:ml-3">
-              <button
-                type="button"
-                onClick={() => ProfileData?.openPopUp(AccountAction.TRANSFER)}
-                className="inline-flex items-center rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-              >
-                <CreditCardIcon className="-ml-0.5 mr-1.5 h-5 w-5" aria-hidden="true"/>
-                transfer
-              </button>
-            </span>
+          <OutlineSecondaryButton onClick={() => ProfileData?.openPopUp(PopUpType.ACCOUNT_ACTION_DEPOSIT)}>
+            <PlusIcon className="h-5 w-5" aria-hidden="true"/>
+            deposit
+          </OutlineSecondaryButton>
+        </span>
+        <span className="sm:ml-3">
+          <PrimaryButton onClick={() => ProfileData?.openPopUp(PopUpType.ACCOUNT_ACTION_TRANSFER)}>
+            <CreditCardIcon className="h-5 w-5" aria-hidden="true"/>
+              transfer
+          </PrimaryButton>
+        </span>
       </div>
     </div>
   );

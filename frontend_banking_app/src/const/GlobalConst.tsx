@@ -1,13 +1,10 @@
 import {
-    AccountAction,
     AccountActionConfig,
-    ApiVersion,
-    FallbackPath,
     LogInData,
-    Navigation,
-    UserDetails
-} from "./Types";
+} from "../types/Types";
 import {Cog6ToothIcon, LockClosedIcon, UserCircleIcon} from "@heroicons/react/24/outline";
+import {ApiVersion, FallbackPath, NavigationConfig} from "../types/ConstTypes";
+import {AccountAction} from "../types/Enums";
 
 export const API_URLS_V1: ApiVersion = {
     test: 'http://localhost:8080/api-test/v1',
@@ -18,6 +15,12 @@ export const API_URLS_V1: ApiVersion = {
 
 export const FALLBACK_URLS: FallbackPath = {
     unauthorised: "/login"
+}
+
+export const MAX_ACCOUNTS = {
+    DEFAULT: 1,
+    USER: 5,
+    ADMIN: 10
 }
 
 export const DEFAULT_USER: LogInData = {
@@ -32,14 +35,14 @@ export const user = {
       "https://st3.depositphotos.com/9998432/13335/v/450/depositphotos_133351928-stock-illustration-default-placeholder-man-and-woman.jpg"
 }
 
-export const navigation: Navigation[] = [
+export const navigation: NavigationConfig[] = [
     { name: 'Home', to: '/'},
     { name: 'Dashboard', to: '/dashboard'},
-    { name: 'Projects', to: '/projects'},
+    { name: 'Test', to: '/test'},
     { name: 'Calendar', to: '/calendar'},
     { name: 'Reports', to: '/reports'},
 ]
-export const userNavigation: Navigation[] = [
+export const userNavigation: NavigationConfig[] = [
     { name: 'Your Profile', to: '/', icon: <UserCircleIcon className="mr-1.5 h-5 w-5 flex-shrink-0 text-gray-400" aria-hidden="true"/> },
     { name: 'Settings', to: '/', icon: <Cog6ToothIcon className="mr-1.5 h-5 w-5 flex-shrink-0 text-gray-400" aria-hidden="true" />},
     { name: 'Sign out', to: '/logout', icon: <LockClosedIcon className="mr-1.5 h-5 w-5 flex-shrink-0 text-red-500" aria-hidden="true" />, addOnStyles: "text-red-500", divider: true},

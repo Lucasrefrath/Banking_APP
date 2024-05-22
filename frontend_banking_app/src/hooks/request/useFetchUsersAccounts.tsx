@@ -1,8 +1,8 @@
-import {API_URLS_V1} from "../types-const/GlobalConst";
-import {AccountDetails, SimpleAccountDetails, UserDetails} from "../types-const/Types";
+import {API_URLS_V1} from "../../const/GlobalConst";
+import {AccountDetails, SimpleAccountDetails, UserDetails} from "../../types/Types";
 import {useEffect, useState} from "react";
 
-const UseFetchUsersAccounts = () => {
+const useFetchUsersAccounts = () => {
   const [userAccounts, setUserAccounts] = useState<SimpleAccountDetails[] | undefined>(undefined);
   const [isPending, setIsPending] = useState<boolean>(true);
   const [error, setError] = useState<any>(undefined);
@@ -36,7 +36,7 @@ const UseFetchUsersAccounts = () => {
     setIsPending(false);
   }
 
-  return {userAccounts, isPending, error}
+  return {userAccounts, isPending, error, setUserAccounts}
 };
 
-export default UseFetchUsersAccounts;
+export default useFetchUsersAccounts;

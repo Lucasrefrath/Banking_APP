@@ -1,10 +1,11 @@
-import React, {ReactElement, useContext} from 'react';
+import React, {useContext} from 'react';
 import {Dialog, DialogPanel, DialogTitle, Transition, TransitionChild} from "@headlessui/react";
-import {AccountHistory} from "../../types-const/Types";
-import {formatBalance, formatDate, formatTime} from "../../types-const/Utils";
-import {ProfileContext} from "../../types-const/Context";
-import {CurrencyEuroIcon} from "@heroicons/react/24/solid";
-import {ChevronDoubleRightIcon, ChevronRightIcon} from "@heroicons/react/24/outline";
+import {AccountHistory} from "../../types/Types";
+import {formatBalance, formatDate, formatTime} from "../../utils/Utils";
+import {ProfileContext} from "../../const/Context";
+import {ChevronRightIcon} from "@heroicons/react/24/outline";
+import PrimaryButton from "../customUI/CustomButtons/PrimaryButton";
+import {AccountAction} from "../../types/Enums";
 
 interface HistoryPopUpProps {
   history: AccountHistory,
@@ -13,19 +14,19 @@ interface HistoryPopUpProps {
   isProfit: () => boolean
 }
 
-const AccountActionPopUp = ({history, isOpen, close, isProfit}: HistoryPopUpProps) => {
+const HistoryPopUp = ({history, isOpen, close, isProfit}: HistoryPopUpProps) => {
   const ProfileData = useContext(ProfileContext);
 
   const getBefore = (): number | string => {
-    if(history.transactionType === "DEPOSIT") return formatBalance(history.destinationBalanceBefore || undefined);
-    if(history.transactionType === "WITHDRAW") return formatBalance(history.originBalanceBefore || undefined);
+    if(history.transactionType === AccountAction.DEPOSIT) return formatBalance(history.destinationBalanceBefore || undefined);
+    if(history.transactionType === AccountAction.WITHDRAW) return formatBalance(history.originBalanceBefore || undefined);
     if(history.destinationAccount?.id === ProfileData?.userAccount?.id) return formatBalance(history.destinationBalanceBefore || undefined);
     return formatBalance(history.originBalanceBefore || undefined);
   }
 
   const getAfter = (): number | string => {
-    if(history.transactionType === "DEPOSIT") return formatBalance(history.destinationBalanceAfter || undefined);
-    if(history.transactionType === "WITHDRAW") return formatBalance(history.originBalanceAfter || undefined);
+    if(history.transactionType === AccountAction.DEPOSIT) return formatBalance(history.destinationBalanceAfter || undefined);
+    if(history.transactionType === AccountAction.WITHDRAW) return formatBalance(history.originBalanceAfter || undefined);
     if(history.destinationAccount?.id === ProfileData?.userAccount?.id) return formatBalance(history.destinationBalanceAfter || undefined);
     return formatBalance(history.originBalanceAfter || undefined);
   }
@@ -43,7 +44,7 @@ const AccountActionPopUp = ({history, isOpen, close, isProfit}: HistoryPopUpProp
               leaveFrom="opacity-100 transform-[scale(100%)]"
               leaveTo="opacity-0 transform-[scale(95%)]"
             >
-              <DialogPanel className="w-full max-w-md rounded-xl bg-black/5 p-6 backdrop-blur-2xl">
+              <DialogPanel className="w-full max-w-lg rounded-xl bg-black/5 p-6 backdrop-blur-lg">
                 <DialogTitle as="h3" className="text-xl font-medium text-black">
                   <p
                     className={"text-sm font-extralight"}>{formatDate(history.timeStamp)} at {formatTime(history.timeStamp)}</p>
@@ -81,7 +82,7 @@ const AccountActionPopUp = ({history, isOpen, close, isProfit}: HistoryPopUpProp
                     <input
                       name="recipient"
                       id="recipient"
-                      value={history.destinationAccount?.id || undefined}
+                      value={history.destinationAccount?.iban || undefined}
                       disabled={true}
                       className="block w-full rounded-md border-0 py-1.5 pl-4 pr-20 bg-black/5 text-gray-900 ring-inset ring-gray-300 placeholder:text-gray-400 sm:text-sm sm:leading-6"
                       placeholder="unknown recipient"
@@ -92,7 +93,7 @@ const AccountActionPopUp = ({history, isOpen, close, isProfit}: HistoryPopUpProp
                     <input
                       name="origin"
                       id="origin"
-                      value={history.originAccount?.id || undefined}
+                      value={history.originAccount?.iban || undefined}
                       disabled={true}
                       className="block w-full rounded-md border-0 py-1.5 pl-4 pr-20 bg-black/5 text-gray-900 ring-inset ring-gray-300 placeholder:text-gray-400 sm:text-sm sm:leading-6"
                       placeholder="unknown origin"
@@ -100,13 +101,7 @@ const AccountActionPopUp = ({history, isOpen, close, isProfit}: HistoryPopUpProp
                   </div>
                 )}
 
-                <button
-                  type="button"
-                  onClick={close}
-                  className="mt-4 inline-flex items-center rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-                >
-                  done
-                </button>
+                <PrimaryButton className={"mt-4"} onClick={close}>done</PrimaryButton>
               </DialogPanel>
             </TransitionChild>
           </div>
@@ -116,4 +111,4 @@ const AccountActionPopUp = ({history, isOpen, close, isProfit}: HistoryPopUpProp
   );
 };
 
-export default AccountActionPopUp;
+export default HistoryPopUp;

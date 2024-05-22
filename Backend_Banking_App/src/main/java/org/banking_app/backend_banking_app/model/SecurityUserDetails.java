@@ -25,6 +25,10 @@ public class SecurityUserDetails implements UserDetails {
             .toList();
   }
 
+  public boolean hasAuthority(String authority) {
+    return user.getRoles().contains(authority);
+  }
+
   @Override
   public String getPassword() {
     return user.getPassword();

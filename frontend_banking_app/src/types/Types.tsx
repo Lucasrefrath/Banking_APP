@@ -1,4 +1,4 @@
-import {ReactElement} from "react";
+import {AccountAction, PopUpType, Roles} from "./Enums";
 
 export interface AuthData {
     isAuthenticated: boolean,
@@ -11,29 +11,16 @@ export interface ProfileData {
     userAccount: SimpleAccountDetails | undefined
     userAccountHistory: AccountHistory[] | undefined
     updateAccountDetails: (details: SimpleAccountDetails) => void,
-    openPopUp: (actionType: AccountAction) => void,
-    closePopUp: (actionType: AccountAction) => void,
-    isPopUpOpen: (actionType: AccountAction) => boolean
-}
-
-export interface ApiVersion {
-    test: string,
-    auth: string,
-    accounts: string,
-    accountActions: string
-}
-
-export interface FallbackPath {
-    unauthorised: string
+    openPopUp: (actionType: PopUpType) => void,
+    closePopUp: (actionType: PopUpType) => void,
+    isPopUpOpen: (actionType: PopUpType) => boolean
 }
 
 export interface UserDetails {
     id: number,
     username: string,
-    roles: Role[]
+    roles: Roles[]
 }
-
-export type Role = "ROLE_USER" | "ROLE_ADMIN"
 
 export type AccountDetails = {
     accountDetails: SimpleAccountDetails
@@ -48,7 +35,7 @@ export type AccountHistory = {
     destinationAccount: SimpleAccountDetails | null
     destinationBalanceBefore: number | null,
     destinationBalanceAfter: number | null,
-    transactionType: string,
+    transactionType: AccountAction,
     amount: number,
     message: string | null,
     timeStamp: Date
@@ -56,33 +43,15 @@ export type AccountHistory = {
 
 export type SimpleAccountDetails = {
     id: number,
-    balance: number
-}
-
-export interface Navigation {
+    balance: number,
     name: string,
-    to: string,
-    icon?: ReactElement,
-    addOnStyles?: string,
-    divider?: boolean
+    active: boolean,
+    iban: string
 }
 
 export type LogInData = {
     username: string,
     password: string
-}
-
-export type DepositRequst = {
-    accountId: number,
-    amount: number,
-    recipientId?: number,
-    message?: string
-}
-
-export enum AccountAction {
-    DEPOSIT = "/deposit",
-    WITHDRAW = "/withdraw",
-    TRANSFER = "/transfer"
 }
 
 export type AccountActionConfig = {
@@ -94,12 +63,6 @@ export type AccountActionConfig = {
     testBalance: boolean
 }
 
-export enum MessageLevel {
-    NOTICE,
-    ERROR
-}
-
-export type AccountActionResponse = {
-    updatedAccountData: SimpleAccountDetails,
-    newHistoryData: AccountHistory
+export interface DashBoardData {
+    pushNewAccount: (account: SimpleAccountDetails) => void
 }
