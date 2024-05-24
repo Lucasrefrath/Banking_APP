@@ -9,6 +9,7 @@ import SecondaryButton from "../customUI/CustomButtons/SecondaryButton";
 import {AccountAction, MessageLevel, PopUpType} from "../../types/Enums";
 import InputField from "../customUI/InputField";
 import {CheckIcon} from "@heroicons/react/24/outline";
+import AccountSearchBar from "../AccountSearchBar";
 
 interface DataProps {
   recipient: number | undefined,
@@ -36,6 +37,12 @@ const AccountActionPopUp = ({actionType, popUpType}: {actionType: AccountAction,
     setNotice(undefined);
     setError(undefined);
     setButtonActive(false);
+
+    if(!data.recipient && config.selectRecipient) {
+      setNotice("No Recipient selected!")
+      setButtonActive(true);
+      return
+    }
 
     if(data.amount === undefined || data.amount <= 0) {
       setNotice("Amount has to be greater than 0")
@@ -102,17 +109,7 @@ const AccountActionPopUp = ({actionType, popUpType}: {actionType: AccountAction,
                 {config.selectRecipient && (
                   <div className={"mt-3"}>
                     <label className={"text-sm/6 font-medium text-black"}>Recipient</label>
-                    <input
-                      type="number"
-                      name="recipient"
-                      id="recipient"
-                      value={data.recipient}
-                      onChange={(e) => {
-                        changeData(e.target.name ,Number.parseInt(e.target.value) || undefined)
-                      }}
-                      className="block w-full rounded-md border-0 py-1.5 pl-7 pr-20 bg-black/5 text-gray-900 ring-inset ring-gray-300 placeholder:text-gray-400 sm:text-sm sm:leading-6"
-                      placeholder="none"
-                    />
+                    <AccountSearchBar changeData={changeData}/>
                   </div>
                 )}
 

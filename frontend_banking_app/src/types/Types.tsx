@@ -66,3 +66,13 @@ export type AccountActionConfig = {
 export interface DashBoardData {
     pushNewAccount: (account: SimpleAccountDetails) => void
 }
+
+export interface AccountSearchResultAccountObject {
+    iban: string,
+    ownerName: string,
+    accountId: number
+}
+
+export interface AccountSearchResult {
+    response: AccountSearchResultAccountObject[]
+}

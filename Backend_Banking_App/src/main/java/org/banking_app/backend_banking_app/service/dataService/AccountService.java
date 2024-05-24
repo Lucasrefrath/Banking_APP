@@ -2,6 +2,7 @@ package org.banking_app.backend_banking_app.service.dataService;
 
 import lombok.Data;
 import org.banking_app.backend_banking_app.exceptions.*;
+import org.banking_app.backend_banking_app.model.AccountSearchResultModel;
 import org.banking_app.backend_banking_app.model.DTO.AccountEntity;
 import org.banking_app.backend_banking_app.model.DTO.AccountHistoryEntity;
 import org.banking_app.backend_banking_app.model.SecurityUserDetails;
@@ -13,8 +14,10 @@ import org.banking_app.backend_banking_app.service.JpaUserDetailsService;
 import org.banking_app.backend_banking_app.service.SortingService;
 import org.banking_app.backend_banking_app.service.factory.AccountFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -141,5 +144,34 @@ public class AccountService {
             fromAccount,
             history
     );
+  }
+
+  public List<AccountSearchResultModel> getAccountSearchResultsBySearchQuery(String searchQuery) {
+    List<AccountEntity> ibanResults = accountRepository.findAllByIbanContainsIgnoreCaseAndActive(searchQuery, true);
+    List<AccountEntity> nameResults = accountRepository.findAllByOwner_UsernameContainsIgnoreCaseAndActive(searchQuery, true);
+
+    List<AccountSearchResultModel> resultList = new ArrayList<>();
+
+    for(AccountEntity entity : ibanResults) {
+      resultList.add(
+              new AccountSearchResultModel(
+                      entity.getIban(),
+                      entity.getOwner().getUsername(),
+                      entity.getId()
+              )
+      );
+    }
+
+    for(AccountEntity entity : nameResults) {
+      resultList.add(
+              new AccountSearchResultModel(
+                      entity.getIban(),
+                      entity.getOwner().getUsername(),
+                      entity.getId()
+              )
+      );
+    }
+
+    return resultList;
   }
 }

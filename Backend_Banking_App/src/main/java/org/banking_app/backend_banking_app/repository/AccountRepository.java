@@ -15,4 +15,8 @@ public interface AccountRepository extends JpaRepository<AccountEntity, Long> {
 
   Boolean existsByIban(String iban);
 
+  List<AccountEntity> findAllByIbanContainsIgnoreCaseAndActive(String iban, Boolean active);
+
+  List<AccountEntity> findAllByOwner_UsernameContainsIgnoreCaseAndActive(String username, Boolean active);
+
 }

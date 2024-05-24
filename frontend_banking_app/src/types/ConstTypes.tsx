@@ -4,7 +4,8 @@ export interface ApiVersion {
   test: string,
   auth: string,
   accounts: string,
-  accountActions: string
+  accountActions: string,
+  fastSearch: string
 }
 
 export interface FallbackPath {
