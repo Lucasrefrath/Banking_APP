@@ -6,6 +6,7 @@ import {navigation, user, userNavigation} from "../const/GlobalConst";
 import useUtils, {classNames} from "../utils/Utils";
 import useAuthContext from "../hooks/contextHook/useAuthContext";
 import PrimaryButton from "./customUI/CustomButtons/PrimaryButton";
+import NavigationLinkItem from "./NavigationLinkItem";
 
 const Header = () => {
   const navigate = useNavigate();
@@ -31,20 +32,7 @@ const Header = () => {
                     <div className="hidden md:block">
                       <div className="ml-10 flex items-baseline space-x-4">
                         {navigation.map((item) => (
-                          <a
-                            key={item.name}
-                            href=""
-                            onClick={() => navigate(item.to)}
-                            className={classNames(
-                              checkRouteActive(item.to)
-                                ? 'bg-gray-900 text-white'
-                                : 'text-gray-300 hover:bg-gray-700 hover:text-white',
-                              'rounded-md px-3 py-2 text-sm font-medium'
-                            )}
-                            aria-current={checkRouteActive(item.to) ? 'page' : undefined}
-                          >
-                            {item.name}
-                          </a>
+                          <NavigationLinkItem item={item} key={item.name}/>
                         ))}
                       </div>
                     </div>

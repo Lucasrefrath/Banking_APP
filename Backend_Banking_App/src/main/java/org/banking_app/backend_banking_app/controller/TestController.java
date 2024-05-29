@@ -17,38 +17,5 @@ import java.util.Optional;
 @RequestMapping("/api-test/v1")
 @CrossOrigin("http://localhost:3000/")
 public class TestController {
-
-  @Autowired
-  JpaUserDetailsService userDetailsService;
-
-  @Autowired
-  AccountRepository accountRepository;
-
-  @Autowired
-  UserRepository userRepository;
-
-  @GetMapping("/open")
-  public String open() {
-    return "Welcome";
-  }
-
-  @GetMapping("/user")
-  public String user(Principal principal) {
-    return "Welcome User: " + principal.getName();
-  }
-
-  @GetMapping("/admin")
-  public String admin(Principal principal) {
-    return "Welcome admin: " + principal.getName();
-  }
-
-  @GetMapping("/test")
-  public Optional<UserEntity> getUser() {
-    return userRepository.findByUsername("admin");
-  }
-
-  @GetMapping("/accounts")
-  public ResponseEntity<List<AccountEntity>> getAllAccounts() {
-    return ResponseEntity.ok().body(accountRepository.findAll());
-  }
+  
 }

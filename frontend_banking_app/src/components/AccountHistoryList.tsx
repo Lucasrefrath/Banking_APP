@@ -14,7 +14,7 @@ const AccountHistoryList = () => {
       ) : (
         <div className={"pt-2 pb-5"}>
           <ul className="divide-y divide-gray-100 bg-gray-200 rounded-lg px-4">
-            {userAccountHistory.map((history: AccountHistory) => <HistoryPreviewItem history={history}/>)}
+            {userAccountHistory.map((history: AccountHistory) => <HistoryPreviewItem history={history} key={history.id}/>)}
           </ul>
         </div>
       )}

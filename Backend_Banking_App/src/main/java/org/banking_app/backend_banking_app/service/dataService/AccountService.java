@@ -166,7 +166,7 @@ public class AccountService {
 
     for(AccountEntity entity : nameResults) {
       if(entity.getId().equals(originAccountId)) continue;
-      
+
       resultList.add(
               new AccountSearchResultModel(
                       entity.getIban(),

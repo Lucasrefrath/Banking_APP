@@ -1,10 +1,7 @@
-import {
-    AccountActionConfig,
-    LogInData,
-} from "../types/Types";
+import {AccountActionConfig, LogInData,} from "../types/Types";
 import {Cog6ToothIcon, LockClosedIcon, UserCircleIcon} from "@heroicons/react/24/outline";
 import {ApiVersion, FallbackPath, NavigationConfig} from "../types/ConstTypes";
-import {AccountAction} from "../types/Enums";
+import {AccountAction, Roles} from "../types/Enums";
 
 export const API_URLS_V1: ApiVersion = {
     test: 'http://localhost:8080/api-test/v1',
@@ -38,11 +35,11 @@ export const user = {
 
 export const navigation: NavigationConfig[] = [
     { name: 'Home', to: '/'},
-    { name: 'Dashboard', to: '/dashboard'},
+    { name: 'Dashboard', to: '/dashboard', requireAuthentication: true},
     { name: 'Test', to: '/test'},
-    { name: 'Admin', to: '/admin'},
-    { name: 'Reports', to: '/reports'},
+    { name: 'Admin', to: '/admin', requiredRoles: [Roles.ADMIN], requireAuthentication: true},
 ]
+
 export const userNavigation: NavigationConfig[] = [
     { name: 'Your Profile', to: '/', icon: <UserCircleIcon className="mr-1.5 h-5 w-5 flex-shrink-0 text-gray-400" aria-hidden="true"/> },
     { name: 'Settings', to: '/', icon: <Cog6ToothIcon className="mr-1.5 h-5 w-5 flex-shrink-0 text-gray-400" aria-hidden="true" />},
