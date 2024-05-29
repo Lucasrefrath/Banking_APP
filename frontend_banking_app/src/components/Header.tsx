@@ -4,13 +4,13 @@ import {Bars3Icon, FingerPrintIcon, XMarkIcon} from '@heroicons/react/24/outline
 import {useNavigate} from "react-router-dom";
 import {navigation, user, userNavigation} from "../const/GlobalConst";
 import useUtils, {classNames} from "../utils/Utils";
-import useAuthContext from "../hooks/useAuthContext";
+import useAuthContext from "../hooks/contextHook/useAuthContext";
 import PrimaryButton from "./customUI/CustomButtons/PrimaryButton";
 
 const Header = () => {
   const navigate = useNavigate();
   const { checkRouteActive } = useUtils();
-  const AuthData = useAuthContext();
+  const { isAuthenticated, userDetails} = useAuthContext();
 
   return (
     <>
@@ -52,7 +52,7 @@ const Header = () => {
                   <div className="hidden md:block">
                     <div className="ml-4 flex items-center md:ml-6">
                       {/* Profile dropdown */}
-                      {AuthData?.isAuthenticated ? (
+                      {isAuthenticated ? (
                         <Menu as="div" className="relative ml-3">
                         <div>
                           <Menu.Button
@@ -73,8 +73,8 @@ const Header = () => {
                         >
                           <Menu.Items
                             className="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
-                            {AuthData?.isAuthenticated && <p
-                              className={"font-extralight text-sm mb-1 mt-2 mx-4"}>{AuthData.userDetails?.username}</p>}
+                            {isAuthenticated && <p
+                              className={"font-extralight text-sm mb-1 mt-2 mx-4"}>{userDetails?.username}</p>}
 
                             {userNavigation.map((item) => (
                               <Menu.Item key={item.name}>

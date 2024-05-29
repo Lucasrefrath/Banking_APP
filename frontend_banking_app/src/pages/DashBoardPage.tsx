@@ -1,5 +1,5 @@
 import React from 'react';
-import useAuthContext from "../hooks/useAuthContext";
+import useAuthContext from "../hooks/contextHook/useAuthContext";
 import AccountPreview from "../components/AccountPreview";
 import useFetchUsersAccounts from "../hooks/request/useFetchUsersAccounts";
 import {SimpleAccountDetails} from "../types/Types";

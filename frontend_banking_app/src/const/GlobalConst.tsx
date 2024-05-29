@@ -40,7 +40,7 @@ export const navigation: NavigationConfig[] = [
     { name: 'Home', to: '/'},
     { name: 'Dashboard', to: '/dashboard'},
     { name: 'Test', to: '/test'},
-    { name: 'Calendar', to: '/calendar'},
+    { name: 'Admin', to: '/admin'},
     { name: 'Reports', to: '/reports'},
 ]
 export const userNavigation: NavigationConfig[] = [

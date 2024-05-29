@@ -1,8 +1,10 @@
 import {API_URLS_V1} from "../../const/GlobalConst";
 import {useEffect, useState} from "react";
 import {AccountSearchResult} from "../../types/Types";
+import {useParams} from "react-router-dom";
 
-const useGetAccountSearch = (query: string) => {
+const useAccountSearch = (query: string) => {
+  const { accountId} = useParams()
   const [results, setResults] = useState<AccountSearchResult | undefined>(undefined);
 
   useEffect(() => {
@@ -13,7 +15,7 @@ const useGetAccountSearch = (query: string) => {
       if(query !== "") {
         handleRequest()
       }
-    }, 700)
+    }, 500)
 
     return () => clearTimeout(timeout);
   }, [ query ]);
@@ -21,9 +23,16 @@ const useGetAccountSearch = (query: string) => {
   const handleRequest = async (): Promise<void> => {
 
     try {
-      const response = await fetch(`${API_URLS_V1.fastSearch}/accounts?q=${query}?fromAcc=`, { //TODO: current accountID
-        method: 'GET',
+      const response = await fetch(`${API_URLS_V1.fastSearch}/accounts`, { //TODO: current accountID
+        method: 'POST',
         credentials: "include",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          query: query,
+          originAccountId: accountId
+        })
       });
 
       if(response.status === 403) {
@@ -45,4 +54,4 @@ const useGetAccountSearch = (query: string) => {
   return { results }
 };
 
-export default useGetAccountSearch;
+export default useAccountSearch;

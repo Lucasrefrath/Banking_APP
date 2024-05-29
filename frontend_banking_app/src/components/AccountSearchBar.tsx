@@ -1,14 +1,16 @@
 import { Combobox, ComboboxButton, ComboboxInput, ComboboxOption, ComboboxOptions } from '@headlessui/react'
 import { ChevronDownIcon } from '@heroicons/react/20/solid'
 import React, {useEffect, useState} from 'react'
-import useGetAccountSearch from "../hooks/request/useGetAccountSearch";
+import useAccountSearch from "../hooks/request/useAccountSearch";
 import { AccountSearchResultAccountObject } from "../types/Types";
-import {CheckIcon} from "@heroicons/react/24/outline";
+import {CheckIcon, UserCircleIcon} from "@heroicons/react/24/outline";
+import useAuthContext from "../hooks/contextHook/useAuthContext";
 
 const AccountSearchBar = ({changeData}: {changeData: (prop: string, value: any) => void}) => {
+  const AuthData = useAuthContext()
   const [query, setQuery] = useState<string>('')
   const [selected, setSelected] = useState<AccountSearchResultAccountObject | undefined>(undefined)
-  const { results } = useGetAccountSearch(query);
+  const { results } = useAccountSearch(query);
 
   useEffect(() => {
     if(selected?.iban !== query) setSelected(undefined);
@@ -60,6 +62,7 @@ const AccountSearchBar = ({changeData}: {changeData: (prop: string, value: any) 
             >
               <div className="flex justify-start items-center gap-2 text-gray-900">
                 {result.iban === selected?.iban && <CheckIcon className={"h-4 w-4"}/>}
+                {result.ownerName === AuthData?.userDetails?.username && <UserCircleIcon className={"h-4 w-4"}/>}
                 <p className={"text-sm"}>{result.iban}</p>
                 <p className={"text-sm font-light"}>{result.ownerName}</p>
               </div>

@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import useAuthContext from "../hooks/useAuthContext";
+import useAuthContext from "../hooks/contextHook/useAuthContext";
 import {Navigate, useNavigate} from "react-router-dom";
 import {DEFAULT_USER} from "../const/GlobalConst";
 import {ChevronRightIcon} from "@heroicons/react/24/outline";

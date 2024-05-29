@@ -1,14 +1,14 @@
-import {useContext, useState} from 'react';
+import {useState} from 'react';
 import {API_URLS_V1} from "../../const/GlobalConst";
 import {
 } from "../../types/Types";
-import {ProfileContext} from "../../const/Context";
 import {AccountAction, PopUpType} from "../../types/Enums";
 import {AccountActionResponse, DepositRequst} from "../../types/Request-Response";
+import useProfileContext from "../contextHook/useProfileContext";
 
 const useAccountAction = ({actionType, popUpType}: {actionType: AccountAction, popUpType: PopUpType}) => {
   const [error, setError] = useState<any>(undefined);
-  const ProfileData = useContext(ProfileContext);
+  const { updateAccountDetails, userAccountHistory, closePopUp} = useProfileContext();
 
   const handleRequest = async ( payLoad: DepositRequst): Promise<void> => {
 
@@ -32,9 +32,9 @@ const useAccountAction = ({actionType, popUpType}: {actionType: AccountAction, p
       }
 
       const data: AccountActionResponse = await response.json();
-      ProfileData?.updateAccountDetails(data.updatedAccountData);
-      ProfileData?.userAccountHistory?.unshift(data.newHistoryData);
-      ProfileData?.closePopUp(popUpType)
+      updateAccountDetails(data.updatedAccountData);
+      userAccountHistory?.unshift(data.newHistoryData);
+      closePopUp(popUpType)
     } catch (error) {
       setError(error)
       console.log(error);

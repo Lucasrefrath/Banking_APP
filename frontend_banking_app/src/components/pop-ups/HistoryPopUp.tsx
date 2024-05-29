@@ -1,11 +1,11 @@
-import React, {useContext} from 'react';
+import React from 'react';
 import {Dialog, DialogPanel, DialogTitle, Transition, TransitionChild} from "@headlessui/react";
 import {AccountHistory} from "../../types/Types";
 import {formatBalance, formatDate, formatTime} from "../../utils/Utils";
-import {ProfileContext} from "../../const/Context";
 import {ChevronRightIcon} from "@heroicons/react/24/outline";
 import PrimaryButton from "../customUI/CustomButtons/PrimaryButton";
 import {AccountAction} from "../../types/Enums";
+import useProfileContext from "../../hooks/contextHook/useProfileContext";
 
 interface HistoryPopUpProps {
   history: AccountHistory,
@@ -15,19 +15,19 @@ interface HistoryPopUpProps {
 }
 
 const HistoryPopUp = ({history, isOpen, close, isProfit}: HistoryPopUpProps) => {
-  const ProfileData = useContext(ProfileContext);
+  const { userAccount} = useProfileContext();
 
   const getBefore = (): number | string => {
     if(history.transactionType === AccountAction.DEPOSIT) return formatBalance(history.destinationBalanceBefore || undefined);
     if(history.transactionType === AccountAction.WITHDRAW) return formatBalance(history.originBalanceBefore || undefined);
-    if(history.destinationAccount?.id === ProfileData?.userAccount?.id) return formatBalance(history.destinationBalanceBefore || undefined);
+    if(history.destinationAccount?.id === userAccount?.id) return formatBalance(history.destinationBalanceBefore || undefined);
     return formatBalance(history.originBalanceBefore || undefined);
   }
 
   const getAfter = (): number | string => {
     if(history.transactionType === AccountAction.DEPOSIT) return formatBalance(history.destinationBalanceAfter || undefined);
     if(history.transactionType === AccountAction.WITHDRAW) return formatBalance(history.originBalanceAfter || undefined);
-    if(history.destinationAccount?.id === ProfileData?.userAccount?.id) return formatBalance(history.destinationBalanceAfter || undefined);
+    if(history.destinationAccount?.id === userAccount?.id) return formatBalance(history.destinationBalanceAfter || undefined);
     return formatBalance(history.originBalanceAfter || undefined);
   }
 
@@ -76,7 +76,7 @@ const HistoryPopUp = ({history, isOpen, close, isProfit}: HistoryPopUpProps) => 
                   />
                 </div>
 
-                {history.destinationAccount?.id !== ProfileData?.userAccount?.id ? (
+                {history.destinationAccount?.id !== userAccount?.id ? (
                   <div className={"mt-3"}>
                     <label className={"text-sm/6 font-medium text-black"}>To</label>
                     <input

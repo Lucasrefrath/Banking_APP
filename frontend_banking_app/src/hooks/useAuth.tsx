@@ -1,4 +1,4 @@
-import useAuthContext from "./useAuthContext";
+import useAuthContext from "./contextHook/useAuthContext";
 import {Roles} from "../types/Enums";
 
 const useAuth = () => {

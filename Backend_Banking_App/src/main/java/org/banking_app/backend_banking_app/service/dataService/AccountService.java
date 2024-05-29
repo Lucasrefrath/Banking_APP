@@ -146,13 +146,15 @@ public class AccountService {
     );
   }
 
-  public List<AccountSearchResultModel> getAccountSearchResultsBySearchQuery(String searchQuery) {
+  public List<AccountSearchResultModel> getAccountSearchResultsBySearchQuery(String searchQuery, Long originAccountId) {
     List<AccountEntity> ibanResults = accountRepository.findAllByIbanContainsIgnoreCaseAndActive(searchQuery, true);
     List<AccountEntity> nameResults = accountRepository.findAllByOwner_UsernameContainsIgnoreCaseAndActive(searchQuery, true);
 
     List<AccountSearchResultModel> resultList = new ArrayList<>();
 
     for(AccountEntity entity : ibanResults) {
+      if(entity.getId().equals(originAccountId)) continue;
+
       resultList.add(
               new AccountSearchResultModel(
                       entity.getIban(),
@@ -163,6 +165,8 @@ public class AccountService {
     }
 
     for(AccountEntity entity : nameResults) {
+      if(entity.getId().equals(originAccountId)) continue;
+      
       resultList.add(
               new AccountSearchResultModel(
                       entity.getIban(),

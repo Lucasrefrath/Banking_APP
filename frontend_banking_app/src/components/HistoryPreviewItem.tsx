@@ -3,12 +3,12 @@ import {AccountHistory} from "../types/Types";
 import {formatBalance, formatDate, getTimeSince} from "../utils/Utils";
 import {ArrowTrendingDownIcon, ArrowTrendingUpIcon} from "@heroicons/react/24/outline";
 import HistoryPopUp from "./pop-ups/HistoryPopUp";
-import {ProfileContext} from "../const/Context";
 import usePopUpManager from "../hooks/usePopUpManager";
 import {AccountAction, PopUpType} from "../types/Enums";
+import useProfileContext from "../hooks/contextHook/useProfileContext";
 
 const HistoryPreviewItem = ({history}: {history: AccountHistory}) => {
-  const ProfileData = useContext(ProfileContext);
+  const { userAccount } = useProfileContext();
   const {openPopUp, closePopUp, isPopUpOpen} = usePopUpManager();
 
   const isProfit = (): boolean => {
@@ -16,7 +16,7 @@ const HistoryPreviewItem = ({history}: {history: AccountHistory}) => {
     if(history.transactionType === AccountAction.WITHDRAW) return false;
 
     //TRANSFER
-    return history.destinationAccount?.id === ProfileData?.userAccount?.id;
+    return history.destinationAccount?.id === userAccount?.id;
   }
 
   const getIcon = (): ReactElement => {

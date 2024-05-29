@@ -1,14 +1,14 @@
-import React, {useContext} from 'react';
+import React from 'react';
 import {CreditCardIcon, CurrencyEuroIcon} from "@heroicons/react/24/solid";
 import {formatBalance} from "../utils/Utils";
-import {ProfileContext} from "../const/Context";
 import {MinusIcon, PlusIcon} from "@heroicons/react/24/outline";
 import PrimaryButton from "./customUI/CustomButtons/PrimaryButton";
 import OutlineSecondaryButton from "./customUI/CustomButtons/OutlineSecondaryButton";
 import {PopUpType} from "../types/Enums";
+import useProfileContext from "../hooks/contextHook/useProfileContext";
 
 const AccountInfo = () => {
-  const ProfileData = useContext(ProfileContext);
+  const ProfileData= useProfileContext();
 
   if(!ProfileData) return <p>Loading...</p>
 

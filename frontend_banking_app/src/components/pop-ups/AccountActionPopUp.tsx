@@ -1,15 +1,13 @@
-import React, {useContext, useEffect, useState} from 'react';
-import {Checkbox, Dialog, DialogPanel, DialogTitle, Switch, Transition, TransitionChild} from "@headlessui/react";
-import {ProfileContext} from "../../const/Context";
+import React, {useEffect, useState} from 'react';
+import {Dialog, DialogPanel, DialogTitle, Transition, TransitionChild} from "@headlessui/react";
 import useAccountAction from "../../hooks/request/useAccountAction";
 import {getAccountActionConfig} from "../../const/GlobalConst";
 import NoticeMessage from "../NoticeMessage";
 import PrimaryButton from "../customUI/CustomButtons/PrimaryButton";
 import SecondaryButton from "../customUI/CustomButtons/SecondaryButton";
 import {AccountAction, MessageLevel, PopUpType} from "../../types/Enums";
-import InputField from "../customUI/InputField";
-import {CheckIcon} from "@heroicons/react/24/outline";
 import AccountSearchBar from "../AccountSearchBar";
+import useProfileContext from "../../hooks/contextHook/useProfileContext";
 
 interface DataProps {
   recipient: number | undefined,
@@ -24,7 +22,7 @@ const standard: DataProps = {
 }
 
 const AccountActionPopUp = ({actionType, popUpType}: {actionType: AccountAction, popUpType: PopUpType}) => {
-  const ProfileData = useContext(ProfileContext);
+  const { userAccount, isPopUpOpen, closePopUp } = useProfileContext();
   const { handleRequest, error, setError } = useAccountAction({actionType, popUpType});
   const config = getAccountActionConfig(actionType);
 
@@ -50,14 +48,14 @@ const AccountActionPopUp = ({actionType, popUpType}: {actionType: AccountAction,
       return;
     }
 
-    if(config.testBalance && (data.amount >= (ProfileData?.userAccount?.balance || 0.0))) {
+    if(config.testBalance && (data.amount >= (userAccount?.balance || 0.0))) {
       setNotice("To little balance for this transaction")
       setButtonActive(true);
       return;
     }
 
     handleRequest({
-      accountId: ProfileData?.userAccount?.id || 0,
+      accountId: userAccount?.id || 0,
       recipientId: data.recipient,
       message: data.description,
       amount: data.amount
@@ -88,8 +86,8 @@ const AccountActionPopUp = ({actionType, popUpType}: {actionType: AccountAction,
   }
 
   return (
-    <Transition appear show={ProfileData?.isPopUpOpen(popUpType)}>
-      <Dialog as="div" className="relative z-10 focus:outline-none" onClose={() => ProfileData?.closePopUp(popUpType)}>
+    <Transition appear show={isPopUpOpen(popUpType)}>
+      <Dialog as="div" className="relative z-10 focus:outline-none" onClose={() => closePopUp(popUpType)}>
         <div className="fixed inset-0 z-10 w-screen overflow-y-auto">
           <div className="flex min-h-full items-center justify-center p-4">
             <TransitionChild
@@ -153,7 +151,7 @@ const AccountActionPopUp = ({actionType, popUpType}: {actionType: AccountAction,
                 )}
 
                 <div className="flex mt-5 gap-2">
-                  <SecondaryButton onClick={() => ProfileData?.closePopUp(popUpType)}>
+                  <SecondaryButton onClick={() => closePopUp(popUpType)}>
                     cancel
                   </SecondaryButton>
                   <PrimaryButton onClick={handleSubmit} disabled={!buttonActive}>

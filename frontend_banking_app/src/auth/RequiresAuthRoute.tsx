@@ -1,6 +1,6 @@
 import React, {ReactElement} from 'react';
 import {Navigate} from "react-router-dom";
-import useAuthContext from "../hooks/useAuthContext";
+import useAuthContext from "../hooks/contextHook/useAuthContext";
 import {FALLBACK_URLS} from "../const/GlobalConst";
 import {Roles} from "../types/Enums";
 

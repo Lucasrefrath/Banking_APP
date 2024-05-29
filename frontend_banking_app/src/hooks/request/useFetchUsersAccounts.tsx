@@ -28,7 +28,6 @@ const useFetchUsersAccounts = () => {
       setIsPending(false);
       setUserAccounts(data);
 
-      console.log(data);
     } catch (error) {
       setError(error)
       console.log(error);

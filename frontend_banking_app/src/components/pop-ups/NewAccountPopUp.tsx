@@ -17,7 +17,6 @@ const NewAccountPopUp = ({isOpen, close}: NewAccountPopUpProps) => {
   const { handleRequest } = useCreateAccount();
 
   const validateInput = (): boolean => {
-    console.log(name.trim())
     if(name.trim() === "") setName("")
     return name.length < MAX_LENGTH;
   }

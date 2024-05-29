@@ -1,11 +1,10 @@
 import {API_URLS_V1} from "../../const/GlobalConst";
 import {SimpleAccountDetails} from "../../types/Types";
-import {useContext} from "react";
-import {DashBoardContext} from "../../const/Context";
 import {CreateAccountRequest} from "../../types/Request-Response";
+import useDashboardContext from "../contextHook/useDashboardContext";
 
 const useCreateAccount = () => {
-  const DashBoardData = useContext(DashBoardContext);
+  const { pushNewAccount } = useDashboardContext();
 
   const handleRequest = async (request: CreateAccountRequest): Promise<void> => {
 
@@ -24,7 +23,7 @@ const useCreateAccount = () => {
       }
 
       const data: SimpleAccountDetails = await response.json();
-      DashBoardData?.pushNewAccount(data);
+      pushNewAccount(data);
     } catch (error) {
       console.log(error);
     }
