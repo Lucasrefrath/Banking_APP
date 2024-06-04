@@ -3,7 +3,7 @@ package org.banking_app.backend_banking_app.controller;
 import jakarta.servlet.http.HttpSession;
 import org.banking_app.backend_banking_app.model.SecurityUserDetails;
 import org.banking_app.backend_banking_app.model.SessionUserModel;
-import org.banking_app.backend_banking_app.service.JpaUserDetailsService;
+import org.banking_app.backend_banking_app.service.auth.JpaUserDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;

@@ -1,14 +1,17 @@
-import {AccountActionConfig, LogInData,} from "../types/Types";
+import {AccountActionConfig, ListItemModel, LogInData,} from "../types/Types";
 import {Cog6ToothIcon, LockClosedIcon, UserCircleIcon} from "@heroicons/react/24/outline";
 import {ApiVersion, FallbackPath, NavigationConfig} from "../types/ConstTypes";
 import {AccountAction, Roles} from "../types/Enums";
+import UserManagementTile from "../components/UserManagementTile";
+import React from "react";
 
 export const API_URLS_V1: ApiVersion = {
     test: 'http://localhost:8080/api-test/v1',
     auth: 'http://localhost:8080/auth/v1',
     accounts: 'http://localhost:8080/api/v1/accounts',
     accountActions: 'http://localhost:8080/api/v1/account/actions',
-    fastSearch: 'http://localhost:8080/api/v1/fastSearch'
+    fastSearch: 'http://localhost:8080/api/v1/fastSearch',
+    users: 'http://localhost:8080/api/v1/users',
 }
 
 export const FALLBACK_URLS: FallbackPath = {
@@ -20,6 +23,12 @@ export const MAX_ACCOUNTS = {
     USER: 5,
     ADMIN: 10
 }
+
+export const ADMIN_OPTIONS: ListItemModel[] = [
+    {label: "User", tileObject: <UserManagementTile /> },
+    {label: "Capital"},
+    {label: "Item 3"}
+]
 
 export const DEFAULT_USER: LogInData = {
     username: "admin",

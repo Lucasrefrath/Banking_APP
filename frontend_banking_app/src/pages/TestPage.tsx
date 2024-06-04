@@ -1,12 +1,10 @@
-import React from 'react';
-import AccountSearchBar from "../components/AccountSearchBar";
-import PrimaryButton from "../components/customUI/CustomButtons/PrimaryButton";
+import React from 'react';import {Menu, MenuButton, MenuItem, MenuItems} from "@headlessui/react";
 
 const TestPage = () => {
-    return (
-        <div className={"flex gap-2"}>
-        </div>
-    );
+
+  return (
+    <></>
+  );
 };
 
 export default TestPage;

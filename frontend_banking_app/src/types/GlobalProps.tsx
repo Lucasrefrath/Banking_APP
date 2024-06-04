@@ -6,6 +6,5 @@ export interface CustomButtonProps {
 }
 
 export interface DestructionButtonProps extends CustomButtonProps{
-  affirmationRequired?: boolean
   affirmationMessage?: string
 }

@@ -1,4 +1,5 @@
 import {AccountAction, PopUpType, Roles} from "./Enums";
+import {ReactElement} from "react";
 
 export interface AuthData {
     isAuthenticated: boolean,
@@ -49,6 +50,17 @@ export type SimpleAccountDetails = {
     iban: string
 }
 
+export interface AdminData {
+    userData: FullUserData[] | undefined,
+    handleDeactivateAccount: (accountId: number) => void,
+    handleActivateAccount: (accountId: number) => void
+}
+
+export interface FullUserData {
+    user: UserDetails,
+    accounts: SimpleAccountDetails[]
+}
+
 export type LogInData = {
     username: string,
     password: string
@@ -75,4 +87,9 @@ export interface AccountSearchResultAccountObject {
 
 export interface AccountSearchResult {
     response: AccountSearchResultAccountObject[]
+}
+
+export interface ListItemModel {
+    label: string,
+    tileObject?: ReactElement
 }

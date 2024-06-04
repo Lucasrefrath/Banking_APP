@@ -1,3 +1,106 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer components {
+    .bg-primary {
+        @apply bg-indigo-600
+    }
+
+    .bg-secondary {
+        @apply bg-gray-400
+    }
+
+    .bg-gray-overlay {
+        @apply bg-black/5
+    }
+
+    .bg-destructive {
+        @apply bg-red-500
+    }
+
+    .icon-small {
+        @apply h-4 w-4
+    }
+
+    .icon {
+        @apply h-5 w-5
+    }
+
+    button {
+        @apply inline-flex justify-center items-center gap-2 rounded-lg px-3.5 py-2.5 text-sm font-semibold
+    }
+
+    button.type-see-more {
+        @apply shadow-none p-0 m-0 mt-3 font-light text-gray-700
+    }
+
+    button.type-primary {
+        @apply bg-primary text-white hover:bg-indigo-500 disabled:bg-indigo-400 shadow-sm
+    }
+
+    button.type-secondary {
+        @apply bg-secondary text-white hover:bg-gray-500 disabled:bg-gray-200 shadow-sm
+    }
+
+    button.type-secondary-outline {
+        @apply bg-white ring-1 ring-inset ring-gray-300 hover:bg-gray-50 disabled:text-gray-500 disabled:hover:bg-white shadow-sm
+    }
+
+    button.type-destructive {
+        @apply bg-destructive text-white hover:bg-red-400 disabled:text-red-300 shadow-sm
+    }
+
+    h1 {
+        @apply text-4xl font-bold text-gray-900
+    }
+
+    h2 {
+        @apply text-3xl font-bold text-gray-900
+    }
+
+    h3 {
+        @apply text-2xl font-bold text-gray-900
+    }
+
+    h4 {
+        @apply text-lg font-semibold text-gray-900
+    }
+
+    p {
+        @apply text-gray-900
+    }
+
+    label {
+        @apply text-sm/6 font-medium text-gray-800 mb-1
+    }
+
+    small {
+        @apply text-sm font-light text-gray-700
+    }
+
+    input {
+        @apply block w-full rounded-md border-0 py-1.5 pl-4 pr-20 bg-gray-overlay text-gray-900 text-sm ring-inset ring-gray-300 placeholder:text-gray-400
+    }
+
+    textarea {
+        @apply block w-full rounded-md border-0 py-1.5 pl-4 pr-20 bg-gray-overlay text-gray-900 text-sm ring-inset ring-gray-300 placeholder:text-gray-400
+    }
+
+    .pill-gray {
+        @apply pill bg-gray-overlay text-gray-900
+    }
+
+    .pill-red {
+        @apply pill bg-red-400 text-gray-900
+    }
+
+    .pill {
+        @apply px-2 py-1 rounded-xl text-sm flex gap-1
+    }
+
+    section {
+        @apply mt-3
+    }
+
+}

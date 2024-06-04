@@ -1,6 +1,6 @@
 package org.banking_app.backend_banking_app.config;
 
-import org.banking_app.backend_banking_app.service.JpaUserDetailsService;
+import org.banking_app.backend_banking_app.service.auth.JpaUserDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -35,6 +35,8 @@ public class SecurityConfig {
             .csrf(AbstractHttpConfigurer::disable)
             .authorizeHttpRequests(auth -> {
               auth.requestMatchers("/auth/v1/login", "/auth/v1/checkAuth").permitAll(); //AUTH
+
+              auth.requestMatchers("/api/v1/users").hasAuthority("ROLE_ADMIN");
 
               auth.anyRequest().authenticated();
             })

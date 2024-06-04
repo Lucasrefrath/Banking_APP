@@ -6,7 +6,8 @@ export interface ApiVersion {
   auth: string,
   accounts: string,
   accountActions: string,
-  fastSearch: string
+  fastSearch: string,
+  users: string
 }
 
 export interface FallbackPath {

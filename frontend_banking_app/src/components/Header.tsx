@@ -5,7 +5,6 @@ import {useNavigate} from "react-router-dom";
 import {navigation, user, userNavigation} from "../const/GlobalConst";
 import useUtils, {classNames} from "../utils/Utils";
 import useAuthContext from "../hooks/contextHook/useAuthContext";
-import PrimaryButton from "./customUI/CustomButtons/PrimaryButton";
 import NavigationLinkItem from "./NavigationLinkItem";
 
 const Header = () => {
@@ -44,7 +43,7 @@ const Header = () => {
                         <Menu as="div" className="relative ml-3">
                         <div>
                           <Menu.Button
-                            className="relative flex max-w-xs items-center rounded-full bg-gray-800 text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800">
+                            className="p-0 relative flex max-w-xs items-center rounded-full bg-gray-800 text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800">
                             <span className="absolute -inset-1.5"/>
                             <span className="sr-only">Open user menu</span>
                             <img className="h-8 w-8 rounded-full" src={user.imageUrl} alt=""/>
@@ -61,8 +60,8 @@ const Header = () => {
                         >
                           <Menu.Items
                             className="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
-                            {isAuthenticated && <p
-                              className={"font-extralight text-sm mb-1 mt-2 mx-4"}>{userDetails?.username}</p>}
+                            {isAuthenticated && <small
+                              className={"mb-1 mt-2 mx-4"}>{userDetails?.username}</small>}
 
                             {userNavigation.map((item) => (
                               <Menu.Item key={item.name}>
@@ -90,12 +89,13 @@ const Header = () => {
                         </Transition>
                       </Menu>
                       ) : (
-                        <PrimaryButton onClick={() => navigate("/login")}>
+                        <button className={"type-primary"} onClick={() => navigate("/login")}>
                           <div className={"flex gap-1 justify-between items-center"}>
                             <FingerPrintIcon className={"w-5 h-5"} />
                             LogIn
                           </div>
-                        </PrimaryButton>
+                        </button>
+
                       )}
                     </div>
                   </div>

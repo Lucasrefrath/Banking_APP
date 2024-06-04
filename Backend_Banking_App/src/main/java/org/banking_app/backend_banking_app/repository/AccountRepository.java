@@ -11,6 +11,8 @@ public interface AccountRepository extends JpaRepository<AccountEntity, Long> {
 
   List<AccountEntity> findAllByOwner_IdAndActive(Long ownerId, Boolean active);
 
+  List<AccountEntity> findAllByOwner_Id(Long ownerId);
+
   Long countAllByOwnerIdAndActive(Long ownerId, Boolean active);
 
   Boolean existsByIban(String iban);

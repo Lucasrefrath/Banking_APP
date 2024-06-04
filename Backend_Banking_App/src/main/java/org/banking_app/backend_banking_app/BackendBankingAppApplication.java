@@ -1,10 +1,8 @@
 package org.banking_app.backend_banking_app;
 
-import org.banking_app.backend_banking_app.exceptions.NoSuchUserFoundException;
 import org.banking_app.backend_banking_app.exceptions.UsernameAlreadyExistsException;
-import org.banking_app.backend_banking_app.model.DTO.AccountEntity;
 import org.banking_app.backend_banking_app.model.DTO.UserEntity;
-import org.banking_app.backend_banking_app.service.dataService.AccountService;
+import org.banking_app.backend_banking_app.service.account.AccountDataService;
 import org.banking_app.backend_banking_app.service.dataService.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
@@ -20,7 +18,7 @@ public class BackendBankingAppApplication {
   UserService userService;
 
   @Autowired
-  AccountService accountService;
+  AccountDataService accountDataService;
 
   @Autowired
   PasswordEncoder encoder;

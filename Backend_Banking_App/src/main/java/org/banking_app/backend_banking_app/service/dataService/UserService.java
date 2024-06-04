@@ -9,6 +9,8 @@ import org.banking_app.backend_banking_app.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 @Data
 public class UserService {
@@ -29,6 +31,10 @@ public class UserService {
       throw new UsernameAlreadyExistsException(user.getUsername());
     }
     return userRepo.save(user);
+  }
+
+  public List<UserEntity> getAll() {
+    return userRepo.findAll();
   }
 
 }

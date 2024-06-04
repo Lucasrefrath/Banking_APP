@@ -1,4 +1,4 @@
-package org.banking_app.backend_banking_app.service.factory;
+package org.banking_app.backend_banking_app.service.accountHistory;
 
 import org.banking_app.backend_banking_app.model.DTO.AccountEntity;
 import org.banking_app.backend_banking_app.model.DTO.AccountHistoryEntity;

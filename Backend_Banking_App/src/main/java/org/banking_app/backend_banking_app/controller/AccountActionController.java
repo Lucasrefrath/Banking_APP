@@ -6,8 +6,9 @@ import org.banking_app.backend_banking_app.exceptions.UserAccessNotAllowedExcept
 import org.banking_app.backend_banking_app.model.requestModel.BasicAccountActionRequest;
 import org.banking_app.backend_banking_app.model.requestModel.TransferAccountActionRequest;
 import org.banking_app.backend_banking_app.model.responseModel.AccountActionResponse;
-import org.banking_app.backend_banking_app.service.dataService.AccountService;
-import org.banking_app.backend_banking_app.service.dataService.HistoryService;
+import org.banking_app.backend_banking_app.service.account.AccountActionService;
+import org.banking_app.backend_banking_app.service.account.AccountDataService;
+import org.banking_app.backend_banking_app.service.accountHistory.AccountHistoryDataService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -18,14 +19,17 @@ import org.springframework.web.bind.annotation.*;
 public class AccountActionController {
 
   @Autowired
-  AccountService accountService;
+  AccountDataService accountDataService;
 
   @Autowired
-  HistoryService historyService;
+  AccountActionService accountActionService;
+
+  @Autowired
+  AccountHistoryDataService accountHistoryDataService;
 
   @PostMapping(value = "/deposit")
   public ResponseEntity<AccountActionResponse> deposit(@RequestBody BasicAccountActionRequest request) throws IllegalIdentifierException, UserAccessNotAllowedException {
-    AccountActionResponse response = accountService.deposit(
+    AccountActionResponse response = accountActionService.deposit(
             request.getAccountId(),
             request.getAmount()
     );
@@ -35,7 +39,7 @@ public class AccountActionController {
 
   @PostMapping("/withdraw")
   public ResponseEntity<AccountActionResponse> withdraw(@RequestBody BasicAccountActionRequest request) throws IllegalIdentifierException, UserAccessNotAllowedException, NotEnoughBalanceException {
-    AccountActionResponse response = accountService.withdraw(
+    AccountActionResponse response = accountActionService.withdraw(
                     request.getAccountId(),
                     request.getAmount()
     );
@@ -45,7 +49,7 @@ public class AccountActionController {
 
   @PostMapping("/transfer")
   public ResponseEntity<AccountActionResponse> transfer(@RequestBody TransferAccountActionRequest request) throws IllegalIdentifierException, UserAccessNotAllowedException, NotEnoughBalanceException {
-    AccountActionResponse response = accountService.transfer(
+    AccountActionResponse response = accountActionService.transfer(
             request.getAccountId(),
             request.getAmount(),
             request.getRecipientId(),

@@ -1,11 +1,24 @@
 import React from 'react';
+import TabList from "../components/customUI/TabList";
+import {AdminContext} from "../const/Context";
+import useAllUsers from "../hooks/request/useAllUsers";
+import {ADMIN_OPTIONS} from "../const/GlobalConst";
 
 const AdminPage = () => {
-    return (
-        <div>
-            AdminPage
-        </div>
-    );
+  const {isPending, userData, handleDeactivateAccount, handleActivateAccount} = useAllUsers();
+
+  if(isPending) return <p>Loading...</p>
+
+  return (
+      <AdminContext.Provider value={{
+        userData: userData,
+        handleDeactivateAccount: handleDeactivateAccount,
+        handleActivateAccount: handleActivateAccount
+      }}>
+        <h2 className={"mb-4"}>AdminPage</h2>
+        <TabList listItems={ADMIN_OPTIONS}/>
+      </AdminContext.Provider>
+  );
 };
 
 export default AdminPage;

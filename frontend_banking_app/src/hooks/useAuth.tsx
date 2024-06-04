@@ -1,11 +1,16 @@
 import useAuthContext from "./contextHook/useAuthContext";
 import {Roles} from "../types/Enums";
+import {FullUserData} from "../types/Types";
 
 const useAuth = () => {
   const {userDetails} = useAuthContext()
 
   const userHasRole = (role: Roles) => {
     return userDetails?.roles.includes(role);
+  }
+
+  const specificUserHasRole = (user: FullUserData, role: Roles) => {
+    return user.user.roles.includes(role);
   }
 
   const userHasRoles = (roles: Roles[] | undefined) => {
@@ -20,7 +25,7 @@ const useAuth = () => {
     return result;
   }
 
-  return { userHasRole, userHasRoles };
+  return { userHasRole, userHasRoles, specificUserHasRole };
 };
 
 export default useAuth;

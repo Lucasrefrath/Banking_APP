@@ -1,4 +1,4 @@
-package org.banking_app.backend_banking_app.service;
+package org.banking_app.backend_banking_app.service.auth;
 
 import org.banking_app.backend_banking_app.model.SecurityUserDetails;
 import org.banking_app.backend_banking_app.model.DTO.UserEntity;

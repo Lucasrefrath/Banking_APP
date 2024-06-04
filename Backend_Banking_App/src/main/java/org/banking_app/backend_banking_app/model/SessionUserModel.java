@@ -1,7 +1,7 @@
 package org.banking_app.backend_banking_app.model;
 
 import lombok.Data;
-import org.banking_app.backend_banking_app.service.JpaUserDetailsService;
+import org.banking_app.backend_banking_app.service.auth.JpaUserDetailsService;
 
 import java.util.ArrayList;
 

@@ -5,8 +5,9 @@ import org.banking_app.backend_banking_app.model.DTO.AccountEntity;
 import org.banking_app.backend_banking_app.model.requestModel.CreateAccountRequest;
 import org.banking_app.backend_banking_app.model.requestModel.DeactivateAccountRequest;
 import org.banking_app.backend_banking_app.model.responseModel.AccountResponse;
-import org.banking_app.backend_banking_app.service.dataService.AccountService;
-import org.banking_app.backend_banking_app.service.dataService.HistoryService;
+import org.banking_app.backend_banking_app.service.account.AccountActionService;
+import org.banking_app.backend_banking_app.service.account.AccountDataService;
+import org.banking_app.backend_banking_app.service.accountHistory.AccountHistoryDataService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -20,14 +21,19 @@ import java.util.List;
 public class AccountsController {
 
   @Autowired
-  private AccountService accountService;
+  private AccountDataService accountDataService;
 
   @Autowired
-  private HistoryService historyService;
+  private AccountHistoryDataService accountHistoryDataService;
+
+  @Autowired
+  AccountActionService activateAccount;
+  @Autowired
+  private AccountActionService accountActionService;
 
   @GetMapping
   public ResponseEntity<List<AccountEntity>> getUserAccounts() {
-    List<AccountEntity> response = accountService.getCurrentAuthenticatedUsersAccounts();
+    List<AccountEntity> response = accountDataService.getCurrentAuthenticatedUsersAccounts();
     System.out.println(response.toString());
     return ResponseEntity.ok(response);
   }
@@ -36,8 +42,8 @@ public class AccountsController {
   public ResponseEntity getOneAccount(@PathVariable Long accountId) throws IllegalIdentifierException {
     try {
       AccountResponse account = new AccountResponse();
-      account.setAccountDetails((accountService.getAccountById(accountId)));
-      account.setAccountHistory(historyService.getHistoryForAccount(accountId));
+      account.setAccountDetails((accountDataService.getAccountById(accountId)));
+      account.setAccountHistory(accountHistoryDataService.getHistoryForAccount(accountId));
       return ResponseEntity.ok(account);
     } catch (UserAccessNotAllowedException e) {
       return ResponseEntity.status(HttpStatus.FORBIDDEN).body(e.getMessage());
@@ -46,13 +52,19 @@ public class AccountsController {
 
   @PostMapping("/create")
   public ResponseEntity<AccountEntity> createNewAccount(@RequestBody CreateAccountRequest request) throws NoSuchUserFoundException, IdNotNullException, NumberOfAccountsLimitedException {
-    AccountEntity account = accountService.createAccount(request.getName());
+    AccountEntity account = accountActionService.createAccount(request.getName());
     return ResponseEntity.ok(account);
   }
 
   @DeleteMapping("/deactivate")
   public ResponseEntity<String> deactivateAccount(@RequestBody DeactivateAccountRequest request) throws IllegalIdentifierException, UserAccessNotAllowedException {
-    accountService.deactivateAccount(request.getId());
+    accountActionService.deactivateAccount(request.getId());
     return ResponseEntity.ok("Account " + request.getId() + " deactivated successful");
+  }
+
+  @PostMapping("/activate")
+  public ResponseEntity<String> activateAccount(@RequestBody DeactivateAccountRequest request) throws IllegalIdentifierException, UserAccessNotAllowedException {
+    accountActionService.activateAccount(request.getId());
+    return ResponseEntity.ok("Account " + request.getId() + " activated successful");
   }
 }

@@ -2,7 +2,7 @@ package org.banking_app.backend_banking_app.controller;
 
 import org.banking_app.backend_banking_app.model.requestModel.AccountFastSearchRequest;
 import org.banking_app.backend_banking_app.model.responseModel.AccountFastSearchResponse;
-import org.banking_app.backend_banking_app.service.dataService.AccountService;
+import org.banking_app.backend_banking_app.service.account.AccountSearchService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -13,12 +13,12 @@ import org.springframework.web.bind.annotation.*;
 public class FastSearchResultController {
 
   @Autowired
-  AccountService accountService;
+  AccountSearchService accountSearchService;
 
   @PostMapping("/accounts")
   public ResponseEntity<AccountFastSearchResponse> searchForAccounts(@RequestBody AccountFastSearchRequest request) {
     AccountFastSearchResponse response = new AccountFastSearchResponse();
-    response.setResponse(accountService.getAccountSearchResultsBySearchQuery(
+    response.setResponse(accountSearchService.searchForAccounts(
             request.getQuery(),
             request.getOriginAccountId()
     ));

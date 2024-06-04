@@ -1,10 +1,10 @@
-package org.banking_app.backend_banking_app.service.factory;
+package org.banking_app.backend_banking_app.service.account;
 
 
 import org.banking_app.backend_banking_app.exceptions.NoSuchUserFoundException;
 import org.banking_app.backend_banking_app.model.DTO.AccountEntity;
 import org.banking_app.backend_banking_app.service.IBANIssuerService;
-import org.banking_app.backend_banking_app.service.JpaUserDetailsService;
+import org.banking_app.backend_banking_app.service.auth.JpaUserDetailsService;
 import org.banking_app.backend_banking_app.service.dataService.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

@@ -1,9 +1,7 @@
 import React, {useState} from 'react';
 import {Dialog, DialogPanel, DialogTitle, Transition, TransitionChild} from "@headlessui/react";
-import SecondaryButton from "../customUI/CustomButtons/SecondaryButton";
-import PrimaryButton from "../customUI/CustomButtons/PrimaryButton";
-import InputField from "../customUI/InputField";
 import useCreateAccount from "../../hooks/request/useCreateAccount";
+import CustomPopUp from "../customUI/CustomPopUp";
 
 interface NewAccountPopUpProps {
   isOpen: boolean,
@@ -38,41 +36,27 @@ const NewAccountPopUp = ({isOpen, close}: NewAccountPopUpProps) => {
   }
 
   return (
-    <Transition appear show={isOpen}>
-      <Dialog as="div" className="relative z-10 focus:outline-none" onClose={close}>
-        <div className="fixed inset-0 z-10 w-screen overflow-y-auto">
-          <div className="flex min-h-full items-center justify-center p-4">
-            <TransitionChild
-              enter="ease-out duration-300"
-              enterFrom="opacity-0 transform-[scale(95%)]"
-              enterTo="opacity-100 transform-[scale(100%)]"
-              leave="ease-in duration-200"
-              leaveFrom="opacity-100 transform-[scale(100%)]"
-              leaveTo="opacity-0 transform-[scale(95%)]"
-            >
-              <DialogPanel className="w-full max-w-md rounded-xl bg-black/5 p-6 backdrop-blur-2xl">
-                <DialogTitle as="h3" className="text-xl font-medium text-black">
-                  <p>Create New Account</p>
-                </DialogTitle>
+    <CustomPopUp isOpen={isOpen} close={close}>
+      <DialogTitle>
+        <h3>Create New Account</h3>
+      </DialogTitle>
+      <small>create a new Account</small>
 
-                <InputField
-                  label={"Name"}
-                  name={"name"}
-                  value={name}
-                  onChange={(e) => handleNameChange(e)}
-                  placeHolder={"enter account name"}
-                />
+      <section>
+        <label>Name</label>
+        <input
+          name={"name"}
+          value={name}
+          onChange={(e) => handleNameChange(e)}
+          placeholder={"enter account name"}
+        />
+      </section>
 
-                <div className={"flex gap-2 mt-4"}>
-                  <SecondaryButton onClick={close}>cancel</SecondaryButton>
-                  <PrimaryButton onClick={handleSubmit}>create</PrimaryButton>
-                </div>
-              </DialogPanel>
-            </TransitionChild>
-          </div>
-        </div>
-      </Dialog>
-    </Transition>
+      <section className={"flex gap-2 mt-4"}>
+        <button className={"type-secondary"} onClick={close}>Cancel</button>
+        <button className={"type-primary"} onClick={handleSubmit}>Create</button>
+      </section>
+    </CustomPopUp>
   );
 };
 

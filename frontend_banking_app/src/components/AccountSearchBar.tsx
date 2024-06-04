@@ -43,7 +43,7 @@ const AccountSearchBar = ({changeData}: {changeData: (prop: string, value: any) 
             placeholder={"search for IBAN or username"}
           />
           <ComboboxButton className="group absolute inset-y-0 right-0 px-2.5">
-            <ChevronDownIcon className="size-4 fill-gray-400 group-data-[hover]:fill-gray-900" />
+            <ChevronDownIcon className={"icon-small fill-gray-400 group-data-[hover]:fill-gray-900"}/>
           </ComboboxButton>
         </div>
         <ComboboxOptions
@@ -61,14 +61,14 @@ const AccountSearchBar = ({changeData}: {changeData: (prop: string, value: any) 
               className="group flex cursor-default items-center gap-2 rounded-lg py-1.5 px-3 backdrop-blur-sm"
             >
               <div className="flex justify-start items-center gap-2 text-gray-900">
-                {result.iban === selected?.iban && <CheckIcon className={"h-4 w-4"}/>}
-                {result.ownerName === AuthData?.userDetails?.username && <UserCircleIcon className={"h-4 w-4"}/>}
-                <p className={"text-sm"}>{result.iban}</p>
-                <p className={"text-sm font-light"}>{result.ownerName}</p>
+                {result.iban === selected?.iban && <CheckIcon className={"icon-small"}/>}
+                {result.ownerName === AuthData?.userDetails?.username && <UserCircleIcon className={"icon-small"}/>}
+                <label className={"m-0"}>{result.iban}</label>
+                <small>{result.ownerName}</small>
               </div>
             </ComboboxOption>
           ))) : (
-            <p className={"font-light text-sm ms-2 text-gray-400"}>no results</p>
+            <small className={"text-gray-400 pl-2"}>no results</small>
           )}
         </ComboboxOptions>
       </Combobox>
