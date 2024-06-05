@@ -5,10 +5,12 @@ import {
 import {AccountAction, PopUpType} from "../../types/Enums";
 import {AccountActionResponse, DepositRequst} from "../../types/Request-Response";
 import useProfileContext from "../contextHook/useProfileContext";
+import useAuthContext from "../contextHook/useAuthContext";
 
 const useAccountAction = ({actionType, popUpType}: {actionType: AccountAction, popUpType: PopUpType}) => {
   const [error, setError] = useState<any>(undefined);
   const { updateAccountDetails, userAccountHistory, closePopUp} = useProfileContext();
+  const { refreshAuth } = useAuthContext();
 
   const handleRequest = async ( payLoad: DepositRequst): Promise<void> => {
 
@@ -22,7 +24,8 @@ const useAccountAction = ({actionType, popUpType}: {actionType: AccountAction, p
         body: JSON.stringify(payLoad)
       });
 
-      if(response.status === 403) {
+      if(response.status === 401) {
+        refreshAuth();
         const message = await response.text();
         throw new Error(message)
       }

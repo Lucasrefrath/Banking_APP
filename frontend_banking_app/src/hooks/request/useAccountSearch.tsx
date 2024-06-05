@@ -2,9 +2,11 @@ import {API_URLS_V1} from "../../const/GlobalConst";
 import {useEffect, useState} from "react";
 import {AccountSearchResult} from "../../types/Types";
 import {useParams} from "react-router-dom";
+import useAuthContext from "../contextHook/useAuthContext";
 
 const useAccountSearch = (query: string) => {
-  const { accountId} = useParams()
+  const { accountId} = useParams();
+  const { refreshAuth } = useAuthContext();
   const [results, setResults] = useState<AccountSearchResult | undefined>(undefined);
 
   useEffect(() => {
@@ -35,7 +37,8 @@ const useAccountSearch = (query: string) => {
         })
       });
 
-      if(response.status === 403) {
+      if(response.status === 401) {
+        refreshAuth();
         const message = await response.text();
         throw new Error(message)
       }

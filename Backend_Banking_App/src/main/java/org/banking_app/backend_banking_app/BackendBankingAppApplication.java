@@ -3,7 +3,7 @@ package org.banking_app.backend_banking_app;
 import org.banking_app.backend_banking_app.exceptions.UsernameAlreadyExistsException;
 import org.banking_app.backend_banking_app.model.DTO.UserEntity;
 import org.banking_app.backend_banking_app.service.account.AccountDataService;
-import org.banking_app.backend_banking_app.service.dataService.UserService;
+import org.banking_app.backend_banking_app.service.user.UserDataService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -15,7 +15,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 public class BackendBankingAppApplication {
 
   @Autowired
-  UserService userService;
+  UserDataService userDataService;
 
   @Autowired
   AccountDataService accountDataService;
@@ -31,8 +31,8 @@ public class BackendBankingAppApplication {
   CommandLineRunner commandLineRunner() {
     return args -> {
       try {
-        userService.addUser(new UserEntity("admin", encoder.encode("admin"), "ROLE_USER,ROLE_ADMIN"));
-        userService.addUser(new UserEntity("user", encoder.encode("user"), "ROLE_USER"));
+        userDataService.addUser(new UserEntity("admin", encoder.encode("admin"), "ROLE_USER,ROLE_ADMIN"));
+        userDataService.addUser(new UserEntity("user", encoder.encode("user"), "ROLE_USER"));
       } catch (UsernameAlreadyExistsException e) {
         System.out.println("Could not add Users...");
       }

@@ -5,7 +5,8 @@ export interface AuthData {
     isAuthenticated: boolean,
     userDetails: UserDetails | undefined,
     login: (loginData: LogInData) => void,
-    logout: () => void
+    logout: () => void,
+    refreshAuth: () => void
 }
 
 export interface ProfileData {
@@ -53,7 +54,8 @@ export type SimpleAccountDetails = {
 export interface AdminData {
     userData: FullUserData[] | undefined,
     handleDeactivateAccount: (accountId: number) => void,
-    handleActivateAccount: (accountId: number) => void
+    handleActivateAccount: (accountId: number) => void,
+    handleUpdateUserRoles: (updatedRoles: Roles[], userId: number, actionAfter: () => void) => void
 }
 
 export interface FullUserData {
@@ -92,4 +94,10 @@ export interface AccountSearchResult {
 export interface ListItemModel {
     label: string,
     tileObject?: ReactElement
+}
+
+export interface RoleObject {
+    enum: Roles,
+    label: string
+    icon: ReactElement
 }

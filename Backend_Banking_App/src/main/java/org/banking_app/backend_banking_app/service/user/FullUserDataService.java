@@ -1,10 +1,10 @@
-package org.banking_app.backend_banking_app.service;
+package org.banking_app.backend_banking_app.service.user;
 
+import org.banking_app.backend_banking_app.exceptions.UserAccessNotAllowedException;
 import org.banking_app.backend_banking_app.model.DTO.UserEntity;
 import org.banking_app.backend_banking_app.model.DTO.UserModel;
 import org.banking_app.backend_banking_app.model.FullUserDataModel;
 import org.banking_app.backend_banking_app.service.account.AccountDataService;
-import org.banking_app.backend_banking_app.service.dataService.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,14 +15,14 @@ import java.util.List;
 public class FullUserDataService {
 
   @Autowired
-  private UserService userService;
+  private UserDataService userDataService;
 
   @Autowired
   private AccountDataService accountDataService;
 
-  public List<FullUserDataModel> getAllUserData() {
+  public List<FullUserDataModel> getAllUserData() throws UserAccessNotAllowedException {
     List<FullUserDataModel> returnList = new ArrayList<>();
-    List<UserEntity> users = userService.getAll();
+    List<UserEntity> users = userDataService.getAll();
 
     for(UserEntity user : users) {
       FullUserDataModel dataModel = new FullUserDataModel();

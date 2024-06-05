@@ -1,11 +1,13 @@
 import {API_URLS_V1} from "../../const/GlobalConst";
 import {AccountDetails, SimpleAccountDetails, UserDetails} from "../../types/Types";
 import {useEffect, useState} from "react";
+import useAuthContext from "../contextHook/useAuthContext";
 
 const useFetchUsersAccounts = () => {
   const [userAccounts, setUserAccounts] = useState<SimpleAccountDetails[] | undefined>(undefined);
   const [isPending, setIsPending] = useState<boolean>(true);
   const [error, setError] = useState<any>(undefined);
+  const { refreshAuth } = useAuthContext();
 
   useEffect(() => {
     handleRequest()
@@ -19,6 +21,11 @@ const useFetchUsersAccounts = () => {
         method: 'GET',
         credentials: "include",
       });
+
+      if(response.status === 401) {
+        refreshAuth();
+        throw new Error("Unauthorized")
+      }
 
       if(response.status !== 200) {
         throw new Error("Ein unerwarteter Fehler ist aufgetreten...");

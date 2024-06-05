@@ -30,12 +30,12 @@ public class AccountDataService {
 
   public List<AccountEntity> getAllActiveByUser(Long userId) {
     List<AccountEntity> allByOwnerId = accountRepository.findAllByOwner_IdAndActive(userId, true);
-    return sortingService.sortById(allByOwnerId);
+    return sortingService.sortAccountsById(allByOwnerId);
   }
 
   public List<AccountEntity> getAllByUser(Long userId) {
     List<AccountEntity> allByOwnerId = accountRepository.findAllByOwner_Id(userId);
-    return sortingService.sortById(allByOwnerId);
+    return sortingService.sortAccountsById(allByOwnerId);
   }
 
   public AccountEntity getAccountById(Long accountId) throws IllegalIdentifierException, UserAccessNotAllowedException {

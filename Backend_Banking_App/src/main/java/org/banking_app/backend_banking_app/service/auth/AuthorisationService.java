@@ -27,7 +27,11 @@ public class AuthorisationService {
     if(!Objects.equals(account.getOwner().getId(), authenticatedUserDetails.getUserId())) throw new UserAccessNotAllowedException();
   }
 
-  private boolean userIsAdmin() throws UserAccessNotAllowedException {
+  public void checkUserAdmin() throws UserAccessNotAllowedException {
+    if(!userIsAdmin()) throw new UserAccessNotAllowedException();
+  }
+
+  private boolean userIsAdmin() {
     return JpaUserDetailsService.getAuthenticatedUserDetails().hasAuthority("ROLE_ADMIN");
   }
 

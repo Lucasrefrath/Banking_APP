@@ -1,13 +1,13 @@
 package org.banking_app.backend_banking_app.controller;
 
+import org.banking_app.backend_banking_app.exceptions.UserAccessNotAllowedException;
 import org.banking_app.backend_banking_app.model.FullUserDataModel;
-import org.banking_app.backend_banking_app.service.FullUserDataService;
+import org.banking_app.backend_banking_app.model.requestModel.UpdateUserRolesRequest;
+import org.banking_app.backend_banking_app.service.user.FullUserDataService;
+import org.banking_app.backend_banking_app.service.user.UserDataService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -19,9 +19,21 @@ public class UsersController {
   @Autowired
   FullUserDataService fullUserDataService;
 
+  @Autowired
+  UserDataService userDataService;
+
   @GetMapping
-  public ResponseEntity<List<FullUserDataModel>> getAllUsers() {
+  public ResponseEntity<List<FullUserDataModel>> getAllUsers() throws UserAccessNotAllowedException {
     return ResponseEntity.ok(fullUserDataService.getAllUserData());
+  }
+
+  @PostMapping("/updateRoles")
+  public ResponseEntity updateUserRoles(@RequestBody UpdateUserRolesRequest request) throws UserAccessNotAllowedException {
+    userDataService.updateUserRoles(
+            request.getUserId(),
+            request.getUpdatedRoles()
+    );
+    return ResponseEntity.ok().build();
   }
 
 }

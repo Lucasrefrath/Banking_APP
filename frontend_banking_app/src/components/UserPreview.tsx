@@ -1,21 +1,17 @@
 import React, {useState} from 'react';
 import {FullUserData} from "../types/Types";
 import useFormat from "../utils/useFormat";
-import useAuth from "../hooks/useAuth";
-import {Roles} from "../types/Enums";
-import {CheckBadgeIcon, StarIcon} from "@heroicons/react/24/solid";
 import UserDetailsPopUp from "./pop-ups/UserDetailsPopUp";
-import useFormatRoles from "../utils/useFormatRoles";
+import useUserRoles from "../hooks/request/useUserRoles";
 
 interface UserPreviewProps {
   userData: FullUserData
 }
 
 const UserPreview = ({ userData }: UserPreviewProps) => {
+  const { getRoleObjects } = useUserRoles();
   const { formatBalanceSum, formatActiveAccountCount } = useFormat();
-  const { getRoleIcons } = useFormatRoles(userData)
-  const { specificUserHasRole } = useAuth();
-  const [popUpOpen, setPopUpOpen] = useState<boolean>(false)
+  const [popUpOpen, setPopUpOpen] = useState<boolean>(false);
 
   return (
     <li key={userData.user.id} className="flex justify-between items-center gap-x-6 py-2">
@@ -25,7 +21,7 @@ const UserPreview = ({ userData }: UserPreviewProps) => {
             <span className={"flex items-center gap-2"}>
               <h4>{userData.user.username}</h4>
               <div className={"flex gap-1 items-center"}>
-                {getRoleIcons().map((icon) => <div key={icon.key}>{icon}</div>)}
+                {getRoleObjects(userData.user.roles).map((role) => role.icon)}
               </div>
             </span>
             <small>{formatActiveAccountCount(userData)}</small>

@@ -15,11 +15,11 @@ const UserAccountAdminActionDropdown = ({account}: UserAccountAdminActionDropdow
       <MenuButton>
         <EllipsisVerticalIcon className={"icon"} />
       </MenuButton>
-      <MenuItems className={"w-auto rounded-md shadow-lg ring-1 ring-black ring-opacity-5 bg-white z-50"} anchor={"bottom start"}>
+      <MenuItems className={"menu-items"} anchor={"bottom start"}>
         {account.active ? (
           <MenuItem>
             <a
-              className={'block px-4 py-2 text-sm font-normal hover:bg-gray-100 cursor-pointer'}
+              className={'type-menu-item'}
               onClick={() => handleDeactivateAccount(account.id)}
             >
               <div className={"flex gap-2"}>
@@ -30,7 +30,7 @@ const UserAccountAdminActionDropdown = ({account}: UserAccountAdminActionDropdow
           </MenuItem>) : (
           <MenuItem>
             <a
-            className={'block px-4 py-2 text-sm font-normal hover:bg-gray-100 cursor-pointer'}
+            className={'type-menu-item'}
             onClick={() => handleActivateAccount(account.id)}
             >
               <div className={"flex gap-2"}>

@@ -1,4 +1,5 @@
 import {AccountHistory, SimpleAccountDetails} from "./Types";
+import {Roles} from "./Enums";
 
 export type AccountActionResponse = {
   updatedAccountData: SimpleAccountDetails,
@@ -18,4 +19,9 @@ export type DepositRequst = {
 
 export interface DeleteAccountRequest {
   id: number
+}
+
+export interface UpdateUserRolesRequest {
+  userId: number,
+  updatedRoles: Roles[]
 }

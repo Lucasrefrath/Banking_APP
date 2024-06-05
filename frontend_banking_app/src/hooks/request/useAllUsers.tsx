@@ -2,12 +2,17 @@ import {API_URLS_V1} from "../../const/GlobalConst";
 import {FullUserData, SimpleAccountDetails} from "../../types/Types";
 import {useEffect, useState} from "react";
 import useAccountActive from "./useAccountActive";
+import {Roles} from "../../types/Enums";
+import useUserRoles from "./useUserRoles";
+import useAuthContext from "../contextHook/useAuthContext";
 
 const useAllUsers = () => {
   const [isPending, setIsPending] = useState<boolean>(true);
   const [error, setError] = useState<any>(undefined);
   const [userData, setUserData] = useState<FullUserData[] | undefined>(undefined);
   const { handleDeactivate, handleActivate } = useAccountActive();
+  const { handleUpdateUserRoles: updateRoles } = useUserRoles();
+  const { refreshAuth } = useAuthContext();
 
   useEffect(() => {
     handleRequest()
@@ -41,6 +46,27 @@ const useAllUsers = () => {
     handleActivate({id: accountId}, () => setUserData(newUserData));
   }
 
+  const handleUpdateUserRoles = (updatedRoles: Roles[], userId: number, actionAfter: () => void) => {
+    if(!updatedRoles.includes(Roles.USER)) updatedRoles.push(Roles.USER);
+    updateRoles({
+      userId: userId,
+      updatedRoles
+    }, () => {
+      actionAfter();
+      pushNewRolesToLocalUserData(updatedRoles, userId);
+    })
+  }
+
+  const pushNewRolesToLocalUserData  = (newRoles: Roles[], userId: number) => {
+    const newUserData = userData?.map((fullUser) => {
+      if(fullUser.user.id === userId) {
+        return {...fullUser, user: {...fullUser.user, roles: newRoles}}
+      }
+      return fullUser;
+    });
+    setUserData(newUserData);
+  }
+
   const handleRequest = async (): Promise<void> => {
     setIsPending(true);
 
@@ -50,7 +76,8 @@ const useAllUsers = () => {
         credentials: "include",
       });
 
-      if(response.status === 403) {
+      if(response.status === 401) {
+        refreshAuth();
         const message = await response.text();
         throw new Error(message)
       }
@@ -69,7 +96,7 @@ const useAllUsers = () => {
     setIsPending(false);
   }
 
-  return { isPending, error, userData, handleDeactivateAccount, handleActivateAccount }
+  return { isPending, error, userData, handleDeactivateAccount, handleActivateAccount, handleUpdateUserRoles }
 };
 
 export default useAllUsers;

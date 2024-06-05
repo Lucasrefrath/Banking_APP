@@ -27,9 +27,8 @@ const AuthProvider = () => {
             const data: UserDetails = await response.json();
             setIsAuthenticated(true)
             setUserDetails(data);
-
-            console.log(data);
         } catch (error) {
+            setIsAuthenticated(false)
             console.log(error)
         }
         setIsChecking(false);
@@ -83,7 +82,8 @@ const AuthProvider = () => {
           isAuthenticated: isAuthenticated,
           userDetails: userDetails,
           login: handleLogIn,
-          logout: handleLogOut
+          logout: handleLogOut,
+          refreshAuth: checkAuthentication
       }}>
           <AuthRoutingManager/>
       </AuthContext.Provider>

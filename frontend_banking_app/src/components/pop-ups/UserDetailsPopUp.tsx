@@ -1,9 +1,13 @@
 import React from 'react';
 import {FullUserData} from "../../types/Types";
-import useFormatRoles from "../../utils/useFormatRoles";
 import CustomPopUp from "../customUI/CustomPopUp";
 import useFormat from "../../utils/useFormat";
 import UserAccountAdminActionDropdown from "../customUI/UserAccountAdminActionDropdown";
+import useAdminContext from "../../hooks/contextHook/useAdminContext";
+import AddRoleDropdown from "../customUI/AddRoleDropdown";
+import useManageUserRolesChanges from "../../hooks/useManageUserRolesChanges";
+import useUserRoles from "../../hooks/request/useUserRoles";
+import RolePill from "../RolePill";
 
 interface UserDetailsPopUpProps {
   userDetail: FullUserData,
@@ -12,8 +16,15 @@ interface UserDetailsPopUpProps {
 }
 
 const UserDetailsPopUp = ({ isOpen, close, userDetail}: UserDetailsPopUpProps) => {
-  const { getRolePills } = useFormatRoles(userDetail);
+  const { hasValueChanged, userRoles, resetValues, addRole, deleteRole} = useManageUserRolesChanges(userDetail.user.roles)
   const { formatBalance } = useFormat();
+  const { handleUpdateUserRoles } = useAdminContext();
+  const { getRoleObjects } = useUserRoles();
+
+  const handleCancel = () => {
+    close();
+    resetValues();
+  }
 
   return (
     <CustomPopUp isOpen={isOpen} close={close}>
@@ -24,8 +35,9 @@ const UserDetailsPopUp = ({ isOpen, close, userDetail}: UserDetailsPopUpProps) =
 
       <section>
         <label>Roles</label>
-        <div className={"flex items-center gap-2"}>
-          {getRolePills().map((role) => <div key={role.key}>{role}</div>)}
+        <div className={"flex items-center gap-2 flex-wrap"}>
+          {getRoleObjects(userRoles).map((role) => <RolePill role={role} userId={userDetail.user.id} showActionX={true} onClick={() => deleteRole(role.enum)}/>)}
+          <AddRoleDropdown userRoles={userRoles} addRole={addRole}/>
         </div>
       </section>
 
@@ -49,7 +61,16 @@ const UserDetailsPopUp = ({ isOpen, close, userDetail}: UserDetailsPopUpProps) =
         </ol>
       </section>
 
-      <button className={"type-primary mt-4"} onClick={close}>Done</button>
+        {hasValueChanged ? (
+          <section className={"flex gap-2"}>
+            <button className={"type-secondary"} onClick={handleCancel}>cancel</button>
+            <button className={"type-primary"} onClick={() => handleUpdateUserRoles(userRoles, userDetail.user.id, close)}>save changes</button>
+          </section>
+        ) : (
+          <section>
+            <button className={"type-primary"} onClick={close}>Done</button>
+          </section>
+        )}
     </CustomPopUp>
   );
 };

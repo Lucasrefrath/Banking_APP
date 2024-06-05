@@ -3,12 +3,11 @@ package org.banking_app.backend_banking_app.service;
 import lombok.NoArgsConstructor;
 import org.banking_app.backend_banking_app.model.DTO.AccountEntity;
 import org.banking_app.backend_banking_app.model.DTO.AccountHistoryEntity;
+import org.banking_app.backend_banking_app.model.DTO.UserEntity;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDateTime;
 import java.util.Comparator;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 @NoArgsConstructor
@@ -20,9 +19,20 @@ public class SortingService {
             .toList();
   }
 
-  public List<AccountEntity> sortById(List<AccountEntity> accounts) {
+  public List<AccountEntity> sortAccountsById(List<AccountEntity> accounts) {
     return accounts.stream()
             .sorted(Comparator.comparing(AccountEntity::getId))
             .toList();
+  }
+
+  public List<UserEntity> sortUserById(List<UserEntity> user) {
+    return user.stream()
+            .sorted(Comparator.comparing(UserEntity::getId))
+            .toList();
+  }
+
+  public String sortRoles(String roles) {
+    //TODO: IMPLEMENT
+    return "sorted Roles";
   }
 }

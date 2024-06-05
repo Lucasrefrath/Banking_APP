@@ -1,6 +1,7 @@
 import {API_URLS_V1} from "../../const/GlobalConst";
 import {AccountDetails, AccountHistory, SimpleAccountDetails} from "../../types/Types";
 import {useEffect, useState} from "react";
+import useAuthContext from "../contextHook/useAuthContext";
 
 interface FetchAccountReturn {
   accountDetails: SimpleAccountDetails,
@@ -8,6 +9,7 @@ interface FetchAccountReturn {
 }
 
 const UseFetchUsersAccounts = (accountId: string) => {
+  const { refreshAuth } = useAuthContext();
   const [userAccount, setUserAccount] = useState<SimpleAccountDetails | undefined>(undefined);
   const [accountHistory, setAccountHistory] = useState<AccountHistory[] | undefined>(undefined);
   const [isPending, setIsPending] = useState<boolean>(true);
@@ -26,7 +28,8 @@ const UseFetchUsersAccounts = (accountId: string) => {
         credentials: "include",
       });
 
-      if(response.status === 403) {
+      if(response.status === 401) {
+        refreshAuth();
         const message = await response.text();
         throw new Error(message)
       }

@@ -1,8 +1,9 @@
 import {API_URLS_V1} from "../../const/GlobalConst";
 import {DeleteAccountRequest} from "../../types/Request-Response";
-import {useNavigate} from "react-router-dom";
+import useAuthContext from "../contextHook/useAuthContext";
 
 const useAccountActive = () => {
+  const { refreshAuth } = useAuthContext();
 
   const handleDeactivate = async (request: DeleteAccountRequest, actionAfter?:  () => any): Promise<void> => {
 
@@ -15,6 +16,11 @@ const useAccountActive = () => {
         },
         body: JSON.stringify(request),
       });
+
+      if(response.status === 401) {
+        refreshAuth();
+        throw new Error("Unauthorized")
+      }
 
       if(response.status !== 200) {
         throw new Error("Ein unerwarteter Fehler ist aufgetreten...");
@@ -38,6 +44,11 @@ const useAccountActive = () => {
         },
         body: JSON.stringify(request),
       });
+
+      if(response.status === 401) {
+        refreshAuth();
+        throw new Error("Unauthorized")
+      }
 
       if(response.status !== 200) {
         throw new Error("Ein unerwarteter Fehler ist aufgetreten...");

@@ -95,12 +95,32 @@
         @apply pill bg-red-400 text-gray-900
     }
 
+    .pill-primary {
+        @apply pill bg-indigo-300 text-gray-900
+    }
+
     .pill {
         @apply px-2 py-1 rounded-xl text-sm flex gap-1
     }
 
+    .pill-round {
+        @apply text-sm flex gap-1 rounded-full p-1
+    }
+
+    .pill-round-gray {
+        @apply pill-round bg-gray-overlay text-gray-900
+    }
+
     section {
         @apply mt-3
+    }
+
+    .menu-items {
+        @apply w-auto rounded-md shadow-lg ring-1 ring-black ring-opacity-5 bg-white z-50
+    }
+
+    a.type-menu-item {
+        @apply block px-4 py-2 text-sm font-normal hover:bg-gray-100 cursor-pointer
     }
 
 }
