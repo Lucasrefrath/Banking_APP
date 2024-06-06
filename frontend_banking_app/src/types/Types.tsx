@@ -118,3 +118,8 @@ export interface UserSession {
     user: UserDetails,
     sessions: Session[]
 }
+
+export interface  ProfileSettingsData {
+    sessionData: Session[] | undefined,
+    terminateSession: (sessionId: string) => void
+}

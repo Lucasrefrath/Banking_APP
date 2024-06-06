@@ -39,7 +39,6 @@ const AuthProvider = () => {
     const handleLogIn = async ({username = "admin", password = "admin"}: LogInData, actionAfter: () => void = () => navigate("/")): Promise<void> => {
         if(isAuthenticated) return
         const auth: string = btoa(`${username}:${password}`);
-        console.log(auth)
 
         try {
             const response = await fetch(API_URLS_V1.auth + '/login', {
@@ -69,7 +68,6 @@ const AuthProvider = () => {
             const data = await response.text();
             setIsAuthenticated(false);
             setUserDetails(undefined);
-            console.log(data);
         } catch (error) {
             console.log(error)
         }

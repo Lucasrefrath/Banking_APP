@@ -6,7 +6,7 @@ import useAuthContext from "../../hooks/contextHook/useAuthContext";
 import {UserCircleIcon} from "@heroicons/react/24/outline";
 
 const ActiveSessionsTile = () => {
-  const { sessionData } = useAdminContext();
+  const { sessionData, terminateSession } = useAdminContext();
   const { userDetails} = useAuthContext();
 
   return (
@@ -19,7 +19,7 @@ const ActiveSessionsTile = () => {
               {sessionD.user.id === userDetails?.id && <UserCircleIcon className={"icon"}/>}
             </div>
             <ol className={"divide-y"}>
-              {sessionD.sessions.map((session: Session) => <SessionPreview sessionData={session} />)}
+              {sessionD.sessions.map((session: Session) => <SessionPreview sessionData={session} terminateSession={terminateSession} />)}
             </ol>
           </section>
           ))}

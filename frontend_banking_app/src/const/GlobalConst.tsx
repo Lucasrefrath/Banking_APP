@@ -5,6 +5,8 @@ import {AccountAction, Roles} from "../types/Enums";
 import UserManagementTile from "../components/tiles/UserManagementTile";
 import React from "react";
 import ActiveSessionsTile from "../components/tiles/ActiveSessionsTile";
+import GeneralSettingsTile from "../components/tiles/GeneralSettingsTile";
+import ActiveSessionsProfileSettingsTile from "../components/tiles/ActiveSessionsProfileSettingsTile";
 
 export const API_URLS_V1: ApiVersion = {
     test: 'http://localhost:8080/api-test/v1',
@@ -13,6 +15,7 @@ export const API_URLS_V1: ApiVersion = {
     accountActions: 'http://localhost:8080/api/v1/account/actions',
     fastSearch: 'http://localhost:8080/api/v1/fastSearch',
     users: 'http://localhost:8080/api/v1/users',
+    sessions: 'http://localhost:8080/api/v1/sessions',
 }
 
 export const FALLBACK_URLS: FallbackPath = {
@@ -26,9 +29,14 @@ export const MAX_ACCOUNTS = {
 }
 
 export const ADMIN_OPTIONS: ListItemModel[] = [
-    {label: "User", tileObject: <UserManagementTile /> },
-    {label: "Sessions", tileObject: <ActiveSessionsTile />},
-    {label: "Requests"}
+    {label: "All User", tileObject: <UserManagementTile /> },
+    {label: "Active Sessions", tileObject: <ActiveSessionsTile />},
+    {label: "Open Requests"}
+]
+
+export const PROFILE_SETTINGS_OPTIONS: ListItemModel[] = [
+    {label: "General", tileObject: <GeneralSettingsTile />},
+    {label: "Active Sessions", tileObject: <ActiveSessionsProfileSettingsTile />}
 ]
 
 export const DEFAULT_USER: LogInData = {
@@ -37,8 +45,6 @@ export const DEFAULT_USER: LogInData = {
 }
 
 export const user = {
-    name: 'Tom Cook',
-    email: 'tom@example.com',
     imageUrl:
       "https://st3.depositphotos.com/9998432/13335/v/450/depositphotos_133351928-stock-illustration-default-placeholder-man-and-woman.jpg"
 }
@@ -51,8 +57,8 @@ export const navigation: NavigationConfig[] = [
 ]
 
 export const userNavigation: NavigationConfig[] = [
-    { name: 'Your Profile', to: '/', icon: <UserCircleIcon className="mr-1.5 h-5 w-5 flex-shrink-0 text-gray-400" aria-hidden="true"/> },
-    { name: 'Settings', to: '/', icon: <Cog6ToothIcon className="mr-1.5 h-5 w-5 flex-shrink-0 text-gray-400" aria-hidden="true" />},
+    { name: 'Your Profile (CS)', to: '/', icon: <UserCircleIcon className="mr-1.5 h-5 w-5 flex-shrink-0 text-gray-400" aria-hidden="true"/> },
+    { name: 'Settings', to: '/profile-settings', icon: <Cog6ToothIcon className="mr-1.5 h-5 w-5 flex-shrink-0 text-gray-400" aria-hidden="true" />},
     { name: 'Sign out', to: '/logout', icon: <LockClosedIcon className="mr-1.5 h-5 w-5 flex-shrink-0 text-red-500" aria-hidden="true" />, addOnStyles: "text-red-500", divider: true},
 ]
 

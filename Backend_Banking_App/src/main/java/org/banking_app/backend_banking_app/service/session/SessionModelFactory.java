@@ -1,4 +1,4 @@
-package org.banking_app.backend_banking_app.service.auth;
+package org.banking_app.backend_banking_app.service.session;
 
 import org.banking_app.backend_banking_app.model.SessionModel;
 import org.springframework.beans.factory.annotation.Autowired;

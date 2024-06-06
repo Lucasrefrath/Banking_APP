@@ -1,5 +1,5 @@
 import {API_URLS_V1} from "../../const/GlobalConst";
-import {FullUserData, Session, SimpleAccountDetails, UserSession} from "../../types/Types";
+import {Session} from "../../types/Types";
 import {useEffect, useState} from "react";
 import useAuthContext from "../contextHook/useAuthContext";
 import useTerminateSession from "./useTerminateSession";
@@ -7,7 +7,7 @@ import useTerminateSession from "./useTerminateSession";
 const useAllSessions = () => {
   const [isPending, setIsPending] = useState<boolean>(true);
   const [error, setError] = useState<any>(undefined);
-  const [sessionData, setSessionData] = useState<UserSession[] | undefined>(undefined);
+  const [sessionData, setSessionData] = useState<Session[] | undefined>(undefined);
   const { refreshAuth } = useAuthContext();
   const { handleTerminateSession } = useTerminateSession();
 
@@ -19,7 +19,7 @@ const useAllSessions = () => {
     setIsPending(true);
 
     try {
-      const response = await fetch(API_URLS_V1.sessions + "/allSessions", {
+      const response = await fetch(API_URLS_V1.sessions + "/sessions", {
         method: 'GET',
         credentials: "include",
       });
@@ -34,7 +34,7 @@ const useAllSessions = () => {
         throw new Error("Ein unerwarteter Fehler ist aufgetreten...");
       }
 
-      const data: UserSession[] = await response.json();
+      const data: Session[] = await response.json();
       setSessionData(data);
       setIsPending(false);
     } catch (error) {
@@ -45,18 +45,11 @@ const useAllSessions = () => {
   }
 
   const deleteSessionLocal = (sessionId: string ) => {
-    const newSessionData = sessionData?.map((userSession: UserSession): UserSession => {
-      return {
-        user: userSession.user,
-        sessions: userSession.sessions.filter((session: Session) => session.id !== sessionId)
-      }
-    });
-
-    setSessionData(newSessionData);
+    setSessionData(sessionData?.filter((session) => session.id !== sessionId))
   }
 
   const terminateSession = async (sessionId: string): Promise<void> => {
-    await handleTerminateSession(sessionId, () => deleteSessionLocal(sessionId));
+    await handleTerminateSession(sessionId, () => deleteSessionLocal(sessionId))
   }
 
   return { isPending, error, sessionData, terminateSession }

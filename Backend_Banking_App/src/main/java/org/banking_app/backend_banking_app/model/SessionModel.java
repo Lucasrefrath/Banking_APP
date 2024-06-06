@@ -1,5 +1,6 @@
 package org.banking_app.backend_banking_app.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
@@ -18,9 +19,6 @@ public class SessionModel implements Session {
   @Getter @Setter
   private Boolean isCurrent = false;
 
-  public SessionModel(Session session) {
-    this.session = session;
-  }
 
   @Override
   public String getId() {
@@ -37,6 +35,12 @@ public class SessionModel implements Session {
     return session.getAttribute(attributeName);
   }
 
+  public String getClientBrowser() {
+    //TODO: IMPLEMENT
+    return "Chrome";
+  }
+
+  //TODO: @JsonIgnore (after Testing)
   @Override
   public Set<String> getAttributeNames() {
     return session.getAttributeNames();

@@ -10,6 +10,7 @@ import NotFoundPage from "../pages/NotFoundPage";
 import Header from "../components/Header";
 import LogOutPage from "../pages/LogOutPage";
 import {Roles} from "../types/Enums";
+import ProfileSettingsPage from "../pages/ProfileSettingsPage";
 
 const AuthRoutingManager = () => {
     return (
@@ -24,6 +25,9 @@ const AuthRoutingManager = () => {
                       (// Private Routes)
                       <Route path={"/user"} element={
                           <RequiresAuthRoute renderElement={<TestPage/>} allowedRoles={[Roles.USER]}/>}
+                      />
+                      <Route path={"/profile-settings"} element={
+                          <RequiresAuthRoute renderElement={<ProfileSettingsPage />}/>}
                       />
                       <Route path={"/dashBoard"} element={
                           <RequiresAuthRoute renderElement={<DashBoardPage/>}/>

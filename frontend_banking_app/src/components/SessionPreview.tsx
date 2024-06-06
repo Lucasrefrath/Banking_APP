@@ -5,16 +5,15 @@ import {ShieldCheckIcon} from "@heroicons/react/24/solid";
 import {CloudIcon, KeyIcon, PowerIcon} from "@heroicons/react/24/outline";
 import useTimeSince from "../utils/useTimeSince";
 import DestructiveButton from "./customUI/DestructiveButton";
-import useAdminContext from "../hooks/contextHook/useAdminContext";
 
 interface SessionPreviewProps {
   sessionData: Session,
+  terminateSession: (sessionId: string) => void
 }
 
-const SessionPreview = ({ sessionData }: SessionPreviewProps) => {
+const SessionPreview = ({ sessionData, terminateSession }: SessionPreviewProps) => {
   const { formatTime } = useFormat();
   const { getTimeSince, getDay, getMinutesSince } = useTimeSince();
-  const { terminateSession } = useAdminContext();
 
   return (
     <li key={sessionData.id} className="flex justify-between items-center gap-x-6 py-2">

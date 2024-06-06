@@ -28,7 +28,7 @@
     }
 
     button {
-        @apply inline-flex justify-center items-center gap-2 rounded-lg px-3.5 py-2.5 text-sm font-semibold
+        @apply inline-flex justify-center items-center gap-2 rounded-lg px-3.5 py-2.5 text-sm font-semibold disabled:cursor-not-allowed
     }
 
     button.type-see-more {
