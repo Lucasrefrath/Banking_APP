@@ -3,11 +3,13 @@ import {AuthContext} from "../const/Context";
 import {API_URLS_V1} from "../const/GlobalConst";
 import {LogInData, UserDetails} from "../types/Types";
 import AuthRoutingManager from "./AuthRoutingManager";
+import {BrowserRouter, useNavigate} from "react-router-dom";
 
 const AuthProvider = () => {
     const [isAuthenticated, setIsAuthenticated] = useState(false);
     const [userDetails, setUserDetails] = useState<UserDetails | undefined>(undefined);
     const [isChecking, setIsChecking] = useState(true);
+    const navigate = useNavigate();
 
     useEffect(() => {
         checkAuthentication();
@@ -34,7 +36,7 @@ const AuthProvider = () => {
         setIsChecking(false);
     }
 
-    const handleLogIn = async ({username = "admin", password = "admin"}: LogInData): Promise<void> => {
+    const handleLogIn = async ({username = "admin", password = "admin"}: LogInData, actionAfter: () => void = () => navigate("/")): Promise<void> => {
         if(isAuthenticated) return
         const auth: string = btoa(`${username}:${password}`);
         console.log(auth)
@@ -50,7 +52,7 @@ const AuthProvider = () => {
             const data: UserDetails = await response.json();
             setIsAuthenticated(true);
             setUserDetails(data)
-            console.log(data);
+            actionAfter()
         } catch (error) {
             console.log(error)
         }
@@ -85,7 +87,7 @@ const AuthProvider = () => {
           logout: handleLogOut,
           refreshAuth: checkAuthentication
       }}>
-          <AuthRoutingManager/>
+        <AuthRoutingManager/>
       </AuthContext.Provider>
 );
 };

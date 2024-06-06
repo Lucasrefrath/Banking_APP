@@ -1,6 +1,6 @@
 import React from 'react';
-import useAdminContext from "../hooks/contextHook/useAdminContext";
-import UserPreview from "./UserPreview";
+import useAdminContext from "../../hooks/contextHook/useAdminContext";
+import UserPreview from "../UserPreview";
 
 const UserManagementTile = () => {
   const { userData } = useAdminContext();
@@ -11,9 +11,9 @@ const UserManagementTile = () => {
 
   return (
     <ol className={"divide-y"}>
-      {userData.map((user) => {
-        return <UserPreview userData={user} key={user.user.id}/>
-      })}
+      {userData.map((user) =>
+        <UserPreview userData={user} key={user.user.id}/>
+      )}
     </ol>
   );
 };

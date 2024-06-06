@@ -2,8 +2,9 @@ import {AccountActionConfig, ListItemModel, LogInData,} from "../types/Types";
 import {Cog6ToothIcon, LockClosedIcon, UserCircleIcon} from "@heroicons/react/24/outline";
 import {ApiVersion, FallbackPath, NavigationConfig} from "../types/ConstTypes";
 import {AccountAction, Roles} from "../types/Enums";
-import UserManagementTile from "../components/UserManagementTile";
+import UserManagementTile from "../components/tiles/UserManagementTile";
 import React from "react";
+import ActiveSessionsTile from "../components/tiles/ActiveSessionsTile";
 
 export const API_URLS_V1: ApiVersion = {
     test: 'http://localhost:8080/api-test/v1',
@@ -26,8 +27,8 @@ export const MAX_ACCOUNTS = {
 
 export const ADMIN_OPTIONS: ListItemModel[] = [
     {label: "User", tileObject: <UserManagementTile /> },
-    {label: "Capital"},
-    {label: "Item 3"}
+    {label: "Sessions", tileObject: <ActiveSessionsTile />},
+    {label: "Requests"}
 ]
 
 export const DEFAULT_USER: LogInData = {

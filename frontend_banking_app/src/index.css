@@ -48,7 +48,7 @@
     }
 
     button.type-destructive {
-        @apply bg-destructive text-white hover:bg-red-400 disabled:text-red-300 shadow-sm
+        @apply bg-destructive text-white hover:bg-red-400 disabled:text-red-300 disabled:hover:bg-destructive shadow-sm
     }
 
     h1 {

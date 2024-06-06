@@ -53,9 +53,11 @@ export type SimpleAccountDetails = {
 
 export interface AdminData {
     userData: FullUserData[] | undefined,
+    sessionData: UserSession[] | undefined,
     handleDeactivateAccount: (accountId: number) => void,
     handleActivateAccount: (accountId: number) => void,
-    handleUpdateUserRoles: (updatedRoles: Roles[], userId: number, actionAfter: () => void) => void
+    handleUpdateUserRoles: (updatedRoles: Roles[], userId: number, actionAfter: () => void) => void,
+    terminateSession: (sessionId: string) => void
 }
 
 export interface FullUserData {
@@ -100,4 +102,19 @@ export interface RoleObject {
     enum: Roles,
     label: string
     icon: ReactElement
+}
+
+export interface Session {
+    id: string,
+    isCurrent: boolean,
+    creationTime: Date,
+    expired: boolean,
+    lastAccessedTime: Date,
+    maxInactiveInterval: string,
+    attributeNames: string[]
+}
+
+export interface UserSession {
+    user: UserDetails,
+    sessions: Session[]
 }

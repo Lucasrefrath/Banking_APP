@@ -30,7 +30,25 @@ const useTimeSince = () => {
     return "long ago"
   }
 
-  return { getTimeSince };
+  const getDay = (date: Date) => {
+    const today: Date = new Date(Date.now())
+    date = new Date(date)
+
+    if(date.toDateString() === today.toDateString()) return "today"
+
+    const diff: string = ((date.getTime() - today.getTime()) / (1000 * 3600 * 24)).toString().split(".")[0];
+    if(diff === "1") return `yesterday`
+    return `${diff} days ago`
+  }
+
+  const getMinutesSince = (date: Date): number => {
+    date = new Date(date);
+    const now: Date = new Date(Date.now());
+
+    return (now.getTime() - date.getTime()) / 1000 / 60
+  }
+
+  return { getTimeSince, getDay, getMinutesSince };
 };
 
 export default useTimeSince;
