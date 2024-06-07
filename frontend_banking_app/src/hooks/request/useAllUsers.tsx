@@ -15,6 +15,7 @@ const useAllUsers = () => {
   const { refreshAuth } = useAuthContext();
 
   useEffect(() => {
+    setIsPending(true)
     handleRequest()
   }, []);
 
@@ -68,8 +69,6 @@ const useAllUsers = () => {
   }
 
   const handleRequest = async (): Promise<void> => {
-    setIsPending(true);
-
     try {
       const response = await fetch(API_URLS_V1.users, {
         method: 'GET',
@@ -96,7 +95,7 @@ const useAllUsers = () => {
     setIsPending(false);
   }
 
-  return { isPending, error, userData, handleDeactivateAccount, handleActivateAccount, handleUpdateUserRoles }
+  return { isPending, error, userData, handleDeactivateAccount, handleActivateAccount, handleUpdateUserRoles, handleRequest }
 };
 
 export default useAllUsers;

@@ -19,7 +19,8 @@ export const API_URLS_V1: ApiVersion = {
 }
 
 export const FALLBACK_URLS: FallbackPath = {
-    unauthorised: "/login"
+    unauthorised: "/login",
+    alreadyLoggedIn: "/dashboard"
 }
 
 export const MAX_ACCOUNTS = {

@@ -1,7 +1,7 @@
 import React from 'react';
 import {Session} from "../types/Types";
 import useFormat from "../utils/useFormat";
-import {ShieldCheckIcon} from "@heroicons/react/24/solid";
+import {ShieldCheckIcon, MapPinIcon} from "@heroicons/react/24/solid";
 import {CloudIcon, KeyIcon, PowerIcon} from "@heroicons/react/24/outline";
 import useTimeSince from "../utils/useTimeSince";
 import DestructiveButton from "./customUI/DestructiveButton";
@@ -21,7 +21,7 @@ const SessionPreview = ({ sessionData, terminateSession }: SessionPreviewProps) 
         <div className="min-w-0">
           <div>
             <span className={"flex items-center gap-2"}>
-              <p>{sessionData.id}</p>
+              <p>{sessionData.clientBrowser} <small>-</small> {sessionData.clientOS}</p>
               {getMinutesSince(sessionData.lastAccessedTime) < 5 ? (
                 <div className={"pill-gray"}>
                   <ShieldCheckIcon className={"icon text-green-700 flex items-center"}/>
@@ -33,6 +33,10 @@ const SessionPreview = ({ sessionData, terminateSession }: SessionPreviewProps) 
                   <small>inactive</small>
                 </div>
               )}
+              <div className={"pill-gray"}>
+                <MapPinIcon className={"icon text-gray-500 flex items-center"}/>
+                <small>{sessionData.clientLocation}</small>
+              </div>
             </span>
             <span className={"flex items-center gap-2"}>
               <PowerIcon className={"icon-small text-gray-700"}/>

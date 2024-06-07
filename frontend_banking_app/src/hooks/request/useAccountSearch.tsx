@@ -25,7 +25,7 @@ const useAccountSearch = (query: string) => {
   const handleRequest = async (): Promise<void> => {
 
     try {
-      const response = await fetch(`${API_URLS_V1.fastSearch}/accounts`, { //TODO: current accountID
+      const response = await fetch(`${API_URLS_V1.fastSearch}/accounts`, {
         method: 'POST',
         credentials: "include",
         headers: {

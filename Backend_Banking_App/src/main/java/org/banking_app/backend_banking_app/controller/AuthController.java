@@ -3,8 +3,9 @@ package org.banking_app.backend_banking_app.controller;
 import jakarta.servlet.http.HttpSession;
 import org.banking_app.backend_banking_app.model.SecurityUserDetails;
 import org.banking_app.backend_banking_app.model.SessionUserModel;
+import org.banking_app.backend_banking_app.model.requestModel.LogInRequest;
 import org.banking_app.backend_banking_app.service.auth.JpaUserDetailsService;
-import org.banking_app.backend_banking_app.service.session.SessionDataService;
+import org.banking_app.backend_banking_app.service.session.SessionAttributeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -22,11 +23,11 @@ public class AuthController {
   JpaUserDetailsService userDetailsService;
 
   @Autowired
-  SessionDataService sessionDataService;
+  SessionAttributeService sessionAttributeService;
 
   @PostMapping("/login")
-  public ResponseEntity<SessionUserModel> login() {
-    sessionDataService.getCurrentHttpSession().setAttribute("TEST", "TEST"); //TODO: SET TAGS
+  public ResponseEntity<SessionUserModel> login(@RequestBody LogInRequest request) {
+    sessionAttributeService.setDefaultAttributes(request);
     return ResponseEntity.ok(new SessionUserModel());
   }
 

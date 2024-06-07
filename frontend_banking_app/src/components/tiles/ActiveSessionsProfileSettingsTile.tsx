@@ -6,9 +6,9 @@ const ActiveSessionsProfileSettingsTile = () => {
   const { sessionData, terminateSession} = useProfileSettingsContext();
 
   return (
-    <div>
+    <ol className={"divide-y"}>
       {sessionData?.map((session) => <SessionPreview sessionData={session} terminateSession={terminateSession} />)}
-    </div>
+    </ol>
   );
 };
 

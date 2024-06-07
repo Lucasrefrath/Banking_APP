@@ -2,6 +2,7 @@ package org.banking_app.backend_banking_app.model.DTO;
 
 import lombok.Data;
 import lombok.Getter;
+import org.banking_app.backend_banking_app.service.SortingService;
 
 import java.util.Arrays;
 import java.util.List;
@@ -18,6 +19,6 @@ public class UserModel {
   public UserModel(UserEntity userEntity) {
     this.id = userEntity.getId();
     this.username = userEntity.getUsername();
-    this.roles = Arrays.stream(userEntity.getRoles().split(",")).toList();
+    this.roles = SortingService.sortRoles(Arrays.stream(userEntity.getRoles().split(",")).toList());
   }
 }

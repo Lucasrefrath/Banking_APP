@@ -6,10 +6,15 @@ import {ADMIN_OPTIONS} from "../const/GlobalConst";
 import useAllSessions from "../hooks/request/useAllSessions";
 
 const AdminPage = () => {
-  const {isPending, userData, handleDeactivateAccount, handleActivateAccount, handleUpdateUserRoles} = useAllUsers();
-  const { sessionData, isPending: sessionIsPending, terminateSession } = useAllSessions();
+  const {isPending, userData, handleDeactivateAccount, handleActivateAccount, handleUpdateUserRoles, handleRequest: handleAllUsersRequest} = useAllUsers();
+  const { sessionData, isPending: sessionIsPending, terminateSession, handleRequest: handleAllSessionsRequest } = useAllSessions();
 
   if(isPending || sessionIsPending) return <p>Loading...</p>
+
+  const reloadData = () => {
+    handleAllUsersRequest()
+    handleAllSessionsRequest()
+  }
 
   return (
       <AdminContext.Provider value={{
@@ -21,7 +26,7 @@ const AdminPage = () => {
         terminateSession
       }}>
         <h2 className={"mb-4"}>AdminPage</h2>
-        <TabList listItems={ADMIN_OPTIONS}/>
+        <TabList listItems={ADMIN_OPTIONS} reloadAction={reloadData}/>
       </AdminContext.Provider>
   );
 };

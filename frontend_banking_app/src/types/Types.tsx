@@ -111,7 +111,10 @@ export interface Session {
     expired: boolean,
     lastAccessedTime: Date,
     maxInactiveInterval: string,
-    attributeNames: string[]
+    attributeNames: string[],
+    clientOS: string,
+    clientBrowser: string,
+    clientLocation: string
 }
 
 export interface UserSession {

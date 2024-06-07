@@ -5,7 +5,13 @@ import useUserSessions from "../hooks/request/useUserSessions";
 import {ProfileSettingsContext} from "../const/Context";
 
 const ProfileSettingsPage = () => {
-  const { sessionData, terminateSession} = useUserSessions();
+  const { sessionData, terminateSession, handleRequest, isPending} = useUserSessions();
+
+  if(isPending) return <p>Loading</p>
+
+  const reloadData = () => {
+    handleRequest();
+  }
 
   return (
     <ProfileSettingsContext.Provider value={{
@@ -13,7 +19,7 @@ const ProfileSettingsPage = () => {
       terminateSession
     }}>
       <h3>Profile Settings</h3>
-      <TabList listItems={PROFILE_SETTINGS_OPTIONS} />
+      <TabList listItems={PROFILE_SETTINGS_OPTIONS} reloadAction={reloadData} />
     </ProfileSettingsContext.Provider>
   );
 };

@@ -4,7 +4,7 @@ import {useNavigate} from "react-router-dom";
 
 const HomePage = () => {
     const AuthData = useAuthContext();
-    const navigate = useNavigate();
+    console.log(navigator)
     return (
         <div>
             {AuthData?.isAuthenticated ? (

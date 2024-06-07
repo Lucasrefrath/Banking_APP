@@ -4,12 +4,14 @@ import {API_URLS_V1} from "../const/GlobalConst";
 import {LogInData, UserDetails} from "../types/Types";
 import AuthRoutingManager from "./AuthRoutingManager";
 import {BrowserRouter, useNavigate} from "react-router-dom";
+import useBrowserData from "../hooks/useBrowserData";
 
 const AuthProvider = () => {
     const [isAuthenticated, setIsAuthenticated] = useState(false);
     const [userDetails, setUserDetails] = useState<UserDetails | undefined>(undefined);
     const [isChecking, setIsChecking] = useState(true);
     const navigate = useNavigate();
+    const { getTimeZone, getBrowserName, getDeviceOS } = useBrowserData();
 
     useEffect(() => {
         checkAuthentication();
@@ -45,7 +47,13 @@ const AuthProvider = () => {
                 method: 'POST',
                 headers: {
                     "Authorization": `Basic ${auth}`,
+                    "Content-Type": "application/json"
                 },
+                body: JSON.stringify({
+                    clientLocation: getTimeZone(),
+                    clientBrowser: getBrowserName(),
+                    clientOS: getDeviceOS()
+                }),
                 credentials: "include"
             });
             const data: UserDetails = await response.json();

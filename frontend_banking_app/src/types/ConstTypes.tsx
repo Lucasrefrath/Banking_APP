@@ -12,7 +12,8 @@ export interface ApiVersion {
 }
 
 export interface FallbackPath {
-  unauthorised: string
+  unauthorised: string,
+  alreadyLoggedIn: string
 }
 
 export interface NavigationConfig {

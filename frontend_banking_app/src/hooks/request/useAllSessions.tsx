@@ -12,12 +12,11 @@ const useAllSessions = () => {
   const { handleTerminateSession } = useTerminateSession();
 
   useEffect(() => {
+    setIsPending(true)
     handleRequest()
   }, []);
 
   const handleRequest = async (): Promise<void> => {
-    setIsPending(true);
-
     try {
       const response = await fetch(API_URLS_V1.sessions + "/allSessions", {
         method: 'GET',
@@ -59,7 +58,7 @@ const useAllSessions = () => {
     await handleTerminateSession(sessionId, () => deleteSessionLocal(sessionId));
   }
 
-  return { isPending, error, sessionData, terminateSession }
+  return { isPending, error, sessionData, terminateSession, handleRequest }
 };
 
 export default useAllSessions;

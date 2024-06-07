@@ -11,6 +11,8 @@ import Header from "../components/Header";
 import LogOutPage from "../pages/LogOutPage";
 import {Roles} from "../types/Enums";
 import ProfileSettingsPage from "../pages/ProfileSettingsPage";
+import RequiresNonAuthRoute from "./RequiresNonAuthRoute";
+import CreateUserPage from "../pages/CreateUserPage";
 
 const AuthRoutingManager = () => {
     return (
@@ -19,10 +21,18 @@ const AuthRoutingManager = () => {
               <div className={"px-52 pt-4"}>
                   <Routes>
                       <Route path={"/"} element={<HomePage/>}/>
-                      <Route path={"/login"} element={<LogInPage/>}/>
                       <Route path={"/test"} element={<TestPage />}/>
 
-                      (// Private Routes)
+                      {/*ONLY OPEN ROUTES*/}
+                      <Route path={"/login"} element={
+                          <RequiresNonAuthRoute renderElement={<LogInPage />}/>
+                      }/>
+
+                      <Route path={"/signup"} element={
+                          <RequiresNonAuthRoute renderElement={<CreateUserPage />}/>
+                      }/>
+
+                      {/*PRIVATE ROUTES*/}
                       <Route path={"/user"} element={
                           <RequiresAuthRoute renderElement={<TestPage/>} allowedRoles={[Roles.USER]}/>}
                       />

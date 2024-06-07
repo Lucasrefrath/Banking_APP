@@ -4,6 +4,7 @@ import jakarta.servlet.http.HttpSession;
 import org.banking_app.backend_banking_app.exceptions.UserAccessNotAllowedException;
 import org.banking_app.backend_banking_app.model.DTO.UserEntity;
 import org.banking_app.backend_banking_app.model.UserSessionsOverview;
+import org.banking_app.backend_banking_app.service.SortingService;
 import org.banking_app.backend_banking_app.service.auth.AuthorisationService;
 import org.banking_app.backend_banking_app.service.auth.JpaUserDetailsService;
 import org.banking_app.backend_banking_app.service.user.UserDataService;
@@ -32,10 +33,13 @@ public class SessionDataService {
   @Autowired
   AuthorisationService authorisationService;
 
+  @Autowired
+  SortingService sortingService;
+
 
   public List<? extends Session> getActiveUsersSessions() {
     List<? extends Session> sessions = sessionRepository.findByPrincipalName(JpaUserDetailsService.getAuthenticatedUserDetails().getUsername()).values().stream().toList();
-    return sessionModelFactory.buildAll(sessions);
+    return sortingService.sortSessions(sessionModelFactory.buildAll(sessions));
   }
 
   public HttpSession getCurrentHttpSession() {
@@ -50,7 +54,7 @@ public class SessionDataService {
   public List<? extends Session> getSessionsByUsername(String username) throws UserAccessNotAllowedException {
     authorisationService.checkUserAdmin();
     List<? extends Session> sessions = sessionRepository.findByPrincipalName(username).values().stream().toList();
-    return sessionModelFactory.buildAll(sessions);
+    return sortingService.sortSessions(sessionModelFactory.buildAll(sessions));
   }
 
   public List<UserSessionsOverview> getAllActiveSessions() throws UserAccessNotAllowedException {
@@ -60,7 +64,7 @@ public class SessionDataService {
     List<UserSessionsOverview> userSessionsOverview = new ArrayList<>();
 
     for(UserEntity user : allUsers) {
-      List<? extends Session> userSessions = getSessionsByUsername(user.getUsername());
+      List<? extends Session> userSessions = sortingService.sortSessions(getSessionsByUsername(user.getUsername()));
       userSessionsOverview.add(new UserSessionsOverview(
               user,
               sessionModelFactory.buildAll(userSessions)

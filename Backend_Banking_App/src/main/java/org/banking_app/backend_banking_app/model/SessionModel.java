@@ -36,11 +36,18 @@ public class SessionModel implements Session {
   }
 
   public String getClientBrowser() {
-    //TODO: IMPLEMENT
-    return "Chrome";
+    return session.getAttribute("CLIENT_BROWSER");
   }
 
-  //TODO: @JsonIgnore (after Testing)
+  public String getClientOS() {
+    return session.getAttribute("CLIENT_OS");
+  }
+
+  public String getClientLocation() {
+    return session.getAttribute("CLIENT_LOCATION");
+  }
+
+  @JsonIgnore
   @Override
   public Set<String> getAttributeNames() {
     return session.getAttributeNames();

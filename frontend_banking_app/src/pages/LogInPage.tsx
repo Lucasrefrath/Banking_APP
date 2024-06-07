@@ -5,7 +5,7 @@ import {DEFAULT_USER} from "../const/GlobalConst";
 import {ChevronRightIcon} from "@heroicons/react/24/outline";
 
 const LogInPage = () => {
-    const AuthData = useAuthContext();
+    const { login, isAuthenticated} = useAuthContext();
     const navigate = useNavigate();
 
     const [username, setUsername] = useState<string>(DEFAULT_USER.username)
@@ -13,15 +13,11 @@ const LogInPage = () => {
 
     const handleLogIn = (e: React.FormEvent) => {
         e.preventDefault();
-        AuthData?.login({
+        login({
             username,
             password
         });
-        navigate("/");
-    }
-
-    if(AuthData?.isAuthenticated) {
-        return <Navigate to={"/"} />
+        navigate("/dashboard");
     }
 
     return (
@@ -89,7 +85,7 @@ const LogInPage = () => {
 
                   <p className="mt-10 text-center text-sm text-gray-500">
                   Not a member?{' '}
-                      <a href="#" className="font-semibold leading-6 text-indigo-600 hover:text-indigo-500">
+                      <a href="#" onClick={() => navigate("/signup")} className="font-semibold leading-6 text-indigo-600 hover:text-indigo-500">
                           Create a new account!
                       </a>
                   </p>

@@ -19,6 +19,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
+import org.springframework.security.web.authentication.www.BasicAuthenticationEntryPoint;
 import org.springframework.security.web.session.SessionInformationExpiredEvent;
 import org.springframework.security.web.session.SessionInformationExpiredStrategy;
 import org.springframework.session.data.redis.RedisIndexedSessionRepository;
@@ -65,7 +66,9 @@ public class SecurityConfig {
                     .invalidateHttpSession(true)
             )
             .userDetailsService(jpaUserDetailsService)
-            .httpBasic(Customizer.withDefaults())
+            .httpBasic(httpSecurityHttpBasicConfigurer -> {
+              httpSecurityHttpBasicConfigurer.realmName("/auth/v1/login");
+            })
             .build();
   }
 

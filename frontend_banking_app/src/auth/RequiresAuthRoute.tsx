@@ -11,10 +11,10 @@ interface RequiresAuthRouteParam {
 }
 
 const RequiresAuthRoute = ({fallbackRoute = FALLBACK_URLS.unauthorised, renderElement, allowedRoles = []}: RequiresAuthRouteParam): ReactElement => {
-    const AuthData = useAuthContext();
-    const userRoles = AuthData?.userDetails?.roles;
+    const { isAuthenticated, userDetails} = useAuthContext();
+    const userRoles = userDetails?.roles;
 
-    if(AuthData?.isAuthenticated) {
+    if(isAuthenticated) {
         if(allowedRoles?.length !== 0) {
             if(allowedRoles.some(item => userRoles?.includes(item))) {
                 return renderElement

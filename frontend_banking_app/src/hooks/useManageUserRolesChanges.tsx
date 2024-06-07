@@ -2,11 +2,11 @@ import {useEffect, useState} from "react";
 import {Roles} from "../types/Enums";
 
 const useManageUserRolesChanges = (defaultValue: Roles[]) => {
-  const [userRoles, setUserRoles] = useState<Roles[]>(defaultValue);
+  const [userRoles, setUserRoles] = useState<Roles[]>(() => defaultValue);
   const [hasValueChanged, setHasValueChanged] = useState<boolean>(false)
 
   useEffect(() => {
-    setHasValueChanged(userRoles.sort().toString() !== defaultValue.sort().toString());
+    setHasValueChanged(userRoles.toString() !== defaultValue.toString());
   }, [ userRoles ]);
 
   const resetValues = () => {

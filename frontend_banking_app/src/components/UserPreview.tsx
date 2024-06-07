@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useMemo, useState} from 'react';
 import {FullUserData} from "../types/Types";
 import useFormat from "../utils/useFormat";
 import UserDetailsPopUp from "./pop-ups/UserDetailsPopUp";
@@ -21,7 +21,7 @@ const UserPreview = ({ userData }: UserPreviewProps) => {
             <span className={"flex items-center gap-2"}>
               <h4>{userData.user.username}</h4>
               <div className={"flex gap-1 items-center"}>
-                {getRoleObjects(userData.user.roles).map((role) => role.icon)}
+                {useMemo(() => getRoleObjects(userData.user.roles).map((role) => role.icon), [ userData ])}
               </div>
             </span>
             <small>{formatActiveAccountCount(userData)}</small>
