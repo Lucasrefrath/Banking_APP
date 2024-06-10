@@ -41,20 +41,24 @@ public class SecurityConfig {
   JpaUserDetailsService jpaUserDetailsService;
 
   @Bean
-  public static PasswordEncoder passwordEncoder() {
-    return new BCryptPasswordEncoder();
-  }
-
-  @Bean
   public SecurityFilterChain configure(HttpSecurity http) throws Exception {
     return http
             .csrf(AbstractHttpConfigurer::disable)
             .authorizeHttpRequests(auth -> {
-              auth.requestMatchers("/auth/v1/login", "/auth/v1/checkAuth").permitAll(); //AUTH
+              // AUTH
+              auth.requestMatchers("/auth/v1/login", "/auth/v1/checkAuth").permitAll();
 
+              // USER SIGNUP
+              auth.requestMatchers("/api/v1/userSignUp/open").hasAuthority("ROLE_ADMIN");
+              auth.requestMatchers("/api/v1/userSignUp/**").permitAll();
+
+              // SESSIONS
               auth.requestMatchers("/api/v1/sessions/allSessions", "/api/v1/sessions/sessions/").hasAnyAuthority("ROLE_USER");
+
+              // USERS
               auth.requestMatchers("/api/v1/users/**").hasAuthority("ROLE_ADMIN");
 
+              // REST
               auth.anyRequest().authenticated();
             })
             .sessionManagement(session -> session
@@ -66,10 +70,13 @@ public class SecurityConfig {
                     .invalidateHttpSession(true)
             )
             .userDetailsService(jpaUserDetailsService)
-            .httpBasic(httpSecurityHttpBasicConfigurer -> {
-              httpSecurityHttpBasicConfigurer.realmName("/auth/v1/login");
-            })
+            .httpBasic(Customizer.withDefaults())
             .build();
+  }
+
+  @Bean
+  public static PasswordEncoder passwordEncoder() {
+    return new BCryptPasswordEncoder();
   }
 
   @Bean

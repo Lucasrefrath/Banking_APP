@@ -4,7 +4,7 @@ import {useNavigate} from "react-router-dom";
 
 const HomePage = () => {
     const AuthData = useAuthContext();
-    console.log(navigator)
+    const navigate = useNavigate();
     return (
         <div>
             {AuthData?.isAuthenticated ? (
@@ -13,7 +13,10 @@ const HomePage = () => {
                     <p>Userdata: {JSON.stringify(AuthData?.userDetails)}</p>
                 </>
             ) : (
-              <h1 className={"text-4xl pb-4 font-bold"}>You are not logged in</h1>
+              <span>
+                  <h1 className={"text-4xl pb-4 font-bold"}>You are not logged in</h1>
+                  <button className={"type-primary"} onClick={() => navigate("/checkSignUp")}>Check SignUpStatus</button>
+              </span>
             )}
         </div>
     );

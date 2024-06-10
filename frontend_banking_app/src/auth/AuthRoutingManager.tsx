@@ -13,6 +13,7 @@ import {Roles} from "../types/Enums";
 import ProfileSettingsPage from "../pages/ProfileSettingsPage";
 import RequiresNonAuthRoute from "./RequiresNonAuthRoute";
 import CreateUserPage from "../pages/CreateUserPage";
+import CheckSignUpStatusPage from "../pages/CheckSignUpStatusPage";
 
 const AuthRoutingManager = () => {
     return (
@@ -27,9 +28,11 @@ const AuthRoutingManager = () => {
                       <Route path={"/login"} element={
                           <RequiresNonAuthRoute renderElement={<LogInPage />}/>
                       }/>
-
                       <Route path={"/signup"} element={
                           <RequiresNonAuthRoute renderElement={<CreateUserPage />}/>
+                      }/>
+                      <Route path={"/checkSignUp/:id?"} element={
+                          <RequiresNonAuthRoute renderElement={<CheckSignUpStatusPage />}/>
                       }/>
 
                       {/*PRIVATE ROUTES*/}

@@ -1,6 +1,8 @@
 import React, {useState} from 'react';
 import {ChevronRightIcon} from "@heroicons/react/24/outline";
 import {useNavigate} from "react-router-dom";
+import useSignUp from "../hooks/request/useSignUp";
+import SignUpCompletePopUp from "../components/pop-ups/SignUpCompletePopUp";
 
 interface SignUpFormData {
   username: string,
@@ -10,6 +12,7 @@ interface SignUpFormData {
 
 const CreateUserPage = () => {
   const navigate = useNavigate();
+  const { handleRequest, isPending, requestResponse} = useSignUp();
   const [formData, setFormData] = useState<SignUpFormData>({
     username: "",
     password: "",
@@ -31,8 +34,17 @@ const CreateUserPage = () => {
       console.log("password falsch")
       return
     }
+
+    if(formData.username.replace(" ", "").length === 0 || formData.password.replace(" ", "").length === 0) {
+      console.log("keine Eingabe")
+      return
+    }
     //TODO validation
     console.log("erfolg")
+    handleRequest({
+      username: formData.username,
+      password: formData.username
+    }, () => console.log(""))
   }
 
   return (
@@ -47,6 +59,7 @@ const CreateUserPage = () => {
           Sign Up for new Account
         </h2>
       </section>
+      <small className={"sm:mx-auto sm:w-full sm:max-w-sm text-center mt-4 text-pretty"}>Sign up for up to 10 Account. After Signup your Request will be processed by a Admin.</small>
 
       <section className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
         <form className="space-y-6" onSubmit={(e) => handleSignUp(e)}>
@@ -85,9 +98,10 @@ const CreateUserPage = () => {
             <button
               type="submit"
               className={"w-full type-primary"}
+              disabled={isPending}
             >
               <div className={"flex gap-1 justify-between items-center"}>
-                Log in
+                Sign Up Now
                 <ChevronRightIcon className={"icon-small"}/>
               </div>
             </button>
@@ -95,13 +109,14 @@ const CreateUserPage = () => {
         </form>
 
         <p className="mt-10 text-center text-sm text-gray-500">
-          Not a member?{' '}
+          Already a Member?{' '}
           <a href="#" onClick={() => navigate("/signup")}
              className="font-semibold leading-6 text-indigo-600 hover:text-indigo-500">
-            Create a new account!
+            Log In!
           </a>
         </p>
       </section>
+      <SignUpCompletePopUp requestResponse={requestResponse} />
     </div>
   );
 };

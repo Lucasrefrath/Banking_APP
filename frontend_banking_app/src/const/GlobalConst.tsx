@@ -7,6 +7,7 @@ import React from "react";
 import ActiveSessionsTile from "../components/tiles/ActiveSessionsTile";
 import GeneralSettingsTile from "../components/tiles/GeneralSettingsTile";
 import ActiveSessionsProfileSettingsTile from "../components/tiles/ActiveSessionsProfileSettingsTile";
+import OpenRequestsTile from "../components/tiles/OpenRequestsTile";
 
 export const API_URLS_V1: ApiVersion = {
     test: 'http://localhost:8080/api-test/v1',
@@ -16,6 +17,7 @@ export const API_URLS_V1: ApiVersion = {
     fastSearch: 'http://localhost:8080/api/v1/fastSearch',
     users: 'http://localhost:8080/api/v1/users',
     sessions: 'http://localhost:8080/api/v1/sessions',
+    userSignUp: 'http://localhost:8080/api/v1/userSignUp'
 }
 
 export const FALLBACK_URLS: FallbackPath = {
@@ -32,7 +34,7 @@ export const MAX_ACCOUNTS = {
 export const ADMIN_OPTIONS: ListItemModel[] = [
     {label: "All User", tileObject: <UserManagementTile /> },
     {label: "Active Sessions", tileObject: <ActiveSessionsTile />},
-    {label: "Open Requests"}
+    {label: "Open Requests", tileObject: <OpenRequestsTile />}
 ]
 
 export const PROFILE_SETTINGS_OPTIONS: ListItemModel[] = [

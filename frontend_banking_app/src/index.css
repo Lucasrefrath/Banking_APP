@@ -23,8 +23,20 @@
         @apply h-4 w-4
     }
 
+    .icon-big {
+        @apply h-10 w-10
+    }
+
+    .icon-mid {
+        @apply h-7 w-7
+    }
+
     .icon {
         @apply h-5 w-5
+    }
+
+    .text-link {
+        @apply text-indigo-600 hover:cursor-pointer hover:underline
     }
 
     button {

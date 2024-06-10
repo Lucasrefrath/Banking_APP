@@ -1,5 +1,6 @@
 import {AccountAction, PopUpType, Roles} from "./Enums";
 import {ReactElement} from "react";
+import {RequestSignUpResponse} from "./Request-Response";
 
 export interface AuthData {
     isAuthenticated: boolean,
@@ -54,10 +55,12 @@ export type SimpleAccountDetails = {
 export interface AdminData {
     userData: FullUserData[] | undefined,
     sessionData: UserSession[] | undefined,
+    openRequestData: RequestSignUpResponse[] | undefined,
     handleDeactivateAccount: (accountId: number) => void,
     handleActivateAccount: (accountId: number) => void,
     handleUpdateUserRoles: (updatedRoles: Roles[], userId: number, actionAfter: () => void) => void,
-    terminateSession: (sessionId: string) => void
+    terminateSession: (sessionId: string) => void,
+    deleteOneRequestLocal: (request: RequestSignUpResponse) => void
 }
 
 export interface FullUserData {
