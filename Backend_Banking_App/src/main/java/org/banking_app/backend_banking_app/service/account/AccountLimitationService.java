@@ -1,7 +1,7 @@
 package org.banking_app.backend_banking_app.service.account;
 
 import lombok.NoArgsConstructor;
-import org.banking_app.backend_banking_app.exceptions.NumberOfAccountsLimitedException;
+import org.banking_app.backend_banking_app.exceptions.customExceptions.NumberOfAccountsLimitedException;
 import org.banking_app.backend_banking_app.model.SecurityUserDetails;
 import org.banking_app.backend_banking_app.repository.AccountRepository;
 import org.banking_app.backend_banking_app.service.auth.JpaUserDetailsService;

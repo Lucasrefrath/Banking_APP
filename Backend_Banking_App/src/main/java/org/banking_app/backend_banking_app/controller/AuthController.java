@@ -1,17 +1,18 @@
 package org.banking_app.backend_banking_app.controller;
 
 import jakarta.servlet.http.HttpSession;
+import org.banking_app.backend_banking_app.exceptions.customExceptions.NoSuchUserFoundException;
+import org.banking_app.backend_banking_app.exceptions.customExceptions.UsernameAndPasswordDoNotMatchException;
 import org.banking_app.backend_banking_app.model.SecurityUserDetails;
 import org.banking_app.backend_banking_app.model.SessionUserModel;
 import org.banking_app.backend_banking_app.model.requestModel.LogInRequest;
 import org.banking_app.backend_banking_app.service.auth.JpaUserDetailsService;
-import org.banking_app.backend_banking_app.service.session.SessionAttributeService;
+import org.banking_app.backend_banking_app.service.session.SessionActionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
-
 import java.security.Principal;
 
 @RestController
@@ -23,11 +24,11 @@ public class AuthController {
   JpaUserDetailsService userDetailsService;
 
   @Autowired
-  SessionAttributeService sessionAttributeService;
+  SessionActionService sessionActionService;
 
   @PostMapping("/login")
-  public ResponseEntity<SessionUserModel> login(@RequestBody LogInRequest request) {
-    sessionAttributeService.setDefaultAttributes(request);
+  public ResponseEntity<SessionUserModel> login(@RequestBody LogInRequest request) throws UsernameAndPasswordDoNotMatchException, NoSuchUserFoundException {
+    sessionActionService.create(request);
     return ResponseEntity.ok(new SessionUserModel());
   }
 

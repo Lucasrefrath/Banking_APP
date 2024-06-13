@@ -4,7 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.banking_app.backend_banking_app.exceptions.NotEnoughBalanceException;
+import org.banking_app.backend_banking_app.exceptions.customExceptions.NotEnoughBalanceException;
 
 @Data
 @NoArgsConstructor

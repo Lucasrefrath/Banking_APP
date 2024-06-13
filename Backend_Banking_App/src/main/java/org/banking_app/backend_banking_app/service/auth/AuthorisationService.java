@@ -1,8 +1,8 @@
 package org.banking_app.backend_banking_app.service.auth;
 
 import lombok.NoArgsConstructor;
-import org.banking_app.backend_banking_app.exceptions.IllegalIdentifierException;
-import org.banking_app.backend_banking_app.exceptions.UserAccessNotAllowedException;
+import org.banking_app.backend_banking_app.exceptions.customExceptions.IllegalIdentifierException;
+import org.banking_app.backend_banking_app.exceptions.customExceptions.UserAccessNotAllowedException;
 import org.banking_app.backend_banking_app.model.DTO.AccountEntity;
 import org.banking_app.backend_banking_app.model.SecurityUserDetails;
 import org.banking_app.backend_banking_app.service.account.AccountDataService;
@@ -12,7 +12,6 @@ import org.springframework.session.Session;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Map;
 import java.util.Objects;
 
 @Service

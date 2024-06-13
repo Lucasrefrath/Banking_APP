@@ -1,41 +1,50 @@
 package org.banking_app.backend_banking_app.config;
 
-import jakarta.servlet.ServletException;
-import jakarta.servlet.http.HttpSessionListener;
-import org.antlr.v4.runtime.misc.Interval;
 import org.banking_app.backend_banking_app.service.auth.JpaUserDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.web.servlet.ServletListenerRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.data.redis.connection.RedisConnectionFactory;
-import org.springframework.data.redis.core.RedisOperations;
+import org.springframework.http.HttpStatus;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.Customizer;
+import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
+import org.springframework.security.config.annotation.authentication.configuration.EnableGlobalAuthentication;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.security.web.SecurityFilterChain;
-import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
-import org.springframework.security.web.authentication.www.BasicAuthenticationEntryPoint;
-import org.springframework.security.web.session.SessionInformationExpiredEvent;
-import org.springframework.security.web.session.SessionInformationExpiredStrategy;
-import org.springframework.session.data.redis.RedisIndexedSessionRepository;
-import org.springframework.session.data.redis.config.annotation.web.http.EnableRedisHttpSession;
+import org.springframework.security.web.access.AccessDeniedHandlerImpl;
+import org.springframework.security.web.authentication.AuthenticationFilter;
+import org.springframework.security.web.authentication.HttpStatusEntryPoint;
 import org.springframework.session.data.redis.config.annotation.web.http.EnableRedisIndexedHttpSession;
-import org.springframework.session.data.redis.config.annotation.web.http.RedisHttpSessionConfiguration;
+import org.springframework.session.web.http.CookieHttpSessionIdResolver;
 import org.springframework.session.web.http.CookieSerializer;
 import org.springframework.session.web.http.DefaultCookieSerializer;
-
-import java.io.IOException;
-import java.time.Duration;
+import org.springframework.session.web.http.HttpSessionIdResolver;
 
 @Configuration
 @EnableWebSecurity
 @EnableRedisIndexedHttpSession
+@EnableGlobalAuthentication
 public class SecurityConfig {
+
+  private final String[] WHITELIST = {
+          "/auth/v1/login",
+          "/auth/v1/checkAuth",
+          "/api/v1/userSignUp/**"
+  };
+
+  private final String[] REQUIRE_ADMIN = {
+          "/api/v1/userSignUp/open",
+          "/api/v1/sessions/allSessions",
+          "/api/v1/sessions/sessions/**",
+          "/api/v1/users/**"
+  };
 
   @Autowired
   JpaUserDetailsService jpaUserDetailsService;
@@ -45,33 +54,30 @@ public class SecurityConfig {
     return http
             .csrf(AbstractHttpConfigurer::disable)
             .authorizeHttpRequests(auth -> {
-              // AUTH
-              auth.requestMatchers("/auth/v1/login", "/auth/v1/checkAuth").permitAll();
 
-              // USER SIGNUP
-              auth.requestMatchers("/api/v1/userSignUp/open").hasAuthority("ROLE_ADMIN");
-              auth.requestMatchers("/api/v1/userSignUp/**").permitAll();
-
-              // SESSIONS
-              auth.requestMatchers("/api/v1/sessions/allSessions", "/api/v1/sessions/sessions/").hasAnyAuthority("ROLE_USER");
-
-              // USERS
-              auth.requestMatchers("/api/v1/users/**").hasAuthority("ROLE_ADMIN");
-
-              // REST
+              auth.requestMatchers(REQUIRE_ADMIN).hasAuthority("ROLE_ADMIN");
+              auth.requestMatchers(WHITELIST).permitAll();
               auth.anyRequest().authenticated();
             })
             .sessionManagement(session -> session
                     .sessionCreationPolicy(SessionCreationPolicy.ALWAYS)
                     .maximumSessions(2)
             )
-            .logout(logout -> logout
-                    .deleteCookies("SESSION")
-                    .invalidateHttpSession(true)
-            )
             .userDetailsService(jpaUserDetailsService)
-            .httpBasic(Customizer.withDefaults())
+            .httpBasic(httpSecurityHttpBasicConfigurer -> httpSecurityHttpBasicConfigurer
+                    .authenticationEntryPoint(new CustomAuthenticationEntryPoint())
+            )
             .build();
+  }
+
+  @Bean
+  public AuthenticationManager authenticationManager(AuthenticationConfiguration authConfig) throws Exception {
+    return authConfig.getAuthenticationManager();
+  }
+
+  @Bean
+  public HttpSessionIdResolver httpSessionIdResolver() {
+    return new CookieHttpSessionIdResolver();
   }
 
   @Bean

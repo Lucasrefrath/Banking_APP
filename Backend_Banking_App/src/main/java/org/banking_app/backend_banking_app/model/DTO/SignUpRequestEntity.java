@@ -6,7 +6,6 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.banking_app.backend_banking_app.enums.SignUpRequestStatus;
-import org.banking_app.backend_banking_app.exceptions.NotEnoughBalanceException;
 
 import java.time.LocalDateTime;
 

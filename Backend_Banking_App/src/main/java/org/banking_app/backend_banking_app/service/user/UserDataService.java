@@ -2,9 +2,9 @@ package org.banking_app.backend_banking_app.service.user;
 
 
 import lombok.Data;
-import org.banking_app.backend_banking_app.exceptions.NoSuchUserFoundException;
-import org.banking_app.backend_banking_app.exceptions.UserAccessNotAllowedException;
-import org.banking_app.backend_banking_app.exceptions.UsernameAlreadyExistsException;
+import org.banking_app.backend_banking_app.exceptions.customExceptions.NoSuchUserFoundException;
+import org.banking_app.backend_banking_app.exceptions.customExceptions.UserAccessNotAllowedException;
+import org.banking_app.backend_banking_app.exceptions.customExceptions.UsernameAlreadyExistsException;
 import org.banking_app.backend_banking_app.model.DTO.UserEntity;
 import org.banking_app.backend_banking_app.repository.UserRepository;
 import org.banking_app.backend_banking_app.service.SortingService;

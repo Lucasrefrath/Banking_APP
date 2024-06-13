@@ -1,4 +1,4 @@
-import {AccountActionConfig, ListItemModel, LogInData,} from "../types/Types";
+import {AccountActionConfig, ListItemModel, LogInData, ServerException,} from "../types/Types";
 import {Cog6ToothIcon, LockClosedIcon, UserCircleIcon} from "@heroicons/react/24/outline";
 import {ApiVersion, FallbackPath, NavigationConfig} from "../types/ConstTypes";
 import {AccountAction, Roles} from "../types/Enums";
@@ -44,7 +44,16 @@ export const PROFILE_SETTINGS_OPTIONS: ListItemModel[] = [
 
 export const DEFAULT_USER: LogInData = {
     username: "admin",
-    password: "admin"
+    password: "admi"
+}
+
+export const UNKNOWN_ERROR: ServerException = {
+    timestamp: new Date(Date.now()),
+    status: 111,
+    error: "Unknown",
+    message: "An unexpected Error accured",
+    path: "unknown",
+    exceptionName: "UnknownException"
 }
 
 export const user = {

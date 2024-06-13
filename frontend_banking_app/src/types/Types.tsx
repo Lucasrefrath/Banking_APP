@@ -5,7 +5,7 @@ import {RequestSignUpResponse} from "./Request-Response";
 export interface AuthData {
     isAuthenticated: boolean,
     userDetails: UserDetails | undefined,
-    login: (loginData: LogInData) => void,
+    login: (loginData: LogInData, actionAfter: () => void, actionOnError: (error: ServerException) => void) => void,
     logout: () => void,
     refreshAuth: () => void
 }
@@ -128,4 +128,13 @@ export interface UserSession {
 export interface  ProfileSettingsData {
     sessionData: Session[] | undefined,
     terminateSession: (sessionId: string) => void
+}
+
+export interface ServerException {
+    timestamp: Date,
+    status: number,
+    error: string,
+    message: string,
+    path: string,
+    exceptionName: string
 }

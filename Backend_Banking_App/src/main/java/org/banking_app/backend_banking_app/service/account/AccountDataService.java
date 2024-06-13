@@ -1,6 +1,7 @@
 package org.banking_app.backend_banking_app.service.account;
 
-import org.banking_app.backend_banking_app.exceptions.*;
+import org.banking_app.backend_banking_app.exceptions.customExceptions.IllegalIdentifierException;
+import org.banking_app.backend_banking_app.exceptions.customExceptions.UserAccessNotAllowedException;
 import org.banking_app.backend_banking_app.model.DTO.AccountEntity;
 import org.banking_app.backend_banking_app.model.SecurityUserDetails;
 import org.banking_app.backend_banking_app.repository.AccountRepository;

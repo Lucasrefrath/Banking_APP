@@ -62,4 +62,11 @@ public class SecurityUserDetails implements UserDetails {
   public Long getUserId() {
     return user.getId();
   }
+
+  @Override
+  public String toString() {
+    return "SecurityUserDetails{" +
+            "user=" + user +
+            '}';
+  }
 }

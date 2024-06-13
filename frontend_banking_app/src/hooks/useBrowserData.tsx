@@ -1,9 +1,7 @@
 const useBrowserData = () => {
 
   const getTimeZone = (): string => {
-    const timezone = Intl.DateTimeFormat().resolvedOptions().timeZone
-    console.log(timezone)
-    return timezone;
+    return Intl.DateTimeFormat().resolvedOptions().timeZone;
   }
 
   const getBrowserName = (): string => {

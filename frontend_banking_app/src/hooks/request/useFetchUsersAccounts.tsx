@@ -19,6 +19,9 @@ const useFetchUsersAccounts = () => {
     try {
       const response = await fetch(API_URLS_V1.accounts, {
         method: 'GET',
+        headers: {
+          "Authorisation": "Basic "
+        },
         credentials: "include",
       });
 

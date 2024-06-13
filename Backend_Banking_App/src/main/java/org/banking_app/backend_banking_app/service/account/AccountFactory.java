@@ -1,7 +1,7 @@
 package org.banking_app.backend_banking_app.service.account;
 
 
-import org.banking_app.backend_banking_app.exceptions.NoSuchUserFoundException;
+import org.banking_app.backend_banking_app.exceptions.customExceptions.NoSuchUserFoundException;
 import org.banking_app.backend_banking_app.model.DTO.AccountEntity;
 import org.banking_app.backend_banking_app.service.IBANIssuerService;
 import org.banking_app.backend_banking_app.service.auth.JpaUserDetailsService;

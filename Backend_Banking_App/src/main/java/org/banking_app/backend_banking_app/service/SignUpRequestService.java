@@ -1,8 +1,8 @@
 package org.banking_app.backend_banking_app.service;
 
 import org.banking_app.backend_banking_app.enums.SignUpRequestStatus;
-import org.banking_app.backend_banking_app.exceptions.UserAccessNotAllowedException;
-import org.banking_app.backend_banking_app.exceptions.UsernameAlreadyExistsException;
+import org.banking_app.backend_banking_app.exceptions.customExceptions.UserAccessNotAllowedException;
+import org.banking_app.backend_banking_app.exceptions.customExceptions.UsernameAlreadyExistsException;
 import org.banking_app.backend_banking_app.model.DTO.SignUpRequestEntity;
 import org.banking_app.backend_banking_app.model.DTO.UserEntity;
 import org.banking_app.backend_banking_app.model.requestModel.ApproveRequestRequest;
@@ -19,7 +19,6 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class SignUpRequestService {

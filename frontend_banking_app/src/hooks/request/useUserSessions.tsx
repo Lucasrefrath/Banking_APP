@@ -18,7 +18,7 @@ const useAllSessions = () => {
 
   const handleRequest = async (): Promise<void> => {
     try {
-      const response = await fetch(API_URLS_V1.sessions + "/sessions", {
+      const response = await fetch(API_URLS_V1.sessions + "/mySessions", {
         method: 'GET',
         credentials: "include",
       });

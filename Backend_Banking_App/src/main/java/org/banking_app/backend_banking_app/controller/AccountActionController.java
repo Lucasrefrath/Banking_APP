@@ -1,8 +1,8 @@
 package org.banking_app.backend_banking_app.controller;
 
-import org.banking_app.backend_banking_app.exceptions.IllegalIdentifierException;
-import org.banking_app.backend_banking_app.exceptions.NotEnoughBalanceException;
-import org.banking_app.backend_banking_app.exceptions.UserAccessNotAllowedException;
+import org.banking_app.backend_banking_app.exceptions.customExceptions.IllegalIdentifierException;
+import org.banking_app.backend_banking_app.exceptions.customExceptions.NotEnoughBalanceException;
+import org.banking_app.backend_banking_app.exceptions.customExceptions.UserAccessNotAllowedException;
 import org.banking_app.backend_banking_app.model.requestModel.BasicAccountActionRequest;
 import org.banking_app.backend_banking_app.model.requestModel.TransferAccountActionRequest;
 import org.banking_app.backend_banking_app.model.responseModel.AccountActionResponse;

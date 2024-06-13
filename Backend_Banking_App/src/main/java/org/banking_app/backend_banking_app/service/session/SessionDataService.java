@@ -1,7 +1,7 @@
 package org.banking_app.backend_banking_app.service.session;
 
 import jakarta.servlet.http.HttpSession;
-import org.banking_app.backend_banking_app.exceptions.UserAccessNotAllowedException;
+import org.banking_app.backend_banking_app.exceptions.customExceptions.UserAccessNotAllowedException;
 import org.banking_app.backend_banking_app.model.DTO.UserEntity;
 import org.banking_app.backend_banking_app.model.UserSessionsOverview;
 import org.banking_app.backend_banking_app.service.SortingService;

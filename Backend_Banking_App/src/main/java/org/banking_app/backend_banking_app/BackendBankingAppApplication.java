@@ -1,6 +1,6 @@
 package org.banking_app.backend_banking_app;
 
-import org.banking_app.backend_banking_app.exceptions.UsernameAlreadyExistsException;
+import org.banking_app.backend_banking_app.exceptions.customExceptions.UsernameAlreadyExistsException;
 import org.banking_app.backend_banking_app.model.DTO.UserEntity;
 import org.banking_app.backend_banking_app.service.account.AccountDataService;
 import org.banking_app.backend_banking_app.service.user.UserDataService;

@@ -1,7 +1,6 @@
 package org.banking_app.backend_banking_app.controller;
 
-import jakarta.servlet.http.HttpSession;
-import org.banking_app.backend_banking_app.exceptions.UserAccessNotAllowedException;
+import org.banking_app.backend_banking_app.exceptions.customExceptions.UserAccessNotAllowedException;
 import org.banking_app.backend_banking_app.model.UserSessionsOverview;
 import org.banking_app.backend_banking_app.service.session.SessionActionService;
 import org.banking_app.backend_banking_app.service.session.SessionDataService;
@@ -28,8 +27,8 @@ public class SessionController {
     return sessionDataService.getSessionsByUsername(username);
   }
 
-  @GetMapping("/sessions")
-  public List<? extends Session> getCurrentUsersSession(HttpSession session) {
+  @GetMapping("/mySessions")
+  public List<? extends Session> getCurrentUsersSession() {
     return sessionDataService.getActiveUsersSessions();
   }
 

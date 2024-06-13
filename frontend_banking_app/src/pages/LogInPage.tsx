@@ -1,23 +1,47 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import useAuthContext from "../hooks/contextHook/useAuthContext";
 import {Navigate, useNavigate} from "react-router-dom";
 import {DEFAULT_USER} from "../const/GlobalConst";
 import {ChevronRightIcon} from "@heroicons/react/24/outline";
+import {ServerException} from "../types/Types";
+import ServerErrorPopUp from "../components/pop-ups/ServerErrorPopUp";
+import useValidate from "../hooks/useValidate";
+import ValidationError from "../components/customUI/ValidationError";
 
 const LogInPage = () => {
-    const { login, isAuthenticated} = useAuthContext();
+    const { login} = useAuthContext();
     const navigate = useNavigate();
+    const [serverError, setServerError] = useState<ServerException | undefined>(undefined)
+    const [validationError, setValidationError] = useState("");
+    const { stringIsEmpty} = useValidate();
 
     const [username, setUsername] = useState<string>(DEFAULT_USER.username)
     const [password, setPassword] = useState<string>(DEFAULT_USER.password)
 
+    useEffect(() => {
+        setValidationError("")
+    }, [ username, password ]);
+
     const handleLogIn = (e: React.FormEvent) => {
         e.preventDefault();
+
+        if(stringIsEmpty(username) || stringIsEmpty(password)) {
+            setValidationError("Username and password are required.")
+            return;
+        };
+
         login({
             username,
             password
-        });
-        navigate("/dashboard");
+        },
+          () => navigate("/dashboard"),
+          (error: ServerException) => setServerError(error)
+          );
+    }
+
+    const clearError = () => {
+        setServerError(undefined);
+        setPassword("");
     }
 
     return (
@@ -34,6 +58,9 @@ const LogInPage = () => {
               </section>
 
               <section className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
+                  {validationError && (
+                    <ValidationError error={validationError} clearError={() => setValidationError("")} />
+                  )}
                   <form className="space-y-6" onSubmit={(e) => handleLogIn(e)}>
                       <div>
                           <div className="mt-2">
@@ -90,6 +117,7 @@ const LogInPage = () => {
                       </a>
                   </p>
               </section>
+              <ServerErrorPopUp error={serverError} clearError={clearError} />
           </div>
     );
 };

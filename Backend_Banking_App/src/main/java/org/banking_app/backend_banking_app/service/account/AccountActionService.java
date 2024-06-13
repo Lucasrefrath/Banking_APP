@@ -1,6 +1,6 @@
 package org.banking_app.backend_banking_app.service.account;
 
-import org.banking_app.backend_banking_app.exceptions.*;
+import org.banking_app.backend_banking_app.exceptions.customExceptions.*;
 import org.banking_app.backend_banking_app.model.DTO.AccountEntity;
 import org.banking_app.backend_banking_app.model.DTO.AccountHistoryEntity;
 import org.banking_app.backend_banking_app.model.responseModel.AccountActionResponse;

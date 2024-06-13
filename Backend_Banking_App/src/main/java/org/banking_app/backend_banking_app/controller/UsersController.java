@@ -1,6 +1,6 @@
 package org.banking_app.backend_banking_app.controller;
 
-import org.banking_app.backend_banking_app.exceptions.UserAccessNotAllowedException;
+import org.banking_app.backend_banking_app.exceptions.customExceptions.UserAccessNotAllowedException;
 import org.banking_app.backend_banking_app.model.FullUserDataModel;
 import org.banking_app.backend_banking_app.model.requestModel.UpdateUserRolesRequest;
 import org.banking_app.backend_banking_app.service.user.FullUserDataService;

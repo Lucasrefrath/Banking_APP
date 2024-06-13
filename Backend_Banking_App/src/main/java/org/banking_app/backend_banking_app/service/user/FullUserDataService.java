@@ -1,6 +1,6 @@
 package org.banking_app.backend_banking_app.service.user;
 
-import org.banking_app.backend_banking_app.exceptions.UserAccessNotAllowedException;
+import org.banking_app.backend_banking_app.exceptions.customExceptions.UserAccessNotAllowedException;
 import org.banking_app.backend_banking_app.model.DTO.UserEntity;
 import org.banking_app.backend_banking_app.model.DTO.UserModel;
 import org.banking_app.backend_banking_app.model.FullUserDataModel;
