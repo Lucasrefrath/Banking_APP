@@ -11,10 +11,14 @@ import java.util.Optional;
 @Repository
 public interface SignUpRequestRepository extends JpaRepository<SignUpRequestEntity, Long> {
 
+  Boolean existsByUsernameAndStatus(String username, SignUpRequestStatus status);
+
   Boolean existsByUsername(String username);
+
+  List<SignUpRequestEntity> findAllByUsernameAndStatus(String username, SignUpRequestStatus status);
 
   List<SignUpRequestEntity> findAllByStatus(SignUpRequestStatus status);
 
-  Optional<SignUpRequestEntity> findByUsername(String username);
+  List<SignUpRequestEntity> findAllByUsername(String username);
 
 }

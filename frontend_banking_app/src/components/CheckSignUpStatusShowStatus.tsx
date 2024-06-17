@@ -1,23 +1,23 @@
 import React, {useEffect} from 'react';
 import {useNavigate, useParams} from "react-router-dom";
 import useSignUp from "../hooks/request/useSignUp";
-import {BellSnoozeIcon, CheckIcon, ClockIcon, QuestionMarkCircleIcon, XMarkIcon} from "@heroicons/react/24/outline";
+import {BellSnoozeIcon, CheckIcon, ClockIcon, XMarkIcon} from "@heroicons/react/24/outline";
 import {SignUpRequestStatus} from "../types/Enums";
 import useFormat from "../utils/useFormat";
+import useTimeSince from "../utils/useTimeSince";
 
 const CheckSignUpStatusShowStatus = () => {
-  const { id } = useParams();
   const { checkStatus, requestStatusData, isPending} = useSignUp();
-  const { formatTime, formatDate} = useFormat();
   const navigate = useNavigate();
+  const { id } = useParams();
+  const { formatTime } = useFormat();
+  const { getDay } = useTimeSince();
 
   useEffect(() => {
     if(id !== undefined) {
       checkStatus(id, () => console.log("check Status"));
     }
   }, []);
-
-  console.log(requestStatusData)
 
   if(isPending) return (
     <p>Loading...</p>
@@ -115,9 +115,9 @@ const CheckSignUpStatusShowStatus = () => {
         {getIcon()}
       </div>
       {requestStatusData.processedAt ? (
-        <small className={"flex justify-center text-center mt-3"}>Updated on {formatDate(requestStatusData.processedAt)} at {formatTime(requestStatusData.processedAt)}</small>
+        <small className={"flex justify-center text-center mt-3"}>Updated {getDay(requestStatusData.processedAt)} at {formatTime(requestStatusData.processedAt)}</small>
       ) : (
-        <small className={"flex justify-center text-center mt-3"}>Created on {formatDate(requestStatusData.createdAt)} at {formatTime(requestStatusData.createdAt)}</small>
+        <small className={"flex justify-center text-center mt-3"}>Created {getDay(requestStatusData.createdAt)} at {formatTime(requestStatusData.createdAt)}</small>
       )}
     </>
   );

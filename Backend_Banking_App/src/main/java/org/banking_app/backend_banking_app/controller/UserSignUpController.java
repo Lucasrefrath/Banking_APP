@@ -1,12 +1,16 @@
 package org.banking_app.backend_banking_app.controller;
 
 import jakarta.websocket.server.PathParam;
+import org.banking_app.backend_banking_app.exceptions.customExceptions.NoSuchSignUpRequestFoundException;
 import org.banking_app.backend_banking_app.exceptions.customExceptions.UserAccessNotAllowedException;
 import org.banking_app.backend_banking_app.exceptions.customExceptions.UsernameAlreadyExistsException;
 import org.banking_app.backend_banking_app.model.requestModel.ApproveRequestRequest;
 import org.banking_app.backend_banking_app.model.requestModel.RejectRequestRequest;
 import org.banking_app.backend_banking_app.model.requestModel.RequestSignUpRequest;
-import org.banking_app.backend_banking_app.service.SignUpRequestService;
+import org.banking_app.backend_banking_app.service.signUp.SignUpDataService;
+import org.banking_app.backend_banking_app.service.signUp.SignUpRequestService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -17,7 +21,10 @@ import org.springframework.web.bind.annotation.*;
 public class UserSignUpController {
 
   @Autowired
-  SignUpRequestService signUpRequestService;
+  private SignUpRequestService signUpRequestService;
+
+  @Autowired
+  private SignUpDataService signUpDataService;
 
   @PostMapping("/request")
   public ResponseEntity requestSignUp(@RequestBody RequestSignUpRequest request) throws UsernameAlreadyExistsException {
@@ -25,8 +32,8 @@ public class UserSignUpController {
   }
 
   @PostMapping("/getId")
-  public ResponseEntity getRequestId(@RequestBody RequestSignUpRequest request) {
-    return ResponseEntity.ok(signUpRequestService.getRequestId(request));
+  public ResponseEntity getRequestId(@RequestBody RequestSignUpRequest request) throws NoSuchSignUpRequestFoundException {
+    return ResponseEntity.ok(signUpDataService.getRequestId(request));
   }
 
   @GetMapping("/checkStatus")
@@ -36,7 +43,7 @@ public class UserSignUpController {
 
   @GetMapping("/open")
   public ResponseEntity getOpenRequests() throws UserAccessNotAllowedException {
-    return ResponseEntity.ok(signUpRequestService.getAllOpen());
+    return ResponseEntity.ok(signUpDataService.getAllOpen());
   }
 
   @PostMapping("/reject")

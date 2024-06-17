@@ -1,8 +1,12 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {ChevronRightIcon} from "@heroicons/react/24/outline";
 import {useNavigate} from "react-router-dom";
 import useSignUp from "../hooks/request/useSignUp";
 import SignUpCompletePopUp from "../components/pop-ups/SignUpCompletePopUp";
+import useValidate from "../hooks/useValidate";
+import {ServerException} from "../types/Types";
+import ServerErrorPopUp from "../components/pop-ups/ServerErrorPopUp";
+import ValidationError from "../components/customUI/ValidationError";
 
 interface SignUpFormData {
   username: string,
@@ -13,13 +17,18 @@ interface SignUpFormData {
 const CreateUserPage = () => {
   const navigate = useNavigate();
   const { handleRequest, isPending, requestResponse} = useSignUp();
+  const [validationError, setValidationError] = useState("");
+  const [serverError, setServerError] = useState<ServerException | undefined>(undefined)
+  const { stringIsEmpty } = useValidate();
   const [formData, setFormData] = useState<SignUpFormData>({
     username: "",
     password: "",
     repeatPassword: ""
   })
 
-  console.log(formData)
+  useEffect(() => {
+    setValidationError("")
+  }, [ formData ]);
 
   const updateFormData = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormData(prevState =>  {
@@ -30,21 +39,22 @@ const CreateUserPage = () => {
   const handleSignUp = (e: React.FormEvent) => {
     e.preventDefault();
 
+    if(stringIsEmpty(formData.username) || stringIsEmpty(formData.password)) {
+      setValidationError("Username and password are required.")
+      return;
+    }
+
     if(formData.password !== formData.repeatPassword) {
-      console.log("password falsch")
+      setValidationError("Please repeat your password to confirm.")
       return
     }
 
-    if(formData.username.replace(" ", "").length === 0 || formData.password.replace(" ", "").length === 0) {
-      console.log("keine Eingabe")
-      return
-    }
-    //TODO validation
-    console.log("erfolg")
     handleRequest({
       username: formData.username,
-      password: formData.username
-    }, () => console.log(""))
+      password: formData.password
+    }, () => console.log(""),
+      (error) => setServerError(error)
+      )
   }
 
   return (
@@ -59,9 +69,12 @@ const CreateUserPage = () => {
           Sign Up for new Account
         </h2>
       </section>
-      <small className={"sm:mx-auto sm:w-full sm:max-w-sm text-center mt-4 text-pretty"}>Sign up for up to 10 Account. After Signup your Request will be processed by a Admin.</small>
+      <small className={"sm:mx-auto sm:w-full sm:max-w-sm text-center mt-4 text-pretty"}>Sign up for up to 10 Saving accounts. After Signup your Request will be processed by a Admin.</small>
 
       <section className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
+        <section>
+          <ValidationError error={validationError} clearError={() => setValidationError("")} />
+        </section>
         <form className="space-y-6" onSubmit={(e) => handleSignUp(e)}>
           <section className="mt-2">
             <label>Username</label>
@@ -117,6 +130,7 @@ const CreateUserPage = () => {
         </p>
       </section>
       <SignUpCompletePopUp requestResponse={requestResponse} />
+      <ServerErrorPopUp error={serverError} clearError={() => setServerError(undefined)} />
     </div>
   );
 };

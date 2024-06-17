@@ -36,7 +36,8 @@ public class SecurityConfig {
   private final String[] WHITELIST = {
           "/auth/v1/login",
           "/auth/v1/checkAuth",
-          "/api/v1/userSignUp/**"
+          "/api/v1/userSignUp/**",
+          "/api-test/v1/**"
   };
 
   private final String[] REQUIRE_ADMIN = {

@@ -39,10 +39,8 @@ public class SessionActionService {
   private UserRepository userRepository;
 
   public void create(LogInRequest request) throws UsernameAndPasswordDoNotMatchException, NoSuchUserFoundException {
-    UserEntity byUsername = userRepository.findByUsername(request.getUsername()).orElseThrow(() -> new NoSuchUserFoundException(request.getUsername()));
-    System.out.println("after");
+    userRepository.findByUsername(request.getUsername()).orElseThrow(() -> new NoSuchUserFoundException(request.getUsername()));
     try {
-      System.out.println("checking cred");
       HttpSession session = sessionDataService.getCurrentHttpSession();
       Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(request.getUsername(), request.getPassword()));
 

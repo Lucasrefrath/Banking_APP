@@ -1,6 +1,7 @@
-package org.banking_app.backend_banking_app.service;
+package org.banking_app.backend_banking_app.service.signUp;
 
 import org.banking_app.backend_banking_app.enums.SignUpRequestStatus;
+import org.banking_app.backend_banking_app.exceptions.customExceptions.NoSuchSignUpRequestFoundException;
 import org.banking_app.backend_banking_app.exceptions.customExceptions.UserAccessNotAllowedException;
 import org.banking_app.backend_banking_app.exceptions.customExceptions.UsernameAlreadyExistsException;
 import org.banking_app.backend_banking_app.model.DTO.SignUpRequestEntity;
@@ -24,18 +25,23 @@ import java.util.List;
 public class SignUpRequestService {
 
   @Autowired
-  PasswordEncoder passwordEncoder;
+  private PasswordEncoder passwordEncoder;
 
   @Autowired
-  SignUpRequestRepository signUpRequestRepository;
+  private SignUpRequestRepository signUpRequestRepository;
 
   @Autowired
-  UserDataService userDataService;
+  private UserDataService userDataService;
+
   @Autowired
-  private AuthorisationService authorisationService;
+  private SignUpDataService signUpDataService;
 
   public SignUpRequestEntity requestSignUp(RequestSignUpRequest request) throws UsernameAlreadyExistsException {
-    checkExists(request.getUsername());
+    signUpDataService.checkExists(
+            request.getUsername(),
+            request.getPassword()
+            );
+
     SignUpRequestEntity entity = new SignUpRequestEntity(
             request.getUsername(),
             passwordEncoder.encode(request.getPassword())
@@ -45,25 +51,8 @@ public class SignUpRequestService {
     return entity;
   }
 
-  public UserSignUpIdResponse getRequestId(RequestSignUpRequest request) {
-    SignUpRequestEntity entity = signUpRequestRepository.findByUsername(
-            request.getUsername()
-    ).orElse(new SignUpRequestEntity());
-
-    return new UserSignUpIdResponse(entity.getId());
-  }
-
   public SignUpRequestEntity checkStatus(Long requestId) {
     return signUpRequestRepository.findById(requestId).orElseThrow(() -> new UsernameNotFoundException(requestId.toString()));
-  }
-
-  private void checkExists(String username) throws UsernameAlreadyExistsException {
-    if(signUpRequestRepository.existsByUsername(username) || userDataService.userNameExists(username)) throw new UsernameAlreadyExistsException(username);
-  }
-
-  public List<SignUpRequestEntity> getAllOpen() throws UserAccessNotAllowedException {
-    authorisationService.checkUserAdmin();
-    return signUpRequestRepository.findAllByStatus(SignUpRequestStatus.PENDING);
   }
 
   public void reject(RejectRequestRequest request) {

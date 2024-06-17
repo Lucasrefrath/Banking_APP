@@ -1,6 +1,7 @@
 import {API_URLS_V1} from "../../const/GlobalConst";
 import {CheckSignUpStatusResponse, RequestSignUpRequest, RequestSignUpResponse} from "../../types/Request-Response";
 import {useState} from "react";
+import {ServerException} from "../../types/Types";
 
 const useSignUp = () => {
   const [isPending, setIsPending] = useState<boolean>(false)
@@ -8,7 +9,7 @@ const useSignUp = () => {
   const [requestId, setRequestId] = useState<CheckSignUpStatusResponse | undefined>(undefined);
   const [requestStatusData, setRequestStatusData] = useState<RequestSignUpResponse | undefined>(undefined)
 
-  const handleRequest = async (request: RequestSignUpRequest, actionAfter: () => void): Promise<void> => {
+  const handleRequest = async (request: RequestSignUpRequest, actionAfter: () => void, actionOnError: (error: ServerException) => void): Promise<void> => {
     setIsPending(true)
     try {
       const response = await fetch(API_URLS_V1.userSignUp + "/request", {
@@ -20,21 +21,29 @@ const useSignUp = () => {
         body: JSON.stringify(request),
       });
 
-      if(response.status !== 200) {
-        throw new Error("Ein unerwarteter Fehler ist aufgetreten...");
+      if(response.status === 200) {
+        const data: RequestSignUpResponse = await response.json();
+        setRequestResponse(data);
+        actionAfter();
+        setIsPending(false);
+        return;
       }
 
-      const data: RequestSignUpResponse = await response.json();
-      setRequestResponse(data);
-      actionAfter();
-      setIsPending(false);
+      if(response.status === 400) {
+        const data: ServerException = await response.json();
+        actionOnError(data)
+        setIsPending(false);
+        return;
+      }
+
+      throw new Error("Ein unerwarteter Fehler ist aufgetreten...");
     } catch (error) {
       setIsPending(false)
       console.log(error);
     }
   }
 
-  const getRequestId = async (request: RequestSignUpRequest, actionAfter: (id: number) => void): Promise<void> => {
+  const getRequestId = async (request: RequestSignUpRequest, actionAfter: (id: number) => void, actionOnError: (error: ServerException) => void): Promise<void> => {
     setIsPending(true)
     try {
       const response = await fetch(API_URLS_V1.userSignUp + "/getId", {
@@ -46,14 +55,21 @@ const useSignUp = () => {
         body: JSON.stringify(request),
       });
 
-      if(response.status !== 200) {
-        throw new Error("Ein unerwarteter Fehler ist aufgetreten...");
+      if(response.status === 200) {
+        const data: CheckSignUpStatusResponse = await response.json();
+        setRequestId(data)
+        actionAfter(data.id);
+        setIsPending(false);
+        return;
+      }
+      if(response.status === 400) {
+        const data: ServerException = await response.json();
+        actionOnError(data)
+        setIsPending(false);
+        return;
       }
 
-      const data: CheckSignUpStatusResponse = await response.json();
-      setRequestId(data)
-      actionAfter(data.id);
-      setIsPending(false);
+      throw new Error("Ein unerwarteter Fehler ist aufgetreten...");
     } catch (error) {
       setIsPending(false)
       console.log(error);

@@ -10,6 +10,7 @@ import {DashBoardContext} from "../const/Context";
 import useLimitations from "../hooks/useLimitations";
 import {PopUpType} from "../types/Enums";
 import useFormat from "../utils/useFormat";
+import News from "../components/News";
 
 const DashBoardPage = () => {
     const AuthData = useAuthContext();
@@ -50,18 +51,23 @@ const DashBoardPage = () => {
             <p>Loading...</p>
           ) : (
             <span>
-              <ul role="list" className="divide-y divide-gray-100">
-                  {userAccounts?.map((account: SimpleAccountDetails) => <AccountPreview account={account}/>)}
-              </ul>
-              <div className="my-1 h-px bg-gray-300"/>
-              <div className={"flex justify-between"}>
-                <small>{getSum()} €</small>
-                <small>{userAccounts?.length}/{maxAccountsForUser()} accounts</small>
-              </div>
-              <NewAccountPopUp
-                isOpen={isPopUpOpen(PopUpType.USER_ACTION_NEW_ACCOUNT)}
-                close={() => closePopUp(PopUpType.USER_ACTION_NEW_ACCOUNT)}
-              />
+              <section>
+                <News />
+              </section>
+              <section>
+                <ul role="list" className="divide-y divide-gray-100">
+                    {userAccounts?.map((account: SimpleAccountDetails) => <AccountPreview account={account}/>)}
+                </ul>
+                <div className="my-1 h-px bg-gray-300"/>
+                <div className={"flex justify-between"}>
+                  <small>{getSum()} €</small>
+                  <small>{userAccounts?.length}/{maxAccountsForUser()} accounts</small>
+                </div>
+                <NewAccountPopUp
+                  isOpen={isPopUpOpen(PopUpType.USER_ACTION_NEW_ACCOUNT)}
+                  close={() => closePopUp(PopUpType.USER_ACTION_NEW_ACCOUNT)}
+                />
+              </section>
             </span>
           )}
       </DashBoardContext.Provider>

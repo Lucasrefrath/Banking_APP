@@ -27,6 +27,8 @@ const ValidationError = ({ error, clearError }: ValidationErrorProps) => {
 
   const { start, reset, timeLeft} = useTimer(closePopUp);
 
+  if(error === "") return <></>;
+
   return (
       <span className={"bg-red-200 pill-red items-center"}>
         <span className={"bg-red-200 pill-round p-3"}>

@@ -1,17 +1,28 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {ChevronRightIcon} from "@heroicons/react/24/outline";
 import {useNavigate} from "react-router-dom";
 import useSignUp from "../hooks/request/useSignUp";
 import {RequestSignUpRequest} from "../types/Request-Response";
+import {ServerException} from "../types/Types";
+import useValidate from "../hooks/useValidate";
+import ValidationError from "./customUI/ValidationError";
+import ServerErrorPopUp from "./pop-ups/ServerErrorPopUp";
 
 const CheckSignUpStatusSearch = () => {
   const navigate = useNavigate();
   const [id, setId] = useState<number | undefined>(undefined);
-  const { getRequestId, requestId } = useSignUp();
+  const { getRequestId } = useSignUp();
+  const { stringIsEmpty } = useValidate();
+  const [validationError, setValidationError] = useState("");
+  const [serverError, setServerError] = useState<ServerException | undefined>(undefined)
   const [formData, setFormData] = useState<RequestSignUpRequest>({
     username: "",
     password: ""
   })
+
+  useEffect(() => {
+    setValidationError("")
+  }, [ formData, id ]);
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -21,7 +32,16 @@ const CheckSignUpStatusSearch = () => {
       return;
     }
 
-    getRequestId(formData, (id: number) => navigate(`/checkSignUp/${id}`))
+    if(stringIsEmpty(formData.username) || stringIsEmpty(formData.password)) {
+      setValidationError("Username and password are required.")
+      return;
+    }
+
+    getRequestId(
+      formData,
+      (id: number) => navigate(`/checkSignUp/${id}`),
+      (error) => setServerError(error)
+    )
 
   }
 
@@ -30,9 +50,6 @@ const CheckSignUpStatusSearch = () => {
       return {...prevState, [e.target.name]: e.target.value}
     });
   }
-
-  console.log(formData)
-  console.log(id)
 
   const changeId = (e: React.ChangeEvent<HTMLInputElement>) => {
     const asNumber = Number.parseInt(e.target.value);
@@ -59,6 +76,9 @@ const CheckSignUpStatusSearch = () => {
         recently requested Sign-Up. Enter username and password or simply use the request id.</small>
 
       <section className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
+        <section>
+          <ValidationError error={validationError} clearError={() => setValidationError("")} />
+        </section>
         <form className="space-y-6" onSubmit={(e) => handleSubmit(e)}>
           <section className="mt-2">
             <label>Request ID</label>
@@ -120,6 +140,7 @@ const CheckSignUpStatusSearch = () => {
           </a>
         </p>
       </section>
+      <ServerErrorPopUp error={serverError} clearError={() => setServerError(undefined)} />
     </div>
   );
 };

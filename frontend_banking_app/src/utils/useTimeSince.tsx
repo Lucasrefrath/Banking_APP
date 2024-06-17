@@ -1,6 +1,8 @@
 import React from 'react';
+import useFormat from "./useFormat";
 
 const useTimeSince = () => {
+  const { formatDate } = useFormat();
 
   const getTimeSince = (date: Date): string => {
     const seconds: number = (Date.now() - new Date(date).getTime()) / 1000;
@@ -38,6 +40,7 @@ const useTimeSince = () => {
 
     const diff: string = ((date.getTime() - today.getTime()) / (1000 * 3600 * 24)).toString().split(".")[0];
     if(diff === "1") return `yesterday`
+    if(Number.parseInt(diff) >= 14) return `on ${formatDate(date)}`
     return `${diff} days ago`
   }
 

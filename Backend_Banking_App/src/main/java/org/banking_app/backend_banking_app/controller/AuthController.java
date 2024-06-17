@@ -8,6 +8,8 @@ import org.banking_app.backend_banking_app.model.SessionUserModel;
 import org.banking_app.backend_banking_app.model.requestModel.LogInRequest;
 import org.banking_app.backend_banking_app.service.auth.JpaUserDetailsService;
 import org.banking_app.backend_banking_app.service.session.SessionActionService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -26,9 +28,12 @@ public class AuthController {
   @Autowired
   SessionActionService sessionActionService;
 
+  private Logger log = LoggerFactory.getLogger(AuthController.class);
+
   @PostMapping("/login")
   public ResponseEntity<SessionUserModel> login(@RequestBody LogInRequest request) throws UsernameAndPasswordDoNotMatchException, NoSuchUserFoundException {
     sessionActionService.create(request);
+    log.info("{} logged in from {}", request.getUsername(), request.getClientOS());
     return ResponseEntity.ok(new SessionUserModel());
   }
 
