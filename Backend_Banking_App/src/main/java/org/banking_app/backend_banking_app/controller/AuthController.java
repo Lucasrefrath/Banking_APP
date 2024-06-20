@@ -46,8 +46,10 @@ public class AuthController {
   @GetMapping("/checkAuth")
   public ResponseEntity<SessionUserModel> checkAuth(Principal principal) {
     if(principal == null) {
+      log.info("unauthenticated");
       return ResponseEntity.status(401).build();
     }
+    log.info("{} checkedAuth", principal.getName());
     return ResponseEntity.ok(new SessionUserModel());
   }
 

@@ -17,7 +17,7 @@ class LoginViewModel: ObservableObject {
 
     func login() {
         LoginAction(
-            parameters: LogInRequest(
+            parameters: LogInRequestModel(
                 username: username,
                 password: password,
                 clientLocation: clientLocation,

@@ -56,7 +56,10 @@ public class SecurityConfig {
             .csrf(AbstractHttpConfigurer::disable)
             .authorizeHttpRequests(auth -> {
 
+              // Eine Liste an Endpunkten können nur von Nutzern erreicht werden, welche die Rolle Admin Haben
               auth.requestMatchers(REQUIRE_ADMIN).hasAuthority("ROLE_ADMIN");
+
+              // Eine Liste an Endpunkten können auch von unauthorisierten Nutzern erreicht werden
               auth.requestMatchers(WHITELIST).permitAll();
               auth.anyRequest().authenticated();
             })
@@ -64,9 +67,9 @@ public class SecurityConfig {
                     .sessionCreationPolicy(SessionCreationPolicy.ALWAYS)
                     .maximumSessions(2)
             )
-            .userDetailsService(jpaUserDetailsService)
+            .userDetailsService(jpaUserDetailsService) // Individuelles Nutzerrepository
             .httpBasic(httpSecurityHttpBasicConfigurer -> httpSecurityHttpBasicConfigurer
-                    .authenticationEntryPoint(new CustomAuthenticationEntryPoint())
+                    .authenticationEntryPoint(new CustomAuthenticationEntryPoint()) // Exception Handeling
             )
             .build();
   }

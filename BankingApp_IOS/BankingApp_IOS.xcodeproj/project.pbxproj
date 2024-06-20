@@ -14,14 +14,22 @@
 		A00F19CC2C1DB9CC007BACE1 /* BankingApp_IOSTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A00F19CB2C1DB9CC007BACE1 /* BankingApp_IOSTests.swift */; };
 		A00F19D62C1DB9CC007BACE1 /* BankingApp_IOSUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A00F19D52C1DB9CC007BACE1 /* BankingApp_IOSUITests.swift */; };
 		A00F19D82C1DB9CC007BACE1 /* BankingApp_IOSUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A00F19D72C1DB9CC007BACE1 /* BankingApp_IOSUITestsLaunchTests.swift */; };
-		A00F19E52C1DC494007BACE1 /* HomePage.swift in Sources */ = {isa = PBXBuildFile; fileRef = A00F19E42C1DC494007BACE1 /* HomePage.swift */; };
-		A00F19E82C1DC682007BACE1 /* AuthenticationPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = A00F19E72C1DC682007BACE1 /* AuthenticationPage.swift */; };
-		A00F19EA2C1DC6E7007BACE1 /* ProfilePage.swift in Sources */ = {isa = PBXBuildFile; fileRef = A00F19E92C1DC6E7007BACE1 /* ProfilePage.swift */; };
-		A00F19ED2C1DC771007BACE1 /* AccountPreview.swift in Sources */ = {isa = PBXBuildFile; fileRef = A00F19EC2C1DC771007BACE1 /* AccountPreview.swift */; };
-		A00F19EF2C1DCCF4007BACE1 /* LogInPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = A00F19EE2C1DCCF4007BACE1 /* LogInPage.swift */; };
-		A00F19F12C1DD07A007BACE1 /* Types.swift in Sources */ = {isa = PBXBuildFile; fileRef = A00F19F02C1DD07A007BACE1 /* Types.swift */; };
-		A00F19F32C1E0264007BACE1 /* LogInViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A00F19F22C1E0264007BACE1 /* LogInViewModel.swift */; };
-		A00F19F52C1E0307007BACE1 /* LogInAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = A00F19F42C1E0307007BACE1 /* LogInAction.swift */; };
+		A00F19E52C1DC494007BACE1 /* HomePageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A00F19E42C1DC494007BACE1 /* HomePageView.swift */; };
+		A00F19E82C1DC682007BACE1 /* AuthenticationPageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A00F19E72C1DC682007BACE1 /* AuthenticationPageView.swift */; };
+		A00F19EA2C1DC6E7007BACE1 /* ProfilePageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A00F19E92C1DC6E7007BACE1 /* ProfilePageView.swift */; };
+		A00F19ED2C1DC771007BACE1 /* AccountPreviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A00F19EC2C1DC771007BACE1 /* AccountPreviewView.swift */; };
+		A00F19EF2C1DCCF4007BACE1 /* LogInPageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A00F19EE2C1DCCF4007BACE1 /* LogInPageView.swift */; };
+		A00F19F12C1DD07A007BACE1 /* Models.swift in Sources */ = {isa = PBXBuildFile; fileRef = A00F19F02C1DD07A007BACE1 /* Models.swift */; };
+		A0A2743F2C206FB800515B28 /* HomePageViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0A2743E2C206FB800515B28 /* HomePageViewModel.swift */; };
+		A0A274422C20704E00515B28 /* AccountsNetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0A274412C20704E00515B28 /* AccountsNetworkManager.swift */; };
+		A0A274442C20721E00515B28 /* AuthenticationNetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0A274432C20721E00515B28 /* AuthenticationNetworkManager.swift */; };
+		A0A274462C20742700515B28 /* NetworkError.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0A274452C20742700515B28 /* NetworkError.swift */; };
+		A0A274482C207D9600515B28 /* LogInViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0A274472C207D9600515B28 /* LogInViewModel.swift */; };
+		A0A2744A2C20877200515B28 /* LoadingSpinner.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0A274492C20877200515B28 /* LoadingSpinner.swift */; };
+		A0A2744C2C208A6B00515B28 /* AuthenticationContextHolder.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0A2744B2C208A6B00515B28 /* AuthenticationContextHolder.swift */; };
+		A0A2744E2C21A33B00515B28 /* CookieManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0A2744D2C21A33B00515B28 /* CookieManager.swift */; };
+		A0A274502C24702300515B28 /* BiometricAuth.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0A2744F2C24702300515B28 /* BiometricAuth.swift */; };
+		A0A274532C24758300515B28 /* WaintingForLocalAuthentication.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0A274522C24758300515B28 /* WaintingForLocalAuthentication.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -52,14 +60,23 @@
 		A00F19D12C1DB9CC007BACE1 /* BankingApp_IOSUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = BankingApp_IOSUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		A00F19D52C1DB9CC007BACE1 /* BankingApp_IOSUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BankingApp_IOSUITests.swift; sourceTree = "<group>"; };
 		A00F19D72C1DB9CC007BACE1 /* BankingApp_IOSUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BankingApp_IOSUITestsLaunchTests.swift; sourceTree = "<group>"; };
-		A00F19E42C1DC494007BACE1 /* HomePage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomePage.swift; sourceTree = "<group>"; };
-		A00F19E72C1DC682007BACE1 /* AuthenticationPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationPage.swift; sourceTree = "<group>"; };
-		A00F19E92C1DC6E7007BACE1 /* ProfilePage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfilePage.swift; sourceTree = "<group>"; };
-		A00F19EC2C1DC771007BACE1 /* AccountPreview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountPreview.swift; sourceTree = "<group>"; };
-		A00F19EE2C1DCCF4007BACE1 /* LogInPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogInPage.swift; sourceTree = "<group>"; };
-		A00F19F02C1DD07A007BACE1 /* Types.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Types.swift; sourceTree = "<group>"; };
-		A00F19F22C1E0264007BACE1 /* LogInViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogInViewModel.swift; sourceTree = "<group>"; };
-		A00F19F42C1E0307007BACE1 /* LogInAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogInAction.swift; sourceTree = "<group>"; };
+		A00F19E42C1DC494007BACE1 /* HomePageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomePageView.swift; sourceTree = "<group>"; };
+		A00F19E72C1DC682007BACE1 /* AuthenticationPageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationPageView.swift; sourceTree = "<group>"; };
+		A00F19E92C1DC6E7007BACE1 /* ProfilePageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfilePageView.swift; sourceTree = "<group>"; };
+		A00F19EC2C1DC771007BACE1 /* AccountPreviewView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountPreviewView.swift; sourceTree = "<group>"; };
+		A00F19EE2C1DCCF4007BACE1 /* LogInPageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogInPageView.swift; sourceTree = "<group>"; };
+		A00F19F02C1DD07A007BACE1 /* Models.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Models.swift; sourceTree = "<group>"; };
+		A0A2743E2C206FB800515B28 /* HomePageViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomePageViewModel.swift; sourceTree = "<group>"; };
+		A0A274412C20704E00515B28 /* AccountsNetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountsNetworkManager.swift; sourceTree = "<group>"; };
+		A0A274432C20721E00515B28 /* AuthenticationNetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationNetworkManager.swift; sourceTree = "<group>"; };
+		A0A274452C20742700515B28 /* NetworkError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkError.swift; sourceTree = "<group>"; };
+		A0A274472C207D9600515B28 /* LogInViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogInViewModel.swift; sourceTree = "<group>"; };
+		A0A274492C20877200515B28 /* LoadingSpinner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingSpinner.swift; sourceTree = "<group>"; };
+		A0A2744B2C208A6B00515B28 /* AuthenticationContextHolder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationContextHolder.swift; sourceTree = "<group>"; };
+		A0A2744D2C21A33B00515B28 /* CookieManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CookieManager.swift; sourceTree = "<group>"; };
+		A0A2744F2C24702300515B28 /* BiometricAuth.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BiometricAuth.swift; sourceTree = "<group>"; };
+		A0A274512C24722200515B28 /* BankingApp-IOS-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "BankingApp-IOS-Info.plist"; sourceTree = SOURCE_ROOT; };
+		A0A274522C24758300515B28 /* WaintingForLocalAuthentication.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WaintingForLocalAuthentication.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -110,14 +127,19 @@
 		A00F19B92C1DB9CA007BACE1 /* BankingApp_IOS */ = {
 			isa = PBXGroup;
 			children = (
-				A00F19EB2C1DC752007BACE1 /* Components */,
-				A00F19BA2C1DB9CA007BACE1 /* BankingApp_IOSApp.swift */,
-				A00F19BC2C1DB9CA007BACE1 /* ContentView.swift */,
+				A0A274512C24722200515B28 /* BankingApp-IOS-Info.plist */,
+				A0A274402C20701600515B28 /* NetworkManager */,
+				A0A2743D2C206F9400515B28 /* ViewModel */,
+				A0A2743B2C206D0300515B28 /* Views */,
+				A00F19F02C1DD07A007BACE1 /* Models.swift */,
 				A00F19BE2C1DB9CC007BACE1 /* Assets.xcassets */,
+				A00F19BA2C1DB9CA007BACE1 /* BankingApp_IOSApp.swift */,
 				A00F19C02C1DB9CC007BACE1 /* Preview Content */,
-				A00F19F02C1DD07A007BACE1 /* Types.swift */,
-				A00F19F22C1E0264007BACE1 /* LogInViewModel.swift */,
-				A00F19F42C1E0307007BACE1 /* LogInAction.swift */,
+				A0A274452C20742700515B28 /* NetworkError.swift */,
+				A0A2744B2C208A6B00515B28 /* AuthenticationContextHolder.swift */,
+				A0A2744D2C21A33B00515B28 /* CookieManager.swift */,
+				A0A2744F2C24702300515B28 /* BiometricAuth.swift */,
+				A0A274522C24758300515B28 /* WaintingForLocalAuthentication.swift */,
 			);
 			path = BankingApp_IOS;
 			sourceTree = "<group>";
@@ -147,24 +169,44 @@
 			path = BankingApp_IOSUITests;
 			sourceTree = "<group>";
 		};
-		A00F19E62C1DC65D007BACE1 /* Pages */ = {
+		A0A2743B2C206D0300515B28 /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				A00F19E42C1DC494007BACE1 /* HomePage.swift */,
-				A00F19E72C1DC682007BACE1 /* AuthenticationPage.swift */,
-				A00F19E92C1DC6E7007BACE1 /* ProfilePage.swift */,
-				A00F19EE2C1DCCF4007BACE1 /* LogInPage.swift */,
+				A0A2743C2C206DA700515B28 /* PageViews */,
+				A00F19EC2C1DC771007BACE1 /* AccountPreviewView.swift */,
+				A0A274492C20877200515B28 /* LoadingSpinner.swift */,
 			);
-			path = Pages;
+			path = Views;
 			sourceTree = "<group>";
 		};
-		A00F19EB2C1DC752007BACE1 /* Components */ = {
+		A0A2743C2C206DA700515B28 /* PageViews */ = {
 			isa = PBXGroup;
 			children = (
-				A00F19E62C1DC65D007BACE1 /* Pages */,
-				A00F19EC2C1DC771007BACE1 /* AccountPreview.swift */,
+				A00F19BC2C1DB9CA007BACE1 /* ContentView.swift */,
+				A00F19E72C1DC682007BACE1 /* AuthenticationPageView.swift */,
+				A00F19E42C1DC494007BACE1 /* HomePageView.swift */,
+				A00F19E92C1DC6E7007BACE1 /* ProfilePageView.swift */,
+				A00F19EE2C1DCCF4007BACE1 /* LogInPageView.swift */,
 			);
-			path = Components;
+			path = PageViews;
+			sourceTree = "<group>";
+		};
+		A0A2743D2C206F9400515B28 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				A0A2743E2C206FB800515B28 /* HomePageViewModel.swift */,
+				A0A274472C207D9600515B28 /* LogInViewModel.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		A0A274402C20701600515B28 /* NetworkManager */ = {
+			isa = PBXGroup;
+			children = (
+				A0A274412C20704E00515B28 /* AccountsNetworkManager.swift */,
+				A0A274432C20721E00515B28 /* AuthenticationNetworkManager.swift */,
+			);
+			path = NetworkManager;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -297,15 +339,23 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A00F19ED2C1DC771007BACE1 /* AccountPreview.swift in Sources */,
-				A00F19F52C1E0307007BACE1 /* LogInAction.swift in Sources */,
-				A00F19E82C1DC682007BACE1 /* AuthenticationPage.swift in Sources */,
+				A0A274532C24758300515B28 /* WaintingForLocalAuthentication.swift in Sources */,
+				A00F19ED2C1DC771007BACE1 /* AccountPreviewView.swift in Sources */,
+				A0A274482C207D9600515B28 /* LogInViewModel.swift in Sources */,
+				A0A274462C20742700515B28 /* NetworkError.swift in Sources */,
+				A0A274502C24702300515B28 /* BiometricAuth.swift in Sources */,
+				A0A2744E2C21A33B00515B28 /* CookieManager.swift in Sources */,
+				A0A2743F2C206FB800515B28 /* HomePageViewModel.swift in Sources */,
+				A00F19E82C1DC682007BACE1 /* AuthenticationPageView.swift in Sources */,
+				A0A274422C20704E00515B28 /* AccountsNetworkManager.swift in Sources */,
+				A0A274442C20721E00515B28 /* AuthenticationNetworkManager.swift in Sources */,
 				A00F19BD2C1DB9CA007BACE1 /* ContentView.swift in Sources */,
-				A00F19F12C1DD07A007BACE1 /* Types.swift in Sources */,
-				A00F19F32C1E0264007BACE1 /* LogInViewModel.swift in Sources */,
-				A00F19EA2C1DC6E7007BACE1 /* ProfilePage.swift in Sources */,
-				A00F19EF2C1DCCF4007BACE1 /* LogInPage.swift in Sources */,
-				A00F19E52C1DC494007BACE1 /* HomePage.swift in Sources */,
+				A00F19F12C1DD07A007BACE1 /* Models.swift in Sources */,
+				A00F19EA2C1DC6E7007BACE1 /* ProfilePageView.swift in Sources */,
+				A00F19EF2C1DCCF4007BACE1 /* LogInPageView.swift in Sources */,
+				A00F19E52C1DC494007BACE1 /* HomePageView.swift in Sources */,
+				A0A2744C2C208A6B00515B28 /* AuthenticationContextHolder.swift in Sources */,
+				A0A2744A2C20877200515B28 /* LoadingSpinner.swift in Sources */,
 				A00F19BB2C1DB9CA007BACE1 /* BankingApp_IOSApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -472,6 +522,7 @@
 				DEVELOPMENT_ASSET_PATHS = "\"BankingApp_IOS/Preview Content\"";
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "BankingApp-IOS-Info.plist";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -500,6 +551,7 @@
 				DEVELOPMENT_ASSET_PATHS = "\"BankingApp_IOS/Preview Content\"";
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "BankingApp-IOS-Info.plist";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;

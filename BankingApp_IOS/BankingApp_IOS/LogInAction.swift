@@ -9,9 +9,9 @@ import Foundation
 
 struct LoginAction {
     
-    var parameters: LogInRequest
+    var parameters: LogInRequestModel
     
-    func call(completion: @escaping (LogInResponse) -> Void) {
+    func call(completion: @escaping (LogInResponseModel) -> Void) {
         let scheme: String = "http"
         let host: String = "http://localhost:8080/auth/v1/"
         let path = "/login"
@@ -39,7 +39,7 @@ struct LoginAction {
         
         let task = URLSession.shared.dataTask(with: request) { data, _, error in
             if let data = data {
-                let response = try? JSONDecoder().decode(LogInResponse.self, from: data)
+                let response = try? JSONDecoder().decode(LogInResponseModel.self, from: data)
                 
                 if let response = response {
                     print(response)

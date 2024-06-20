@@ -15,9 +15,13 @@ const NavigationLinkItem = ({ item }: NavigationLinkItemsProps) => {
   const { checkRouteActive } = useUtils();
   const { userHasRoles } = useAuth();
 
+  // Wenn der Link Authentifizierung benötigt und der Nutzer nicht authentifiziert ist gebe Nichts zurück
   if(item.requireAuthentication && !isAuthenticated) return <></>;
+
+  // Wenn der Link Rollen benötigt und der Nutzer nicht über diese Verfügt gebe Nichts zurück
   if(!userHasRoles(item.requiredRoles)) return <></>;
 
+  //Sonst gebe den Reiter zurück
   return (
     <Link
       key={item.name}

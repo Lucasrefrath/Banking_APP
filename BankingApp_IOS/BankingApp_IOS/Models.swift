@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct LogInRequest: Codable {
+struct LogInRequestModel: Codable {
     let username: String
     let password: String
     let clientLocation: String
@@ -15,13 +15,13 @@ struct LogInRequest: Codable {
     let clientOS: String
 }
 
-struct LogInResponse: Codable {
+struct LogInResponseModel: Codable {
     let id: Int
     let username: String
     let roles: [String]
 }
 
-struct AccountDetails: Codable {
+struct AccountDetailsModel: Codable {
     let id: Int
     let name: String
     let balance: Double

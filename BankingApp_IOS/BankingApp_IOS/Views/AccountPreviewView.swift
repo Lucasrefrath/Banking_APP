@@ -8,9 +8,9 @@
 import Foundation
 import SwiftUI
 
-struct AccountPreview: View {
+struct AccountPreviewView: View {
     
-    let accountDetail: AccountDetails
+    let accountDetail: AccountDetailsModel
     
     var body: some View {
         ZStack(alignment: .topLeading) {

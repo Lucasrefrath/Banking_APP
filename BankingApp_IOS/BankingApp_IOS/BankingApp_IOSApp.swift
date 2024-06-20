@@ -12,6 +12,9 @@ struct BankingApp_IOSApp: App {
     var body: some Scene {
         WindowGroup {
             ContentView()
+                .onAppear {
+                    AuthenticationContextHolder.shared.initiateCheckAuth()
+                }
         }
     }
 }

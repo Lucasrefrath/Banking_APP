@@ -39,15 +39,19 @@ public class SessionActionService {
   private UserRepository userRepository;
 
   public void create(LogInRequest request) throws UsernameAndPasswordDoNotMatchException, NoSuchUserFoundException {
+    // Prüfung ob Nutzername existiert
     userRepository.findByUsername(request.getUsername()).orElseThrow(() -> new NoSuchUserFoundException(request.getUsername()));
     try {
-      HttpSession session = sessionDataService.getCurrentHttpSession();
+      HttpSession session = sessionDataService.getCurrentHttpSession(); // Holt nicht authentifizierte Session
+
+      // Prüfung ob Password zu Nutzer passt
       Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(request.getUsername(), request.getPassword()));
 
+      // Session wird validiert und der Nutzer authentifiziert
       SecurityContextHolder.getContext().setAuthentication(authentication);
-
       session.setAttribute("SPRING_SECURITY_CONTEXT", SecurityContextHolder.getContext());
 
+      // Client Metadaten werden der Session zugeordnet
       sessionAttributeService.setDefaultAttributes(request);
     } catch (Throwable e) {
       throw new UsernameAndPasswordDoNotMatchException();
