@@ -19,25 +19,25 @@ struct ProfilePageView: View {
     var body: some View {
 
         Form {
-            Section{
-                HStack(spacing: 20) {
-                    Image(systemName: "person.circle.fill")
-                        .resizable()
-                        .frame(width: 75, height: 75)
-                        .scaledToFit()
-                    
-                    VStack(alignment: .leading){
-                        Text("Lucas Hermes")
-                        Text(AuthenticationContextHolder.shared.userDetails.username)
-                            .font(.footnote)
+            NavigationLink(destination: EditProfilePage()) {
+                Section{
+                    HStack(spacing: 20) {
+                        Image(systemName: "person.circle.fill")
+                            .resizable()
+                            .frame(width: 75, height: 75)
+                            .scaledToFit()
+                        
+                        VStack(alignment: .leading){
+                            Text("Lucas Hermes")
+                            Text(AuthenticationContextHolder.shared.userDetails.username)
+                                .font(.footnote)
+                        }
+                        
+                        Spacer()
                     }
-                    
-                    Spacer()
-                    
-                    Image(systemName: "chevron.right")
-                        .padding()
                 }
             }
+            
             
             Section ("Roles") {
                 ForEach(AuthenticationContextHolder.shared.userDetails.roles, id: \.self) { role in

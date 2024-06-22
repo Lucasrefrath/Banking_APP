@@ -9,7 +9,17 @@ import SwiftUI
 
 struct WaintingForLocalAuthentication: View {
     var body: some View {
-        Color(.systemBackground)
-        Text("Waiting for local authentication...")
+        ZStack {
+            Color(.systemBackground)
+            
+            VStack {
+                Spacer()
+                ProgressView("Waiting for local Authentication...")
+                    .progressViewStyle(CircularProgressViewStyle(tint: .blue))
+                    .padding()
+                Spacer()
+            }
+            
+        }
     }
 }

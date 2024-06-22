@@ -8,15 +8,24 @@ const GeneralSettingsTile = () => {
 
   return (
     <div>
-      <span>
+      <section>
         <label>Visual Options</label>
         <div>
           <button className={"type-secondary-outline"} onClick={toggleDarkMode}>Toggle Visual Mode</button>
         </div>
-      </span>
-      <span>
+      </section>
+
+      <section>
+        <label>Security Options</label>
+        <div>
+          <small>2-Factor-Auth is disabled</small>
+          <button className={"type-see-more"}>Activate 2-Factor-Auth</button>
+        </div>
+      </section>
+
+      <section>
         <small className={"dark:bg-gray-300"}>Mode</small>
-      </span>
+      </section>
     </div>
   );
 };

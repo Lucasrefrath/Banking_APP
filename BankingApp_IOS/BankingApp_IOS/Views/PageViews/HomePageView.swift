@@ -16,16 +16,16 @@ struct HomePageView: View {
         ZStack {
             ScrollViewReader { proxy in
                 ScrollView(.vertical, showsIndicators: false) {
-                    VStack(spacing: 15) {
-                        ForEach(homePageViewModel.allAccounts, id: \.id) { account in
-                            AccountPreviewView(accountDetail: account)
+                        VStack(spacing: 15) {
+                            ForEach(homePageViewModel.allAccounts, id: \.id) { account in
+                                AccountPreviewView(accountDetail: account)
+                            }
                         }
+                        .padding()
                     }
-                    .padding()
                     .onAppear {
                         homePageViewModel.getAllAccounts()
                     }
-                }
             }
             
             if(homePageViewModel.isPending) {

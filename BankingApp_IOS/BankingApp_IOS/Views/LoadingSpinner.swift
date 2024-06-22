@@ -8,9 +8,20 @@
 import SwiftUI
 
 struct LoadingSpinner: View {
+    
     var body: some View {
-        Color(.systemBackground)
-        Text("Loading...")
+        ZStack {
+            Color(.systemBackground)
+            
+            VStack {
+                Spacer()
+                ProgressView("Loading...")
+                    .progressViewStyle(CircularProgressViewStyle(tint: .blue))
+                    .padding()
+                Spacer()
+            }
+            
+        }
     }
 }
 

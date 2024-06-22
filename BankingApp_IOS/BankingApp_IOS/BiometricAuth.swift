@@ -33,7 +33,10 @@ class BiometricAuth: ObservableObject {
                 }
             }
         } else {
-            print("no bio")
+            DispatchQueue.main.async {
+                //self.isUnLocked = true //TODO: only in DEV for preview
+                print("no bio")
+            }
         }
     }
     

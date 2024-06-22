@@ -30,6 +30,8 @@
 		A0A2744E2C21A33B00515B28 /* CookieManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0A2744D2C21A33B00515B28 /* CookieManager.swift */; };
 		A0A274502C24702300515B28 /* BiometricAuth.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0A2744F2C24702300515B28 /* BiometricAuth.swift */; };
 		A0A274532C24758300515B28 /* WaintingForLocalAuthentication.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0A274522C24758300515B28 /* WaintingForLocalAuthentication.swift */; };
+		A0A274552C25585700515B28 /* AccountPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0A274542C25585700515B28 /* AccountPage.swift */; };
+		A0A274572C25719100515B28 /* EditProfilePage.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0A274562C25719100515B28 /* EditProfilePage.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -77,6 +79,8 @@
 		A0A2744F2C24702300515B28 /* BiometricAuth.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BiometricAuth.swift; sourceTree = "<group>"; };
 		A0A274512C24722200515B28 /* BankingApp-IOS-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "BankingApp-IOS-Info.plist"; sourceTree = SOURCE_ROOT; };
 		A0A274522C24758300515B28 /* WaintingForLocalAuthentication.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WaintingForLocalAuthentication.swift; sourceTree = "<group>"; };
+		A0A274542C25585700515B28 /* AccountPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountPage.swift; sourceTree = "<group>"; };
+		A0A274562C25719100515B28 /* EditProfilePage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditProfilePage.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -187,6 +191,8 @@
 				A00F19E42C1DC494007BACE1 /* HomePageView.swift */,
 				A00F19E92C1DC6E7007BACE1 /* ProfilePageView.swift */,
 				A00F19EE2C1DCCF4007BACE1 /* LogInPageView.swift */,
+				A0A274542C25585700515B28 /* AccountPage.swift */,
+				A0A274562C25719100515B28 /* EditProfilePage.swift */,
 			);
 			path = PageViews;
 			sourceTree = "<group>";
@@ -339,6 +345,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A0A274572C25719100515B28 /* EditProfilePage.swift in Sources */,
 				A0A274532C24758300515B28 /* WaintingForLocalAuthentication.swift in Sources */,
 				A00F19ED2C1DC771007BACE1 /* AccountPreviewView.swift in Sources */,
 				A0A274482C207D9600515B28 /* LogInViewModel.swift in Sources */,
@@ -356,6 +363,7 @@
 				A00F19E52C1DC494007BACE1 /* HomePageView.swift in Sources */,
 				A0A2744C2C208A6B00515B28 /* AuthenticationContextHolder.swift in Sources */,
 				A0A2744A2C20877200515B28 /* LoadingSpinner.swift in Sources */,
+				A0A274552C25585700515B28 /* AccountPage.swift in Sources */,
 				A00F19BB2C1DB9CA007BACE1 /* BankingApp_IOSApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
