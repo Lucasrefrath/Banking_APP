@@ -7,6 +7,7 @@ import org.banking_app.backend_banking_app.model.SecurityUserDetails;
 import org.banking_app.backend_banking_app.model.SessionUserModel;
 import org.banking_app.backend_banking_app.model.requestModel.LogInRequest;
 import org.banking_app.backend_banking_app.service.auth.JpaUserDetailsService;
+import org.banking_app.backend_banking_app.service.auth.MobileAuthenticationService;
 import org.banking_app.backend_banking_app.service.session.SessionActionService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -28,13 +29,17 @@ public class AuthController {
   @Autowired
   SessionActionService sessionActionService;
 
+  @Autowired
+  MobileAuthenticationService mobileAuthenticationService;
+
   private Logger log = LoggerFactory.getLogger(AuthController.class);
 
   @PostMapping("/login")
   public ResponseEntity<SessionUserModel> login(@RequestBody LogInRequest request) throws UsernameAndPasswordDoNotMatchException, NoSuchUserFoundException {
     sessionActionService.create(request);
+    System.out.println(request.getDeviceUUID());
     log.info("{} logged in from {}", request.getUsername(), request.getClientOS());
-    return ResponseEntity.ok(new SessionUserModel());
+    return ResponseEntity.ok(new SessionUserModel(mobileAuthenticationService.checkMobileAuthentication()));
   }
 
   @PostMapping("/logout")
@@ -50,7 +55,7 @@ public class AuthController {
       return ResponseEntity.status(401).build();
     }
     log.info("{} checkedAuth", principal.getName());
-    return ResponseEntity.ok(new SessionUserModel());
+    return ResponseEntity.ok(new SessionUserModel(mobileAuthenticationService.checkMobileAuthentication()));
   }
 
   @GetMapping("/userdetails")

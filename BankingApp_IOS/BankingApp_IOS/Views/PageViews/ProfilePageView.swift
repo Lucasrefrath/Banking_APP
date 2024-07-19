@@ -11,6 +11,7 @@ import SwiftUI
 struct ProfilePageView: View {
     
     @AppStorage("SESSION_COOKIE") private var sessionCookie = ""
+    private var isActive: Bool = false
     
     func nothing() -> Void {
         print("test")
@@ -46,15 +47,27 @@ struct ProfilePageView: View {
             }
             
             Section("Authentication") {
-                LabeledContent("API-Token") {
-                    Text("6f9bsf0g210g8d")
+                LabeledContent("UUID") {
+                    Text(DeviceDataService().getUUID().prefix(20) + "...")
                 }
                 
+                Toggle("Mobile Authentication", isOn: Binding.constant(AuthenticationContextHolder.shared.userDetails.deviceIsMobileAuthentication))
+                .disabled(true)
+                
+            }
+            
+            Section {
                 Button(action: nothing) {
                     Text("Logout")
                         .foregroundColor(.red)
                 }
                 
+                if(AuthenticationContextHolder.shared.userDetails.deviceIsMobileAuthentication) {
+                    Button(action: nothing) {
+                        Text("Revoke Access")
+                            .foregroundColor(.red)
+                    }
+                }
             }
         }
     }

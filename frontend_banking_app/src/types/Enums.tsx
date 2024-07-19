@@ -5,7 +5,8 @@ export enum PopUpType {
   ACCOUNT_VIEW_SHOW_HISTORY,
   USER_ACTION_NEW_ACCOUNT,
   SIGNUP_REQUEST_APPROVE,
-  SIGNUP_REQUEST_REJECT
+  SIGNUP_REQUEST_REJECT,
+  EXPECTING_APPROVAL
 }
 
 export enum AccountAction {
@@ -25,7 +26,7 @@ export enum MessageLevel {
   ERROR
 }
 
-export enum SignUpRequestStatus {
+export enum ApprovalStatus {
   PENDING = "PENDING",
   APPROVED = "APPROVED",
   REJECTED = "REJECTED"

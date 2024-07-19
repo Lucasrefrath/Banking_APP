@@ -13,4 +13,6 @@ public class LogInRequest {
   private String clientBrowser;
 
   private String clientOS;
+
+  private String deviceUUID;
 }

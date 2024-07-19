@@ -1,9 +1,15 @@
 import {AccountHistory, SimpleAccountDetails} from "./Types";
-import {Roles, SignUpRequestStatus} from "./Enums";
+import {Roles, ApprovalStatus} from "./Enums";
 
-export type AccountActionResponse = {
+export interface AccountActionResponse {
   updatedAccountData: SimpleAccountDetails,
   newHistoryData: AccountHistory
+}
+
+export interface AccountActionApprovalStatus {
+  approvalId: number,
+  status: ApprovalStatus,
+  approveUntil: Date
 }
 
 export interface CreateAccountRequest {
@@ -18,7 +24,7 @@ export interface RequestSignUpRequest {
 export interface RequestSignUpResponse {
   id: number,
   username: string,
-  status: SignUpRequestStatus,
+  status: ApprovalStatus,
   processedAt: Date,
   createdAt: Date
   rejectionMessage: string

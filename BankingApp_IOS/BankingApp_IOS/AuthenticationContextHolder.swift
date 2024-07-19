@@ -13,7 +13,7 @@ class AuthenticationContextHolder: ObservableObject {
     
     @Published var isAuthenticated = false
     @Published var initAuthStatusPending = true
-    @Published var userDetails: LogInResponseModel = LogInResponseModel(id: 0, username: "no username", roles: ["NO ROLES"])
+    @Published var userDetails: LogInResponseModel = LogInResponseModel(id: 0, username: "no username", roles: ["NO ROLES"], deviceIsMobileAuthentication: false)
     
     private init() {}
     

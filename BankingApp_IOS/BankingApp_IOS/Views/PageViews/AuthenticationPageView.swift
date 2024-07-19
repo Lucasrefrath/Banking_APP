@@ -16,25 +16,13 @@ struct AuthenticationPageView: View {
     @StateObject var bioAuth = BiometricAuth()
     
     var body: some View {
-        ZStack {
-            VStack {
-                Text("Authenticate Requests")
-                Text(sessionCookie)
-                Button(action: {
-                    AuthenticationContextHolder.shared.initiateCheckAuth()
-                }) {
-                    Text("CheckAuth")
-                }
-            }
-            
-            if !bioAuth.isUnLocked {
-                WaintingForLocalAuthentication()
-            }
-            
+
+        VStack {
+            Text("No open requests")
         }
-        .onAppear {
-            bioAuth.authenticate()
-        }
-        
     }
+}
+
+#Preview {
+    AuthenticationPageView()
 }

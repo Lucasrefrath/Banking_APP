@@ -1,15 +1,13 @@
 import {useState} from 'react';
 import {API_URLS_V1} from "../../const/GlobalConst";
-import {
-} from "../../types/Types";
 import {AccountAction, PopUpType} from "../../types/Enums";
-import {AccountActionResponse, DepositRequst} from "../../types/Request-Response";
+import {AccountActionApprovalStatus, AccountActionResponse, DepositRequst} from "../../types/Request-Response";
 import useProfileContext from "../contextHook/useProfileContext";
 import useAuthContext from "../contextHook/useAuthContext";
 
 const useAccountAction = ({actionType, popUpType}: {actionType: AccountAction, popUpType: PopUpType}) => {
   const [error, setError] = useState<any>(undefined);
-  const { updateAccountDetails, userAccountHistory, closePopUp} = useProfileContext();
+  const { updateAccountDetails, userAccountHistory, closePopUp, openPopUp} = useProfileContext();
   const { refreshAuth } = useAuthContext();
 
   const handleRequest = async ( payLoad: DepositRequst): Promise<void> => {
@@ -28,6 +26,14 @@ const useAccountAction = ({actionType, popUpType}: {actionType: AccountAction, p
         refreshAuth();
         const message = await response.text();
         throw new Error(message)
+      }
+
+      if(response.status === 307) {
+        const data: AccountActionApprovalStatus = await response.json();
+        closePopUp(popUpType)
+        openPopUp(PopUpType.EXPECTING_APPROVAL)
+        console.log(data)
+        return;
       }
 
       if(response.status !== 200) {

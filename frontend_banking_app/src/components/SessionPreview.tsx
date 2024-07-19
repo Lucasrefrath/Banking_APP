@@ -1,7 +1,7 @@
 import React from 'react';
 import {Session} from "../types/Types";
 import useFormat from "../utils/useFormat";
-import {ShieldCheckIcon, MapPinIcon} from "@heroicons/react/24/solid";
+import {ShieldCheckIcon, MapPinIcon, DevicePhoneMobileIcon} from "@heroicons/react/24/solid";
 import {CloudIcon, KeyIcon, PowerIcon} from "@heroicons/react/24/outline";
 import useTimeSince from "../utils/useTimeSince";
 import DestructiveButton from "./customUI/DestructiveButton";
@@ -37,6 +37,12 @@ const SessionPreview = ({ sessionData, terminateSession }: SessionPreviewProps) 
                 <MapPinIcon className={"icon text-gray-500 flex items-center"}/>
                 <small>{sessionData.clientLocation}</small>
               </div>
+              {sessionData.isMobileAuthentication && (
+                <div className={"pill-gray"}>
+                  <DevicePhoneMobileIcon className={"icon text-blue-500 flex items-center"}/>
+                  <small>2FA</small>
+                </div>
+              )}
             </span>
             <span className={"flex items-center gap-2"}>
               <PowerIcon className={"icon-small text-gray-700"}/>

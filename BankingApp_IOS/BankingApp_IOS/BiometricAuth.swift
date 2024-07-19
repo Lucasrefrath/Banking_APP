@@ -10,7 +10,7 @@ import LocalAuthentication
 
 class BiometricAuth: ObservableObject {
     
-    @Published var isUnLocked: Bool = false
+    @Published var isUnLocked: Bool = true
     
     func authenticate () {
         let context = LAContext()

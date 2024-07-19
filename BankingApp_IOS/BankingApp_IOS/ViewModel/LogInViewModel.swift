@@ -17,11 +17,12 @@ class LogInViewModel: ObservableObject {
     private var clientLocation: String = "Europe/Berlin"
     private var clientBrowser: String = "IOS-APP"
     private var clientOS: String = "IOS"
+    private var deviceUUID: String = DeviceDataService().getUUID()
     
     func handleLogin() {
         isPending = true
         AuthenticationNetworkManager.shared.callLogIn(credentials: LogInRequestModel(
-            username: username, password: password, clientLocation: "Europe/Berlin", clientBrowser: "IOS-APP", clientOS: "IOS"
+            username: username, password: password, clientLocation: "Europe/Berlin", clientBrowser: "IOS-APP", clientOS: "IOS", deviceUUID: deviceUUID
         )) { result in
             
             self.isPending = false
@@ -31,6 +32,7 @@ class LogInViewModel: ObservableObject {
                     
                 case .success(let dataResponse):
                     self.userData = dataResponse
+                    AuthenticationContextHolder.shared.userDetails = dataResponse
                     AuthenticationContextHolder.shared.authenticate()
                     print(self.userData ?? "no data")
                     

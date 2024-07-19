@@ -5,7 +5,7 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.banking_app.backend_banking_app.enums.SignUpRequestStatus;
+import org.banking_app.backend_banking_app.enums.ApprovalStatus;
 
 import java.time.LocalDateTime;
 
@@ -26,7 +26,7 @@ public class SignUpRequestEntity {
   @Column(nullable = false)
   private String password;
 
-  private SignUpRequestStatus status = SignUpRequestStatus.PENDING;
+  private ApprovalStatus status = ApprovalStatus.PENDING;
 
   private LocalDateTime processedAt;
 

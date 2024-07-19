@@ -28,4 +28,11 @@ public class SessionModelFactory {
     return result;
   }
 
+  public SessionModel build(Session session) {
+    return new SessionModel(
+            session,
+            Objects.equals(sessionDataService.getActiveSessionId(), session.getId())
+    );
+  }
+
 }

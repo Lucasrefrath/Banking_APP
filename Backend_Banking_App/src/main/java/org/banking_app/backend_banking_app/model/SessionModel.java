@@ -47,6 +47,10 @@ public class SessionModel implements Session {
     return session.getAttribute("CLIENT_LOCATION");
   }
 
+  public Boolean getIsMobileAuthentication() {
+    return (Boolean) session.getAttribute("2FA_MOBILE_ACCESS");
+  }
+
   @JsonIgnore
   @Override
   public Set<String> getAttributeNames() {

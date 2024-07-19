@@ -38,7 +38,7 @@ public class SessionController {
   }
 
   @DeleteMapping("/terminate/{sessionId}")
-  public ResponseEntity terminateSession(@PathVariable String sessionId) throws UserAccessNotAllowedException {
+  public ResponseEntity<String> terminateSession(@PathVariable String sessionId) throws UserAccessNotAllowedException {
     sessionActionService.terminateSession(sessionId);
     return ResponseEntity.ok("Session "+sessionId+" terminated.");
   }

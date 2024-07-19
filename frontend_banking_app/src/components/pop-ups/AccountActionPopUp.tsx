@@ -7,6 +7,7 @@ import {AccountAction, MessageLevel, PopUpType} from "../../types/Enums";
 import AccountSearchBar from "../AccountSearchBar";
 import useProfileContext from "../../hooks/contextHook/useProfileContext";
 import CustomPopUp from "../customUI/CustomPopUp";
+import ExpectingApprovalPopUp from "./ExpectingApprovalPopUp";
 
 interface DataProps {
   recipient: number | undefined,

@@ -117,7 +117,8 @@ export interface Session {
     attributeNames: string[],
     clientOS: string,
     clientBrowser: string,
-    clientLocation: string
+    clientLocation: string,
+    isMobileAuthentication: boolean
 }
 
 export interface UserSession {

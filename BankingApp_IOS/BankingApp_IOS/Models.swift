@@ -13,12 +13,14 @@ struct LogInRequestModel: Codable {
     let clientLocation: String
     let clientBrowser: String
     let clientOS: String
+    let deviceUUID: String
 }
 
 struct LogInResponseModel: Codable {
     let id: Int
     let username: String
     let roles: [String]
+    let deviceIsMobileAuthentication: Bool
 }
 
 struct AccountDetailsModel: Codable {

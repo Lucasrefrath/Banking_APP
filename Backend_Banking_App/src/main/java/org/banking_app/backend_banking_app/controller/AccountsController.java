@@ -5,7 +5,7 @@ import org.banking_app.backend_banking_app.model.DTO.AccountEntity;
 import org.banking_app.backend_banking_app.model.requestModel.CreateAccountRequest;
 import org.banking_app.backend_banking_app.model.requestModel.DeactivateAccountRequest;
 import org.banking_app.backend_banking_app.model.responseModel.AccountResponse;
-import org.banking_app.backend_banking_app.service.account.AccountActionService;
+import org.banking_app.backend_banking_app.service.account.accountAction.AccountActionService;
 import org.banking_app.backend_banking_app.service.account.AccountDataService;
 import org.banking_app.backend_banking_app.service.accountHistory.AccountHistoryDataService;
 import org.springframework.beans.factory.annotation.Autowired;

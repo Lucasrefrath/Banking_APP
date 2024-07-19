@@ -1,6 +1,6 @@
 package org.banking_app.backend_banking_app.service.signUp;
 
-import org.banking_app.backend_banking_app.enums.SignUpRequestStatus;
+import org.banking_app.backend_banking_app.enums.ApprovalStatus;
 import org.banking_app.backend_banking_app.exceptions.customExceptions.NoSuchSignUpRequestFoundException;
 import org.banking_app.backend_banking_app.exceptions.customExceptions.UserAccessNotAllowedException;
 import org.banking_app.backend_banking_app.exceptions.customExceptions.UsernameAlreadyExistsException;
@@ -33,9 +33,9 @@ public class SignUpDataService {
 
   public void checkExists(String username, String password) throws UsernameAlreadyExistsException {
     if(userDataService.userNameExists(username)) throw new UsernameAlreadyExistsException(username);
-    if(signUpRequestRepository.existsByUsernameAndStatus(username, SignUpRequestStatus.PENDING)) throw new UsernameAlreadyExistsException(username);
+    if(signUpRequestRepository.existsByUsernameAndStatus(username, ApprovalStatus.PENDING)) throw new UsernameAlreadyExistsException(username);
     if(signUpRequestRepository.existsByUsername(username)) {
-      List<SignUpRequestEntity> allByUsernameAndStatus = signUpRequestRepository.findAllByUsernameAndStatus(username, SignUpRequestStatus.REJECTED);
+      List<SignUpRequestEntity> allByUsernameAndStatus = signUpRequestRepository.findAllByUsernameAndStatus(username, ApprovalStatus.REJECTED);
       for(SignUpRequestEntity entity : allByUsernameAndStatus) {
         if(passwordEncoder.matches(password, entity.getPassword())) throw new UsernameAlreadyExistsException(username);
       }
@@ -44,7 +44,7 @@ public class SignUpDataService {
 
   public List<SignUpRequestEntity> getAllOpen() throws UserAccessNotAllowedException {
     authorisationService.checkUserAdmin();
-    return signUpRequestRepository.findAllByStatus(SignUpRequestStatus.PENDING);
+    return signUpRequestRepository.findAllByStatus(ApprovalStatus.PENDING);
   }
 
   public UserSignUpIdResponse getRequestId(RequestSignUpRequest request) throws NoSuchSignUpRequestFoundException {

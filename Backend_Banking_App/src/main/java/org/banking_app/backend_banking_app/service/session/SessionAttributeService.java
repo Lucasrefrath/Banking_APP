@@ -11,12 +11,13 @@ public class SessionAttributeService {
   @Autowired
   private SessionDataService sessionDataService;
 
-  public void setDefaultAttributes(LogInRequest request) {
+  public void setDefaultAttributes(LogInRequest request, Boolean isRegisteredMobileApp) {
     HttpSession session = sessionDataService.getCurrentHttpSession();
 
     session.setAttribute("CLIENT_OS", request.getClientOS());
     session.setAttribute("CLIENT_BROWSER", request.getClientBrowser());
     session.setAttribute("CLIENT_LOCATION", request.getClientLocation());
+    session.setAttribute("2FA_MOBILE_ACCESS", isRegisteredMobileApp);
   }
 
 }

@@ -1,17 +1,13 @@
 package org.banking_app.backend_banking_app.service.signUp;
 
-import org.banking_app.backend_banking_app.enums.SignUpRequestStatus;
-import org.banking_app.backend_banking_app.exceptions.customExceptions.NoSuchSignUpRequestFoundException;
-import org.banking_app.backend_banking_app.exceptions.customExceptions.UserAccessNotAllowedException;
+import org.banking_app.backend_banking_app.enums.ApprovalStatus;
 import org.banking_app.backend_banking_app.exceptions.customExceptions.UsernameAlreadyExistsException;
 import org.banking_app.backend_banking_app.model.DTO.SignUpRequestEntity;
 import org.banking_app.backend_banking_app.model.DTO.UserEntity;
 import org.banking_app.backend_banking_app.model.requestModel.ApproveRequestRequest;
 import org.banking_app.backend_banking_app.model.requestModel.RejectRequestRequest;
 import org.banking_app.backend_banking_app.model.requestModel.RequestSignUpRequest;
-import org.banking_app.backend_banking_app.model.responseModel.UserSignUpIdResponse;
 import org.banking_app.backend_banking_app.repository.SignUpRequestRepository;
-import org.banking_app.backend_banking_app.service.auth.AuthorisationService;
 import org.banking_app.backend_banking_app.service.user.UserDataService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -19,7 +15,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
-import java.util.List;
 
 @Service
 public class SignUpRequestService {
@@ -57,7 +52,7 @@ public class SignUpRequestService {
 
   public void reject(RejectRequestRequest request) {
     SignUpRequestEntity entity = checkStatus(request.getRequestId());
-    entity.setStatus(SignUpRequestStatus.REJECTED);
+    entity.setStatus(ApprovalStatus.REJECTED);
     entity.setRejectionMessage(request.getReason());
     entity.setProcessedAt(LocalDateTime.now());
     signUpRequestRepository.save(entity);
@@ -65,7 +60,7 @@ public class SignUpRequestService {
 
   public void approve(ApproveRequestRequest request) throws UsernameAlreadyExistsException {
     SignUpRequestEntity entity = checkStatus(request.getRequestId());
-    entity.setStatus(SignUpRequestStatus.APPROVED);
+    entity.setStatus(ApprovalStatus.APPROVED);
     entity.setProcessedAt(LocalDateTime.now());
     signUpRequestRepository.save(entity);
     userDataService.addUser(new UserEntity(

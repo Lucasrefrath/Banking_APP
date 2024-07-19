@@ -2,7 +2,7 @@ import React, {useEffect} from 'react';
 import {useNavigate, useParams} from "react-router-dom";
 import useSignUp from "../hooks/request/useSignUp";
 import {BellSnoozeIcon, CheckIcon, ClockIcon, XMarkIcon} from "@heroicons/react/24/outline";
-import {SignUpRequestStatus} from "../types/Enums";
+import {ApprovalStatus} from "../types/Enums";
 import useFormat from "../utils/useFormat";
 import useTimeSince from "../utils/useTimeSince";
 
@@ -44,7 +44,7 @@ const CheckSignUpStatusShowStatus = () => {
 
   const getIcon = () => {
     switch (requestStatusData?.status) {
-      case SignUpRequestStatus.PENDING:
+      case ApprovalStatus.PENDING:
         return (
           <div className={"bg-gray-100 rounded-lg p-5 mt-5"}>
             <div className={"flex justify-center text-center items-center"}>
@@ -63,7 +63,7 @@ const CheckSignUpStatusShowStatus = () => {
           </section>
         </div>
       );
-      case SignUpRequestStatus.APPROVED:
+      case ApprovalStatus.APPROVED:
         return (
           <div className={"bg-gray-100 rounded-lg p-5 mt-5"}>
             <div className={"flex justify-center text-center items-center"}>
@@ -82,7 +82,7 @@ const CheckSignUpStatusShowStatus = () => {
             </section>
           </div>
         );
-      case SignUpRequestStatus.REJECTED:
+      case ApprovalStatus.REJECTED:
         return (
           <div className={"bg-gray-100 rounded-lg p-5 mt-5"}>
             <div className={"flex justify-center text-center items-center"}>

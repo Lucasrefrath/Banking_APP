@@ -12,6 +12,7 @@ import {EyeSlashIcon} from "@heroicons/react/24/outline";
 import DestructiveButton from "../components/customUI/DestructiveButton";
 import useAccountActive from "../hooks/request/useAccountActive";
 import useFormat from "../utils/useFormat";
+import ExpectingApprovalPopUp from "../components/pop-ups/ExpectingApprovalPopUp";
 
 const ViewAccountPage = () => {
   const { accountId} = useParams<string>();
@@ -51,6 +52,7 @@ const ViewAccountPage = () => {
     <AccountActionPopUp actionType={AccountAction.DEPOSIT} popUpType={PopUpType.ACCOUNT_ACTION_DEPOSIT}/>
     <AccountActionPopUp actionType={AccountAction.WITHDRAW} popUpType={PopUpType.ACCOUNT_ACTION_WITHDRAW}/>
     <AccountActionPopUp actionType={AccountAction.TRANSFER} popUpType={PopUpType.ACCOUNT_ACTION_TRANSFER}/>
+    <ExpectingApprovalPopUp />
   </ProfileContext.Provider>
 };
 
